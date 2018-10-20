@@ -1,5 +1,5 @@
-#pragma comment(lib, "libcrypto.lib")
-#pragma comment(lib, "openssl.lib")
+//#pragma comment(lib, "libcrypto.lib")
+//#pragma comment(lib, "openssl.lib")
 
 #include "coder.h"
 
