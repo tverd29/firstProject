@@ -35,10 +35,6 @@ HEADERS += \
     dialogaddedit.h \
     coder.h
 
-LIBS += -LC:/OpenSSL-Win32/lib
-
-INCLUDEPATH += C:/OpenSSL-Win32/include
-
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
@@ -47,3 +43,14 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 DISTFILES += \
     needFile \
     needFile_1
+
+win32: LIBS += -LC:/OpenSSL-Win32/lib/ -lopenssl
+
+INCLUDEPATH += C:/OpenSSL-Win32/include
+DEPENDPATH += C:/OpenSSL-Win32/include
+
+
+win32: LIBS += -LC:/OpenSSL-Win32/lib/VC/static/ -llibcrypto32MD
+
+INCLUDEPATH += C:/OpenSSL-Win32/lib/VC/static
+DEPENDPATH += C:/OpenSSL-Win32/lib/VC/static
