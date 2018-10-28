@@ -41,8 +41,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES += \
-    needFile \
-    needFile_1
+    needFile
 
 win32: LIBS += -LC:/OpenSSL-Win32/lib/ -lopenssl
 

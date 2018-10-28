@@ -122,24 +122,24 @@ AkkWindow::AkkWindow(QWidget *parent) : QDialog(parent) {
   main->addLayout(bottom);
 
   //*************try AES*************
-  encryptLine = new QLineEdit;
-  decryptLine = new QLineEdit;
-  encryptButton = new QPushButton("Encrypt");
-  connect(encryptButton, SIGNAL(clicked()), this, SLOT(encryptClicked()));
-  decryptButton = new QPushButton("Decrypt");
-  connect(decryptButton, SIGNAL(clicked()), this, SLOT(decryptClicked()));
+  //  encryptLine = new QLineEdit;
+  //  decryptLine = new QLineEdit;
+  //  encryptButton = new QPushButton("Encrypt");
+  //  connect(encryptButton, SIGNAL(clicked()), this, SLOT(encryptClicked()));
+  //  decryptButton = new QPushButton("Decrypt");
+  //  connect(decryptButton, SIGNAL(clicked()), this, SLOT(decryptClicked()));
 
-  QHBoxLayout *encryptLayout = new QHBoxLayout;
-  encryptLayout->addWidget(encryptLine);
-  encryptLayout->addWidget(encryptButton);
-  QHBoxLayout *decryptLayout = new QHBoxLayout;
-  decryptLayout->addWidget(decryptLine);
-  decryptLayout->addWidget(decryptButton);
-  QVBoxLayout *crypto = new QVBoxLayout;
-  crypto->addLayout(encryptLayout);
-  crypto->addLayout(decryptLayout);
-  main->addLayout(crypto);
-  passwordLine->setText("12345");
+  //  QHBoxLayout *encryptLayout = new QHBoxLayout;
+  //  encryptLayout->addWidget(encryptLine);
+  //  encryptLayout->addWidget(encryptButton);
+  //  QHBoxLayout *decryptLayout = new QHBoxLayout;
+  //  decryptLayout->addWidget(decryptLine);
+  //  decryptLayout->addWidget(decryptButton);
+  //  QVBoxLayout *crypto = new QVBoxLayout;
+  //  crypto->addLayout(encryptLayout);
+  //  crypto->addLayout(decryptLayout);
+  //  main->addLayout(crypto);
+  //  passwordLine->setText("12345");
   //*********************************
 
   setLayout(main);
@@ -149,14 +149,14 @@ AkkWindow::AkkWindow(QWidget *parent) : QDialog(parent) {
 }
 
 //*************try AES*************
-void AkkWindow::encryptClicked() {
-  key = passwordLine->text();
-  encryptLine->setText(cod->Encoding(encryptLine->text(), key));
-}
-void AkkWindow::decryptClicked() {
-  key = passwordLine->text();
-  decryptLine->setText(cod->Decoding(decryptLine->text(), key));
-}
+// void AkkWindow::encryptClicked() {
+//  key = passwordLine->text();
+//  encryptLine->setText(cod->Encoding(encryptLine->text(), key));
+//}
+// void AkkWindow::decryptClicked() {
+//  key = passwordLine->text();
+//  decryptLine->setText(cod->Decoding(decryptLine->text(), key));
+//}
 //*********************************
 
 AkkWindow::~AkkWindow() {
@@ -199,6 +199,7 @@ void AkkWindow::SearchTextChanged(QString str) {
 
 void AkkWindow::LoadClicked() {
   try {
+    bool er = true;
 
     key = passwordLine->text();
 
@@ -215,11 +216,12 @@ void AkkWindow::LoadClicked() {
       throw 1;
     }
 
+    er = false;
     QString pass = passwordLine->text();
 
-    // Decoding******************
-    //    str = cod->Decoding(str, key);
-    //**************************
+    // Decoding
+    if (!str.isEmpty())
+      str = cod->Decoding(str, key);
 
     str.replace(QRegExp("[\n\r]"), "");
     QStringList strList = str.split("<elem>");
@@ -231,6 +233,7 @@ void AkkWindow::LoadClicked() {
 
       QStringList akkValues = elem.split("|");
       Account akk(akkValues[0], akkValues[1], akkValues[2]);
+
       akks.append(akk);
     }
     refreshResult();
@@ -318,9 +321,9 @@ void AkkWindow::successSave(QString f) {
     }
     QTextStream writeStream(&file);
 
-    // Encoding************************
-    //    str = cod->Encoding(str, key);
-    //********************************
+    // Encoding
+    if (!str.isEmpty())
+      str = cod->Encoding(str, key);
 
     writeStream << str;
     file.close();
@@ -344,7 +347,7 @@ void Error(int x) {
     msgBox.setText("Save Error");
     break;
   case 3:
-    msgBox.setText("");
+    msgBox.setText("Bad File");
     break;
   }
   msgBox.exec();

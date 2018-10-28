@@ -74,8 +74,8 @@ private slots:
   void saveAsClicked();
   void addToAkks();
   //*******try AES*************
-  void encryptClicked();
-  void decryptClicked();
+  //  void encryptClicked();
+  //  void decryptClicked();
   //***************************
 };
 
