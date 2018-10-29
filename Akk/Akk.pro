@@ -41,7 +41,9 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES += \
-    needFile
+    needFile \
+    myapp.rc \
+    akks.ico
 
 win32: LIBS += -LC:/OpenSSL-Win32/lib/ -lopenssl
 
