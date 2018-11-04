@@ -53,6 +53,7 @@ private:
 
   bool addPushed;
   bool editPushed;
+  bool isSaved;
 
   void refreshResult();
 

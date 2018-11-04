@@ -74,8 +74,10 @@ void dialogAddEdit::setLines(QString res, QString akk, QString pass,
   ok->setText(str);
 }
 
-Account dialogAddEdit::getAkk() {
+Account dialogAddEdit::getAkk(bool editPushed) {
   Account akk(resourceLine->text(), loginLine->text(), passwordLine->text());
+  if (!editPushed)
+    resourceLine->setFocus();
   return akk;
 }
 void dialogAddEdit::noClicked() { this->close(); }

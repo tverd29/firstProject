@@ -15,7 +15,7 @@ public:
   dialogAddEdit(QDialog *p);
   void setLines(QString res, QString akk, QString pass, QString str);
   QPushButton *ok;
-  Account getAkk();
+  Account getAkk(bool editPushed);
 
 private:
   QObject *parent;

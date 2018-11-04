@@ -1,1 +1,4 @@
+#include <windwos.h>
+
+CREATEPROCESS_MANIFEST_RESOURCE_ID RT_MANIFEST "yourappname.exe.manifest"
 IDI_ICON1 ICON "akks.ico"

@@ -41,17 +41,18 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES += \
-    needFile \
     myapp.rc \
-    akks.ico
+    akks.ico \
+    akks \
+    yourappname.exe.manifest
 
-win32: LIBS += -LC:/OpenSSL-Win32/lib/ -lopenssl
+#win32: LIBS += -LC:/OpenSSL-Win32/lib/ -lopenssl
 
-INCLUDEPATH += C:/OpenSSL-Win32/include
-DEPENDPATH += C:/OpenSSL-Win32/include
+#INCLUDEPATH += C:/OpenSSL-Win32/include
+#DEPENDPATH += C:/OpenSSL-Win32/include
 
 
-win32: LIBS += -LC:/OpenSSL-Win32/lib/VC/static/ -llibcrypto32MD
+#win32: LIBS += -LC:/OpenSSL-Win32/lib/VC/static/ -llibcrypto32MD
 
-INCLUDEPATH += C:/OpenSSL-Win32/lib/VC/static
-DEPENDPATH += C:/OpenSSL-Win32/lib/VC/static
+#INCLUDEPATH += C:/OpenSSL-Win32/lib/VC/static
+#DEPENDPATH += C:/OpenSSL-Win32/lib/VC/static

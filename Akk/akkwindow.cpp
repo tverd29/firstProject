@@ -15,6 +15,7 @@ AkkWindow::AkkWindow(QWidget *parent) : QDialog(parent) {
   dialog = new dialogAddEdit(this);
   connect(dialog->ok, SIGNAL(clicked()), this, SLOT(addToAkks()));
 
+  isSaved = false;
   addPushed = false;
   editPushed = false;
 
@@ -161,11 +162,13 @@ AkkWindow::AkkWindow(QWidget *parent) : QDialog(parent) {
 
 AkkWindow::~AkkWindow() {
   if (!openedFile.isEmpty() && !passwordLine->text().isEmpty()) {
-    QMessageBox::StandardButton msg;
-    msg = QMessageBox::question(this, "Saving", "Do you want to save?",
-                                QMessageBox::Yes | QMessageBox::No);
-    if (msg == QMessageBox::Yes) {
-      successSave(openedFile);
+    if (!isSaved) {
+      QMessageBox::StandardButton msg;
+      msg = QMessageBox::question(this, "Saving", "Do you want to save?",
+                                  QMessageBox::Yes | QMessageBox::No);
+      if (msg == QMessageBox::Yes) {
+        successSave(openedFile);
+      }
     }
   }
 }
@@ -240,6 +243,9 @@ void AkkWindow::LoadClicked() {
     addButton->setEnabled(true);
     saveButton->setEnabled(true);
     saveAsButton->setEnabled(true);
+
+    isSaved = true;
+
   } catch (int x) {
     Error(x);
   }
@@ -292,10 +298,13 @@ void AkkWindow::delClicked() {
       delButton->setEnabled(false);
       editButton->setEnabled(false);
     }
+
+    isSaved = false;
   }
 }
 
 void AkkWindow::saveClicked() { successSave(openedFile); }
+
 void AkkWindow::saveAsClicked() {
   QString f = QFileDialog::getSaveFileName();
   if (!f.isEmpty()) {
@@ -331,6 +340,8 @@ void AkkWindow::successSave(QString f) {
     msg.setWindowTitle("Saving");
     msg.setText("Saving complete");
     msg.exec();
+
+    isSaved = true;
   } else {
     throw 2;
   }
@@ -354,7 +365,7 @@ void Error(int x) {
 }
 
 void AkkWindow::addToAkks() {
-  Account akk = dialog->getAkk();
+  Account akk = dialog->getAkk(editPushed);
   if (addPushed) {
     akks.append(akk);
   }
@@ -365,4 +376,5 @@ void AkkWindow::addToAkks() {
   dialog->close();
   addPushed = false;
   editPushed = false;
+  isSaved = false;
 }
