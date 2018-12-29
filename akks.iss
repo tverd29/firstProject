@@ -26,7 +26,7 @@ AllowNoIcons=yes
 OutputDir=V:\Git\builds\installers\Akks_1.0
 OutputBaseFilename=Akks setup
 PrivilegesRequired = admin
-SetupIconFile=V:\Git\builds\build-Akk-Desktop_Qt_5_9_5_MSVC2015_32bit-Release\release\akks.ico
+SetupIconFile=V:\Git\First\3rdParty\akks.ico
 Compression=lzma
 SolidCompression=yes
 
@@ -40,19 +40,19 @@ Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescrip
 
 [Files]
 Source: "V:\Git\builds\build-Akk-Desktop_Qt_5_9_5_MSVC2015_32bit-Release\release\Akk.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "V:\Git\builds\build-Akk-Desktop_Qt_5_9_5_MSVC2015_32bit-Release\release\akks.ico"; DestDir: "{app}"; Flags: ignoreversion
-Source: "V:\Git\builds\build-Akk-Desktop_Qt_5_9_5_MSVC2015_32bit-Release\release\D3Dcompiler_47.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "V:\Git\builds\build-Akk-Desktop_Qt_5_9_5_MSVC2015_32bit-Release\release\libEGL.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "V:\Git\builds\build-Akk-Desktop_Qt_5_9_5_MSVC2015_32bit-Release\release\libGLESV2.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "V:\Git\builds\build-Akk-Desktop_Qt_5_9_5_MSVC2015_32bit-Release\release\opengl32sw.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "V:\Git\builds\build-Akk-Desktop_Qt_5_9_5_MSVC2015_32bit-Release\release\Qt5Core.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "V:\Git\builds\build-Akk-Desktop_Qt_5_9_5_MSVC2015_32bit-Release\release\Qt5Gui.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "V:\Git\builds\build-Akk-Desktop_Qt_5_9_5_MSVC2015_32bit-Release\release\Qt5Svg.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "V:\Git\builds\build-Akk-Desktop_Qt_5_9_5_MSVC2015_32bit-Release\release\Qt5Widgets.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "V:\Git\builds\build-Akk-Desktop_Qt_5_9_5_MSVC2015_32bit-Release\release\iconengines\*"; DestDir: "{app}\iconengines"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "V:\Git\builds\build-Akk-Desktop_Qt_5_9_5_MSVC2015_32bit-Release\release\imageformats\*"; DestDir: "{app}\imageformats"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "V:\Git\builds\build-Akk-Desktop_Qt_5_9_5_MSVC2015_32bit-Release\release\platforms\*"; DestDir: "{app}\platforms"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "V:\Git\builds\build-Akk-Desktop_Qt_5_9_5_MSVC2015_32bit-Release\release\translations\*"; DestDir: "{app}\translations"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "V:\Git\First\3rdParty\akks.ico"; DestDir: "{app}"; Flags: ignoreversion
+Source: "V:\Git\First\3rdParty\qt_libs\D3Dcompiler_47.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "V:\Git\First\3rdParty\qt_libs\libEGL.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "V:\Git\First\3rdParty\qt_libs\libGLESV2.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "V:\Git\First\3rdParty\qt_libs\opengl32sw.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "V:\Git\First\3rdParty\qt_libs\Qt5Core.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "V:\Git\First\3rdParty\qt_libs\Qt5Gui.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "V:\Git\First\3rdParty\qt_libs\Qt5Svg.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "V:\Git\First\3rdParty\qt_libs\Qt5Widgets.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "V:\Git\First\3rdParty\qt_libs\iconengines\*"; DestDir: "{app}\iconengines"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "V:\Git\First\3rdParty\qt_libs\imageformats\*"; DestDir: "{app}\imageformats"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "V:\Git\First\3rdParty\qt_libs\platforms\*"; DestDir: "{app}\platforms"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "V:\Git\First\3rdParty\qt_libs\translations\*"; DestDir: "{app}\translations"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
