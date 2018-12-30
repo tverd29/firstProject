@@ -1,4 +1,5 @@
 #include "akkwindow.h"
+
 #include <QApplication>
 #include <QFile>
 #include <QFileDialog>
@@ -12,7 +13,7 @@ void Error(int x);
 AkkWindow::AkkWindow(QWidget * parent) : QDialog(parent) {
     cod = new Coder();
 
-    dialog = new dialogAddEdit(this);
+    dialog = new DialogAddEdit(this);
     connect(dialog->ok, SIGNAL(clicked()), this, SLOT(addToAkks()));
 
     isSaved    = false;

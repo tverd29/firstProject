@@ -1,4 +1,5 @@
 #include <QApplication>
+
 #include "akkwindow.h"
 
 int main(int argc, char * argv[]) {

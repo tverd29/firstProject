@@ -1,6 +1,6 @@
 #include "dialogaddedit.h"
 
-dialogAddEdit::dialogAddEdit(QDialog * p) {
+DialogAddEdit::DialogAddEdit(QDialog * p) {
     parent = p;
 
     resourceLabel = new QLabel;
@@ -53,31 +53,31 @@ dialogAddEdit::dialogAddEdit(QDialog * p) {
     setLayout(main);
 }
 
-void dialogAddEdit::resourceChanged(QString str) {
+void DialogAddEdit::resourceChanged(QString str) {
     ok->setEnabled(!str.isEmpty() && !loginLine->text().isEmpty() &&
                    !passwordLine->text().isEmpty());
 }
-void dialogAddEdit::loginChanged(QString str) {
+void DialogAddEdit::loginChanged(QString str) {
     ok->setEnabled(!resourceLine->text().isEmpty() && !str.isEmpty() &&
                    !passwordLine->text().isEmpty());
 }
-void dialogAddEdit::passwordChanged(QString str) {
+void DialogAddEdit::passwordChanged(QString str) {
     ok->setEnabled(!resourceLine->text().isEmpty() && !loginLine->text().isEmpty() &&
                    !str.isEmpty());
 }
-void dialogAddEdit::setLines(QString res, QString akk, QString pass, QString str) {
+void DialogAddEdit::setLines(QString res, QString akk, QString pass, QString str) {
     resourceLine->setText(res);
     loginLine->setText(akk);
     passwordLine->setText(pass);
     ok->setText(str);
 }
 
-Account dialogAddEdit::getAkk(bool editPushed) {
+Account DialogAddEdit::getAkk(bool editPushed) {
     Account akk(resourceLine->text(), loginLine->text(), passwordLine->text());
     if (!editPushed)
         resourceLine->setFocus();
     return akk;
 }
-void dialogAddEdit::noClicked() {
+void DialogAddEdit::noClicked() {
     this->close();
 }

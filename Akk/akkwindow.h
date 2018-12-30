@@ -9,6 +9,7 @@
 #include <QMainWindow>
 #include <QPushButton>
 #include <QVBoxLayout>
+
 #include "account.h"
 #include "coder.h"
 #include "dialogaddedit.h"
@@ -26,7 +27,7 @@ class AkkWindow : public QDialog {
 
     QList<Account> akks;
 
-    dialogAddEdit * dialog;
+    DialogAddEdit * dialog;
 
     QLineEdit * passwordLine;
     QString openedFile;

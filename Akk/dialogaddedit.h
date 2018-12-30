@@ -6,12 +6,13 @@
 #include <QLineEdit>
 #include <QPushButton>
 #include <QVBoxLayout>
+
 #include "account.h"
 
-class dialogAddEdit : public QDialog {
+class DialogAddEdit : public QDialog {
     Q_OBJECT
   public:
-    dialogAddEdit(QDialog * p);
+    DialogAddEdit(QDialog * p);
     void setLines(QString res, QString akk, QString pass, QString str);
     QPushButton * ok;
     Account getAkk(bool editPushed);
