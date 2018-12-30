@@ -206,6 +206,7 @@ void AkkWindow::LoadClicked() {
         key = passwordLine->text();
 
         akks.clear();
+        refreshResult();
         openedFile = QFileDialog::getOpenFileName();
         QFile file(openedFile);
         QByteArray data;
@@ -234,6 +235,9 @@ void AkkWindow::LoadClicked() {
             }
 
             QStringList akkValues = elem.split("|");
+            if (akkValues.count() != 3) {
+                throw 4;
+            }
             Account akk(akkValues[0], akkValues[1], akkValues[2]);
 
             akks.append(akk);
@@ -244,7 +248,6 @@ void AkkWindow::LoadClicked() {
         saveAsButton->setEnabled(true);
 
         isSaved = true;
-
     } catch (int x) {
         Error(x);
     }
@@ -360,6 +363,8 @@ void Error(int x) {
         case 3:
             msgBox.setText("Bad File");
             break;
+        case 4:
+            msgBox.setText("Incorrect password");
     }
     msgBox.exec();
 }
