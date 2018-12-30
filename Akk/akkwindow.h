@@ -18,7 +18,7 @@ class AkkWindow : public QDialog {
     Q_OBJECT
 
   public:
-    AkkWindow(QWidget * parent = 0);
+    AkkWindow(QWidget * parent = nullptr);
     ~AkkWindow();
 
   private:

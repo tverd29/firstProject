@@ -18,8 +18,6 @@ class DialogAddEdit : public QDialog {
     Account getAkk(bool editPushed);
 
   private:
-    QObject * parent;
-
     QLabel * resourceLabel;
     QLineEdit * resourceLine;
     QLabel * loginLabel;
