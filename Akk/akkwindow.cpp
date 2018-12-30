@@ -327,6 +327,7 @@ void AkkWindow::refreshResult() {
     for (auto & elem : akks) {
         result->addItem(elem.getResource());
     }
+    //    result->sortItems(Qt::AscendingOrder);
 }
 
 void AkkWindow::successSave(QString f) {
