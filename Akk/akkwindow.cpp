@@ -14,7 +14,7 @@ AkkWindow::AkkWindow(QWidget * parent) : QDialog(parent) {
     cod = new Coder();
 
     dialog = new DialogAddEdit(this);
-    connect(dialog->ok, SIGNAL(clicked()), this, SLOT(addToAkks()));
+    connect(this->dialog->ok, &QPushButton::clicked, this, &AkkWindow::addToAkks);
 
     isSaved    = false;
     addPushed  = false;
@@ -23,12 +23,11 @@ AkkWindow::AkkWindow(QWidget * parent) : QDialog(parent) {
     passwordLine = new QLineEdit;
     passwordLine->setPlaceholderText("Password...");
     passwordLine->setEchoMode(QLineEdit::Password);
-    connect(passwordLine, SIGNAL(textChanged(const QString &)), this,
-            SLOT(PassTextChanged(const QString &)));
+    connect(this->passwordLine, &QLineEdit::textChanged, this, &AkkWindow::PassTextChanged);
 
     loadButton = new QPushButton("load");
     loadButton->setEnabled(false);
-    connect(loadButton, SIGNAL(clicked()), this, SLOT(LoadClicked()));
+    connect(this->loadButton, &QPushButton::clicked, this, &AkkWindow::LoadClicked);
 
     int height = 20;
     int width  = 60;
@@ -59,31 +58,30 @@ AkkWindow::AkkWindow(QWidget * parent) : QDialog(parent) {
 
     searchLine = new QLineEdit;
     searchLine->setPlaceholderText("Search...");
-    connect(searchLine, SIGNAL(textChanged(const QString &)), this,
-            SLOT(SearchTextChanged(const QString &)));
+    connect(this->searchLine, &QLineEdit::textChanged, this, &AkkWindow::SearchTextChanged);
 
     result = new QListWidget;
-    connect(result, SIGNAL(currentRowChanged(int)), this, SLOT(currentRow(int)));
+    connect(this->result, &QListWidget::currentRowChanged, this, &AkkWindow::currentRow);
 
     addButton = new QPushButton("Add");
     addButton->setEnabled(false);
-    connect(addButton, SIGNAL(clicked()), this, SLOT(addClicked()));
+    connect(this->addButton, &QPushButton::clicked, this, &AkkWindow::addClicked);
 
     editButton = new QPushButton("Edit");
-    connect(editButton, SIGNAL(clicked()), this, SLOT(editClicked()));
+    connect(this->editButton, &QPushButton::clicked, this, &AkkWindow::editClicked);
     editButton->setEnabled(false);
 
     delButton = new QPushButton("Delete");
-    connect(delButton, SIGNAL(clicked()), this, SLOT(delClicked()));
+    connect(this->delButton, &QPushButton::clicked, this, &AkkWindow::delClicked);
     delButton->setEnabled(false);
 
     saveButton = new QPushButton("save");
     saveButton->setEnabled(false);
-    connect(saveButton, SIGNAL(clicked()), this, SLOT(saveClicked()));
+    connect(this->saveButton, &QPushButton::clicked, this, &AkkWindow::saveClicked);
 
     saveAsButton = new QPushButton("save as...");
     saveAsButton->setEnabled(false);
-    connect(saveAsButton, SIGNAL(clicked()), this, SLOT(saveAsClicked()));
+    connect(this->saveAsButton, &QPushButton::clicked, this, &AkkWindow::saveAsClicked);
 
     QHBoxLayout * passLayout = new QHBoxLayout;
     passLayout->addWidget(passwordLine);

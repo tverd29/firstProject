@@ -11,22 +11,18 @@ DialogAddEdit::DialogAddEdit(QDialog * p) {
     passwordLabel->setText("Password:");
 
     resourceLine = new QLineEdit;
-    connect(resourceLine, SIGNAL(textChanged(const QString &)), this,
-            SLOT(resourceChanged(const QString &)));
+    connect(this->resourceLine, &QLineEdit::textChanged, this, &DialogAddEdit::resourceLine);
 
     loginLine = new QLineEdit;
-    connect(loginLine, SIGNAL(textChanged(const QString &)), this,
-            SLOT(loginChanged(const QString &)));
+    connect(this->loginLine, &QLineEdit::textChanged, this, &DialogAddEdit::loginChanged);
 
     passwordLine = new QLineEdit;
-    connect(passwordLine, SIGNAL(textChanged(const QString &)), this,
-            SLOT(passwordChanged(const QString &)));
-
+    connect(this->passwordLine, &QLineEdit::textChanged, this, &DialogAddEdit::passwordChanged);
     ok = new QPushButton();
     ok->setEnabled(false);
 
     no = new QPushButton("Cancel");
-    connect(no, SIGNAL(clicked()), this, SLOT(noClicked()));
+    connect(this->no, &QPushButton::clicked, this, &DialogAddEdit::noClicked);
 
     QVBoxLayout * left = new QVBoxLayout;
     left->addWidget(resourceLabel);
