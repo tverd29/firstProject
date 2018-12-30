@@ -30,8 +30,10 @@ AkkWindow::AkkWindow(QWidget * parent) : QDialog(parent) {
     connect(loadButton, SIGNAL(clicked()), this, SLOT(LoadClicked()));
 
     int height = 20;
+    int width  = 60;
     resLabel   = new QLabel;
     resLabel->setMinimumHeight(height);
+    resLabel->setMaximumWidth(width);
     resLabel->setText("Resource:");
     resValLabel = new QLabel;
     resValLabel->setMinimumHeight(height);
@@ -39,6 +41,7 @@ AkkWindow::AkkWindow(QWidget * parent) : QDialog(parent) {
                                          Qt::TextSelectableByMouse);
     logLabel = new QLabel;
     logLabel->setMinimumHeight(height);
+    logLabel->setMaximumWidth(width);
     logLabel->setText("Account:");
     logValLabel = new QLabel;
     logValLabel->setMinimumHeight(height);
@@ -46,6 +49,7 @@ AkkWindow::AkkWindow(QWidget * parent) : QDialog(parent) {
                                          Qt::TextSelectableByMouse);
     pasLabel = new QLabel;
     pasLabel->setMinimumHeight(height);
+    pasLabel->setMaximumWidth(width);
     pasLabel->setText("Password:");
     pasValLabel = new QLabel;
     pasValLabel->setMinimumHeight(height);
@@ -246,6 +250,8 @@ void AkkWindow::LoadClicked() {
         addButton->setEnabled(true);
         saveButton->setEnabled(true);
         saveAsButton->setEnabled(true);
+
+        searchLine->setFocus();
 
         isSaved = true;
     } catch (int x) {
