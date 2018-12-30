@@ -11,7 +11,7 @@ DialogAddEdit::DialogAddEdit(QDialog * p) {
     passwordLabel->setText("Password:");
 
     resourceLine = new QLineEdit;
-    connect(this->resourceLine, &QLineEdit::textChanged, this, &DialogAddEdit::resourceLine);
+    connect(this->resourceLine, &QLineEdit::textChanged, this, &DialogAddEdit::resourceChanged);
 
     loginLine = new QLineEdit;
     connect(this->loginLine, &QLineEdit::textChanged, this, &DialogAddEdit::loginChanged);
