@@ -61,7 +61,7 @@ AkkWindow::AkkWindow(QWidget * parent) : QDialog(parent) {
     connect(this->searchLine, &QLineEdit::textChanged, this, &AkkWindow::SearchTextChanged);
 
     result = new QListWidget;
-    connect(this->result, &QListWidget::currentRowChanged, this, &AkkWindow::currentRow);
+    connect(this->result, &QListWidget::currentRowChanged, this, &AkkWindow::currentItemValues);
 
     addButton = new QPushButton("Add");
     addButton->setEnabled(false);
@@ -258,7 +258,7 @@ void AkkWindow::LoadClicked() {
     }
 }
 
-void AkkWindow::currentRow(int curRow) {
+void AkkWindow::currentItemValues(int curRow) {
     if (curRow >= 0) {
         resValLabel->setText(akks[curRow].getResource());
         logValLabel->setText(akks[curRow].getName());

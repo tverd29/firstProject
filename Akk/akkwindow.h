@@ -64,7 +64,7 @@ class AkkWindow : public QDialog {
     QPushButton * decryptButton;
     //***************************
   private slots:
-    void currentRow(int curRow);
+    void currentItemValues(int curRow);
     void PassTextChanged(QString str);
     void SearchTextChanged(QString str);
     void LoadClicked();
