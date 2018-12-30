@@ -185,7 +185,7 @@ void AkkWindow::SearchTextChanged(QString str) {
     if (!str.isEmpty()) {
         if (akks.count() > 0) {
             for (int i = 0; i < akks.count(); i++) {
-                if (akks[i].getResource().contains(str)) {
+                if (akks[i].getResource().toLower().contains(str.toLower())) {
                     result->item(i)->setHidden(false);
                 } else {
                     result->item(i)->setHidden(true);
