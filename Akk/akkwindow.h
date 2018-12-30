@@ -1,9 +1,5 @@
-#ifndef AKKWINDOW_H
-#define AKKWINDOW_H
+#pragma once
 
-#include "account.h"
-#include "coder.h"
-#include "dialogaddedit.h"
 #include <QDialog>
 #include <QFile>
 #include <QHBoxLayout>
@@ -13,71 +9,72 @@
 #include <QMainWindow>
 #include <QPushButton>
 #include <QVBoxLayout>
+#include "account.h"
+#include "coder.h"
+#include "dialogaddedit.h"
 
 class AkkWindow : public QDialog {
-  Q_OBJECT
+    Q_OBJECT
 
-public:
-  AkkWindow(QWidget *parent = 0);
-  ~AkkWindow();
+  public:
+    AkkWindow(QWidget * parent = 0);
+    ~AkkWindow();
 
-private:
-  QString key;
-  Coder *cod;
+  private:
+    QString key;
+    Coder * cod;
 
-  QList<Account> akks;
+    QList<Account> akks;
 
-  dialogAddEdit *dialog;
+    dialogAddEdit * dialog;
 
-  QLineEdit *passwordLine;
-  QString openedFile;
-  QPushButton *loadButton;
+    QLineEdit * passwordLine;
+    QString openedFile;
+    QPushButton * loadButton;
 
-  QLineEdit *searchLine;
+    QLineEdit * searchLine;
 
-  QLabel *resLabel;
-  QLabel *logLabel;
-  QLabel *pasLabel;
-  QLabel *resValLabel;
-  QLabel *logValLabel;
-  QLabel *pasValLabel;
+    QLabel * resLabel;
+    QLabel * logLabel;
+    QLabel * pasLabel;
+    QLabel * resValLabel;
+    QLabel * logValLabel;
+    QLabel * pasValLabel;
 
-  QListWidget *result;
-  QPushButton *addButton;
-  QPushButton *editButton;
-  QPushButton *delButton;
-  QPushButton *saveButton;
-  QPushButton *saveAsButton;
+    QListWidget * result;
+    QPushButton * addButton;
+    QPushButton * editButton;
+    QPushButton * delButton;
+    QPushButton * saveButton;
+    QPushButton * saveAsButton;
 
-  void successSave(QString file);
+    void successSave(QString file);
 
-  bool addPushed;
-  bool editPushed;
-  bool isSaved;
+    bool addPushed;
+    bool editPushed;
+    bool isSaved;
 
-  void refreshResult();
+    void refreshResult();
 
-  //*******try AES*************
-  QLineEdit *encryptLine;
-  QLineEdit *decryptLine;
-  QPushButton *encryptButton;
-  QPushButton *decryptButton;
-  //***************************
-private slots:
-  void currentRow(int curRow);
-  void PassTextChanged(QString str);
-  void SearchTextChanged(QString str);
-  void LoadClicked();
-  void addClicked();
-  void editClicked();
-  void delClicked();
-  void saveClicked();
-  void saveAsClicked();
-  void addToAkks();
-  //*******try AES*************
-  //  void encryptClicked();
-  //  void decryptClicked();
-  //***************************
+    //*******try AES*************
+    QLineEdit * encryptLine;
+    QLineEdit * decryptLine;
+    QPushButton * encryptButton;
+    QPushButton * decryptButton;
+    //***************************
+  private slots:
+    void currentRow(int curRow);
+    void PassTextChanged(QString str);
+    void SearchTextChanged(QString str);
+    void LoadClicked();
+    void addClicked();
+    void editClicked();
+    void delClicked();
+    void saveClicked();
+    void saveAsClicked();
+    void addToAkks();
+    //*******try AES*************
+    //  void encryptClicked();
+    //  void decryptClicked();
+    //***************************
 };
-
-#endif // AKKWINDOW_H

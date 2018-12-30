@@ -1,5 +1,4 @@
-#ifndef CODER_H
-#define CODER_H
+#pragma once
 
 #include <QCryptographicHash>
 #include <QString>
@@ -12,12 +11,10 @@
 #include <string>
 
 class Coder {
-public:
-  Coder();
-  QString Encoding(QString str, QString k);
-  QString Decoding(QString str, QString k);
+  public:
+    Coder();
+    QString Encoding(QString str, QString k);
+    QString Decoding(QString str, QString k);
 
-private:
+  private:
 };
-
-#endif // CODER_H
