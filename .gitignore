@@ -19,8 +19,10 @@
 # Inno Setup file
 !*.iss
 
-# Ico file
+# Ico, png, psd file
 !*.ico
+!*.png
+!*.psd
 
 # C/C++ source files
 !*.c
