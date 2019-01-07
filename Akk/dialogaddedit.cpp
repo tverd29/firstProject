@@ -66,6 +66,10 @@ void DialogAddEdit::setLines(QString res, QString akk, QString pass, QString str
     ok->setText(str);
 }
 
+void DialogAddEdit::setFocusOnResource() {
+    this->resourceLine->setFocus();
+}
+
 Account DialogAddEdit::getAkk(bool editPushed) {
     Account akk(resourceLine->text(), loginLine->text(), passwordLine->text());
     if (!editPushed)

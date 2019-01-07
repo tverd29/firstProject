@@ -62,6 +62,7 @@ AkkWindow::AkkWindow(QWidget * parent) : QDialog(parent) {
 
     result = new QListWidget;
     connect(this->result, &QListWidget::currentRowChanged, this, &AkkWindow::currentItemValues);
+    connect(this->result, &QListWidget::doubleClicked, this, &AkkWindow::listDoubleClicked);
 
     addButton = new QPushButton("Add");
     addButton->setEnabled(false);
@@ -268,10 +269,17 @@ void AkkWindow::currentItemValues(int curRow) {
     }
 }
 
+void AkkWindow::listDoubleClicked(const QModelIndex & index) {
+    if (index.row() > -1) {
+        editClicked();
+    }
+}
+
 void AkkWindow::addClicked() {
     addPushed = true;
     dialog->setWindowTitle("Add");
     dialog->setLines("", "", "", "Add");
+    dialog->setFocusOnResource();
     dialog->exec();
 
     refreshResult();
@@ -284,6 +292,7 @@ void AkkWindow::editClicked() {
     dialog->setLines(akks[curItem].getResource(), akks[curItem].getName(),
                      akks[curItem].getPassword(), "Edit");
     dialog->setWindowTitle("Edit");
+    dialog->setFocusOnResource();
     dialog->exec();
 
     refreshResult();

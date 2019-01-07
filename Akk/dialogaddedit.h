@@ -14,6 +14,7 @@ class DialogAddEdit : public QDialog {
   public:
     DialogAddEdit(QDialog * p);
     void setLines(QString res, QString akk, QString pass, QString str);
+    void setFocusOnResource();
     QPushButton * ok;
     Account getAkk(bool editPushed);
 

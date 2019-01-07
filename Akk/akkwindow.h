@@ -65,6 +65,7 @@ class AkkWindow : public QDialog {
     //***************************
   private slots:
     void currentItemValues(int curRow);
+    void listDoubleClicked(const QModelIndex & index);
     void PassTextChanged(QString str);
     void SearchTextChanged(QString str);
     void LoadClicked();
