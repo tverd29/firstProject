@@ -211,7 +211,8 @@ void AkkWindow::LoadClicked() {
 
         akks.clear();
         refreshResult();
-        openedFile = QFileDialog::getOpenFileName();
+        openedFile =
+            QFileDialog::getOpenFileName(this, tr("Load file"), "", tr("Recommended (*.txt)"));
         QFile file(openedFile);
         QByteArray data;
         QString str;
@@ -324,7 +325,7 @@ void AkkWindow::saveClicked() {
 }
 
 void AkkWindow::saveAsClicked() {
-    QString f = QFileDialog::getSaveFileName();
+    QString f = QFileDialog::getSaveFileName(this, tr("Save file"), "", tr("Recommended (*.txt)"));
     if (!f.isEmpty()) {
         successSave(f);
     }
