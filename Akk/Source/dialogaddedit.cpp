@@ -1,4 +1,4 @@
-#include "dialogaddedit.h"
+#include "Include\dialogaddedit.h"
 
 DialogAddEdit::DialogAddEdit(QDialog * p) : QDialog(p) {
     resourceLabel = new QLabel;

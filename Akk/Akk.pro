@@ -23,17 +23,23 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
-        main.cpp \
-        akkwindow.cpp \
-    account.cpp \
-    dialogaddedit.cpp \
-    coder.cpp
+    main.cpp \
+    Source\akkwindow.cpp \
+    Source\account.cpp \
+    Source\dialogaddedit.cpp \
+    Source\coder.cpp \
+    Source/AkksModel/AccountModel.cpp \
+    Source/AkksModel/AccountStorage.cpp \
+    Source/AkksModel/AccountView.cpp
 
 HEADERS += \
-        akkwindow.h \
-    account.h \
-    dialogaddedit.h \
-    coder.h
+    Include\akkwindow.h \
+    Include\account.h \
+    Include\dialogaddedit.h \
+    Include\coder.h \
+    Include/AkksModel/AccountModel.h \
+    Include/AkksModel/AccountStorage.h \
+    Include/AkksModel/AccountView.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

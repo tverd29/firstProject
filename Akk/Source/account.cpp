@@ -1,4 +1,4 @@
-#include "account.h"
+#include "Include/account.h"
 
 Account::Account(const QString & myResource, const QString & myName, const QString & myPassword) {
     resource = myResource;

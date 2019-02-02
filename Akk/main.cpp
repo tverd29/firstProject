@@ -1,6 +1,6 @@
 #include <QApplication>
 
-#include "akkwindow.h"
+#include "Include\akkwindow.h"
 
 int main(int argc, char * argv[]) {
     QApplication a(argc, argv);
