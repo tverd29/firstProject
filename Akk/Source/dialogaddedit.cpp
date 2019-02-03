@@ -70,12 +70,12 @@ void DialogAddEdit::setFocusOnResource() {
     this->resourceLine->setFocus();
 }
 
-Account DialogAddEdit::getAkk(bool editPushed) {
-    Account akk(resourceLine->text(), loginLine->text(), passwordLine->text());
-    if (!editPushed)
-        resourceLine->setFocus();
-    return akk;
-}
+// Account DialogAddEdit::getAkk(bool editPushed) {
+//    Account akk(resourceLine->text(), loginLine->text(), passwordLine->text());
+//    if (!editPushed)
+//        resourceLine->setFocus();
+//    return akk;
+//}
 void DialogAddEdit::noClicked() {
     this->close();
 }

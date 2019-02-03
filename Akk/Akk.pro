@@ -25,19 +25,20 @@ CONFIG += c++11
 SOURCES += \
     main.cpp \
     Source\akkwindow.cpp \
-    Source\account.cpp \
     Source\dialogaddedit.cpp \
     Source\coder.cpp \
     Source/AkksModel/AccountModel.cpp \
-    Source/AkksModel/AccountView.cpp
+    Source/AkksModel/AccountView.cpp \
+    Source/AkksModel/AccountItem.cpp
 
 HEADERS += \
     Include\akkwindow.h \
-    Include\account.h \
     Include\dialogaddedit.h \
     Include\coder.h \
     Include/AkksModel/AccountModel.h \
-    Include/AkksModel/AccountView.h
+    Include/AkksModel/AccountView.h \
+    Include/structs.h \
+    Include/AkksModel/AccountItem.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

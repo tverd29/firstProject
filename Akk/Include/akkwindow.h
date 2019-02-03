@@ -9,8 +9,10 @@
 #include <QMainWindow>
 #include <QPushButton>
 #include <QVBoxLayout>
+#include <memory>
 
-#include "account.h"
+#include "Include/AkksModel/AccountModel.h"
+#include "Include/AkksModel/AccountView.h"
 #include "coder.h"
 #include "dialogaddedit.h"
 
@@ -25,7 +27,10 @@ class AkkWindow : public QDialog {
     QString key;
     Coder * cod;
 
-    QList<Account> akks;
+    std::shared_ptr<AccountModel> model;
+    std::shared_ptr<AccountView> view;
+
+    //    QList<Account> akks;
 
     DialogAddEdit * dialog;
 
@@ -35,14 +40,12 @@ class AkkWindow : public QDialog {
 
     QLineEdit * searchLine;
 
-    QLabel * resLabel;
-    QLabel * logLabel;
-    QLabel * pasLabel;
     QLabel * resValLabel;
     QLabel * logValLabel;
     QLabel * pasValLabel;
+    //    QListWidget * result;
+    //    QListView * result;
 
-    QListWidget * result;
     QPushButton * addButton;
     QPushButton * editButton;
     QPushButton * delButton;
@@ -58,10 +61,10 @@ class AkkWindow : public QDialog {
     void refreshResult();
 
     //*******try AES*************
-    QLineEdit * encryptLine;
-    QLineEdit * decryptLine;
-    QPushButton * encryptButton;
-    QPushButton * decryptButton;
+    //    QLineEdit * encryptLine;
+    //    QLineEdit * decryptLine;
+    //    QPushButton * encryptButton;
+    //    QPushButton * decryptButton;
     //***************************
   private slots:
     void currentItemValues(int curRow);
@@ -76,7 +79,7 @@ class AkkWindow : public QDialog {
     void saveAsClicked();
     void addToAkks();
     //*******try AES*************
-    //  void encryptClicked();
-    //  void decryptClicked();
+    //    void encryptClicked();
+    //    void decryptClicked();
     //***************************
 };

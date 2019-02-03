@@ -7,8 +7,6 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 
-#include "account.h"
-
 class DialogAddEdit : public QDialog {
     Q_OBJECT
   public:
@@ -16,7 +14,7 @@ class DialogAddEdit : public QDialog {
     void setLines(QString res, QString akk, QString pass, QString str);
     void setFocusOnResource();
     QPushButton * ok;
-    Account getAkk(bool editPushed);
+    //    Account getAkk(bool editPushed);
 
   private:
     QLabel * resourceLabel;
