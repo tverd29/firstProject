@@ -29,7 +29,6 @@ SOURCES += \
     Source\dialogaddedit.cpp \
     Source\coder.cpp \
     Source/AkksModel/AccountModel.cpp \
-    Source/AkksModel/AccountStorage.cpp \
     Source/AkksModel/AccountView.cpp
 
 HEADERS += \
@@ -38,7 +37,6 @@ HEADERS += \
     Include\dialogaddedit.h \
     Include\coder.h \
     Include/AkksModel/AccountModel.h \
-    Include/AkksModel/AccountStorage.h \
     Include/AkksModel/AccountView.h
 
 # Default rules for deployment.
