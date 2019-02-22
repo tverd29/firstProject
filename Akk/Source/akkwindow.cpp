@@ -17,6 +17,8 @@
 void Error(int x);
 
 AkkWindow::AkkWindow(QWidget * parent) : QDialog(parent) {
+    this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
+
     cod = new Coder();
 
     model = std::make_shared<AccountModel>(this);
@@ -301,31 +303,35 @@ void AkkWindow::saveAsClicked() {
 }
 
 void AkkWindow::successSave(const QString & f) {
-    QFile file(f);
-    key = passwordLine->text();
-    if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        QString str         = "";
-        QList<Account> akks = model->getAllAkks();
-        for (auto & elem : akks) {
-            str += elem.resource + "|" + elem.name + "|" + elem.password + "<elem>";
+    try {
+        QFile file(f);
+        key = passwordLine->text();
+        if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+            QString str         = "";
+            QList<Account> akks = model->getAllAkks();
+            for (auto & elem : akks) {
+                str += elem.resource + "|" + elem.name + "|" + elem.password + "<elem>";
+            }
+            QTextStream writeStream(&file);
+
+            // -----------Encoding-------------
+            if (!str.isEmpty())
+                str = cod->Encoding(str, key);
+            // --------------------------------
+
+            writeStream << str;
+            file.close();
+            QMessageBox msg;
+            msg.setWindowTitle("Saving");
+            msg.setText("Saving complete");
+            msg.exec();
+
+            isSaved = true;
+        } else {
+            throw 2;
         }
-        QTextStream writeStream(&file);
-
-        // -----------Encoding-------------
-        if (!str.isEmpty())
-            str = cod->Encoding(str, key);
-        // --------------------------------
-
-        writeStream << str;
-        file.close();
-        QMessageBox msg;
-        msg.setWindowTitle("Saving");
-        msg.setText("Saving complete");
-        msg.exec();
-
-        isSaved = true;
-    } else {
-        throw 2;
+    } catch (int ex) {
+        Error(ex);
     }
 }
 
