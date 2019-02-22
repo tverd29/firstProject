@@ -9,6 +9,9 @@
 #include <QTextCodec>
 #include <QTextStream>
 
+#include "Include/AkksModel/AccountModel.h"
+#include "Include/AkksModel/AccountProxy.h"
+#include "Include/AkksModel/AccountView.h"
 #include "Include/structs.h"
 
 void Error(int x);
@@ -18,7 +21,7 @@ AkkWindow::AkkWindow(QWidget * parent) : QDialog(parent) {
 
     model = std::make_shared<AccountModel>(this);
     view  = std::make_shared<AccountView>(this);
-    proxy = new QSortFilterProxyModel(this);
+    proxy = new AccountProxy(this);
     proxy->setSourceModel(model.get());
     proxy->setDynamicSortFilter(true);
     view->setModel(proxy);
@@ -72,7 +75,7 @@ AkkWindow::AkkWindow(QWidget * parent) : QDialog(parent) {
 
     searchLine = new QLineEdit;
     searchLine->setPlaceholderText("Search...");
-    connect(this->searchLine, &QLineEdit::textChanged, this, &AkkWindow::SearchTextChanged);
+    connect(this->searchLine, &QLineEdit::textChanged, this->proxy, &AccountProxy::setFilter);
 
     addButton = new QPushButton("Add");
     addButton->setEnabled(false);
@@ -157,16 +160,12 @@ AkkWindow::~AkkWindow() {
     }
 }
 
-void AkkWindow::PassTextChanged(QString str) {
+void AkkWindow::PassTextChanged(const QString & str) {
     loadButton->setEnabled(!str.isEmpty());
     if (!openedFile.isEmpty()) {
         saveButton->setEnabled(!str.isEmpty());
         saveAsButton->setEnabled(!str.isEmpty());
     }
-}
-
-void AkkWindow::SearchTextChanged(QString str) {
-    // TODO Filter
 }
 
 void AkkWindow::LoadClicked() {
@@ -232,11 +231,19 @@ void AkkWindow::LoadClicked() {
 }
 
 void AkkWindow::currentItemValues(const QString & res, const QString & acc, const QString & pas) {
-    resValLabel->setText(res);
-    logValLabel->setText(acc);
-    pasValLabel->setText(pas);
-    delButton->setEnabled(true);
-    editButton->setEnabled(true);
+    if (!res.isEmpty() && !acc.isEmpty() && !pas.isEmpty()) {
+        resValLabel->setText(res);
+        logValLabel->setText(acc);
+        pasValLabel->setText(pas);
+        delButton->setEnabled(true);
+        editButton->setEnabled(true);
+    } else {
+        resValLabel->setText(QString());
+        logValLabel->setText(QString());
+        pasValLabel->setText(QString());
+        delButton->setEnabled(false);
+        editButton->setEnabled(false);
+    }
 }
 
 void AkkWindow::addClicked() {
@@ -293,7 +300,7 @@ void AkkWindow::saveAsClicked() {
     }
 }
 
-void AkkWindow::successSave(QString f) {
+void AkkWindow::successSave(const QString & f) {
     QFile file(f);
     key = passwordLine->text();
     if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {

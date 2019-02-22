@@ -2,13 +2,11 @@
 
 #include "QVariant"
 
-AccountItem::AccountItem(const Account & akk, AccountItem * parentItem) {
-    m_parentItem = parentItem;
-    m_akk        = akk;
+AccountItem::AccountItem(const Account & akk, AccountItem * parentItem)
+    : m_akk(akk), m_parentItem(parentItem) {
 }
 
-AccountItem::AccountItem(const int type, AccountItem * parentItem) {
-    m_parentItem = parentItem;
+AccountItem::AccountItem(const int type, AccountItem * parentItem) : m_parentItem(parentItem) {
     Account akk;
     switch (type) {
         case AccountTypes::ROOT: {

@@ -30,6 +30,8 @@ void AccountView::selectionChanged(const QItemSelection & selected,
         if (index.isValid()) {
             changeSelected(index);
         }
+    } else {
+        emit currentAkkSelected(QString(), QString(), QString());
     }
     QListView::selectionChanged(selected, deselected);
 }

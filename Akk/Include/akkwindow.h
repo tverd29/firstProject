@@ -12,10 +12,12 @@
 #include <QVBoxLayout>
 #include <memory>
 
-#include "Include/AkksModel/AccountModel.h"
-#include "Include/AkksModel/AccountView.h"
 #include "coder.h"
 #include "dialogaddedit.h"
+
+class AccountModel;
+class AccountView;
+class AccountProxy;
 
 class AkkWindow : public QDialog {
     Q_OBJECT
@@ -30,7 +32,7 @@ class AkkWindow : public QDialog {
 
     std::shared_ptr<AccountModel> model;
     std::shared_ptr<AccountView> view;
-    QSortFilterProxyModel * proxy;
+    AccountProxy * proxy;
 
     DialogAddEdit * dialog;
 
@@ -50,7 +52,7 @@ class AkkWindow : public QDialog {
     QPushButton * saveButton;
     QPushButton * saveAsButton;
 
-    void successSave(QString file);
+    void successSave(const QString & file);
 
     bool isSaved;
 
@@ -59,8 +61,7 @@ class AkkWindow : public QDialog {
 
   private slots:
     void currentItemValues(const QString & res, const QString & acc, const QString & pas);
-    void PassTextChanged(QString str);
-    void SearchTextChanged(QString str);
+    void PassTextChanged(const QString & str);
     void LoadClicked();
     void addClicked();
     void addAccount(const QString & res, const QString & acc, const QString & pas);

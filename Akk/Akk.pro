@@ -29,7 +29,8 @@ SOURCES += \
     Source\coder.cpp \
     Source/AkksModel/AccountModel.cpp \
     Source/AkksModel/AccountView.cpp \
-    Source/AkksModel/AccountItem.cpp
+    Source/AkksModel/AccountItem.cpp \
+    Source/AkksModel/AccountProxy.cpp
 
 HEADERS += \
     Include\akkwindow.h \
@@ -38,7 +39,8 @@ HEADERS += \
     Include/AkksModel/AccountModel.h \
     Include/AkksModel/AccountView.h \
     Include/structs.h \
-    Include/AkksModel/AccountItem.h
+    Include/AkksModel/AccountItem.h \
+    Include/AkksModel/AccountProxy.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
