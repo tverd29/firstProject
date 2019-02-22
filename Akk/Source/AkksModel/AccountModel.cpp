@@ -9,26 +9,27 @@ AccountModel::~AccountModel() {
 }
 
 QVariant AccountModel::data(const QModelIndex & index, int role) const {
-    if (!index.isValid())
+    if (!index.isValid()) {
         return QVariant();
-
-    if (role != AccountRole::Display)
-        return QVariant();
-
+    }
     AccountItem * item = static_cast<AccountItem *>(index.internalPointer());
+    if (!item) {
+        return QVariant();
+    }
 
-    return item->data(index.column());
+    return item->data(index.column(), role);
 }
 
 Qt::ItemFlags AccountModel::flags(const QModelIndex & index) const {
-    if (!index.isValid())
-        return 0;
+    if (!index.isValid()) {
+        return nullptr;
+    }
 
     return QAbstractItemModel::flags(index);
 }
 
 QVariant AccountModel::headerData(int section, Qt::Orientation orientation, int role) const {
-    return QVariant();
+    return "Resource";
 }
 
 QModelIndex AccountModel::index(int row, int column, const QModelIndex & parent) const {
@@ -93,7 +94,35 @@ void AccountModel::reloadModel(QList<Account> & akks) {
     this->endResetModel();
 }
 
+void AccountModel::insert(Account & akk) {
+    this->beginInsertRows(QModelIndex(), rootItem->childCount(), rootItem->childCount());
+
+    AccountItem * item = new AccountItem(akk, rootItem);
+    rootItem->appendChild(item);
+
+    this->endInsertRows();
+}
+
+void AccountModel::remove(const QModelIndex & index) {
+    if (index.row() < this->rootItem->childCount()) {
+        this->beginRemoveRows(QModelIndex(), index.row(), index.row());
+
+        this->rootItem->removeChild(index.row());
+
+        this->endRemoveRows();
+    }
+}
+
+void AccountModel::edit(const QModelIndex & index, const QString & res, const QString & acc,
+                        const QString & pas) {
+    this->rootItem->editChild(index.row(), res, acc, pas);
+    emit dataChanged(index, index);
+}
+
+QList<Account> AccountModel::getAllAkks() {
+    return this->rootItem->getAllAkks();
+}
+
 void AccountModel::clearModel() {
     rootItem = new AccountItem(AccountTypes::ROOT);
-    this->m_akks.clear();
 }

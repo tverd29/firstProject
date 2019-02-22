@@ -11,7 +11,6 @@ class AccountModel : public QAbstractItemModel {
     Q_OBJECT
 
   private:
-    QList<Account *> m_akks;
     AccountItem * rootItem;
 
   public:
@@ -29,6 +28,11 @@ class AccountModel : public QAbstractItemModel {
     int columnCount(const QModelIndex & parent = QModelIndex()) const override;
 
     void reloadModel(QList<Account> & akks);
+    void insert(Account & akk);
+    void remove(const QModelIndex & index);
+    void edit(const QModelIndex & index, const QString & res, const QString & acc,
+              const QString & pas);
+    QList<Account> getAllAkks();
 
   private:
     void clearModel();

@@ -18,6 +18,7 @@ DialogAddEdit::DialogAddEdit(QDialog * p) : QDialog(p) {
     connect(this->passwordLine, &QLineEdit::textChanged, this, &DialogAddEdit::passwordChanged);
     ok = new QPushButton();
     ok->setEnabled(false);
+    connect(this->ok, &QPushButton::clicked, this, &DialogAddEdit::okClicked);
 
     no = new QPushButton("Cancel");
     connect(this->no, &QPushButton::clicked, this, &DialogAddEdit::noClicked);
@@ -59,23 +60,33 @@ void DialogAddEdit::passwordChanged(QString str) {
     ok->setEnabled(!resourceLine->text().isEmpty() && !loginLine->text().isEmpty() &&
                    !str.isEmpty());
 }
-void DialogAddEdit::setLines(QString res, QString akk, QString pass, QString str) {
+void DialogAddEdit::setLines(const QString & str, const QString res, const QString & akk,
+                             const QString & pas) {
+    if (str == "Add") {
+        isAdding = true;
+    }
+    ok->setText(str);
     resourceLine->setText(res);
     loginLine->setText(akk);
-    passwordLine->setText(pass);
-    ok->setText(str);
+    passwordLine->setText(pas);
+    resourceLine->setFocus();
 }
 
-void DialogAddEdit::setFocusOnResource() {
-    this->resourceLine->setFocus();
-}
-
-// Account DialogAddEdit::getAkk(bool editPushed) {
-//    Account akk(resourceLine->text(), loginLine->text(), passwordLine->text());
-//    if (!editPushed)
-//        resourceLine->setFocus();
-//    return akk;
-//}
 void DialogAddEdit::noClicked() {
+    this->close();
+}
+
+void DialogAddEdit::okClicked() {
+    QString res = resourceLine->text();
+    QString acc = loginLine->text();
+    QString pas = passwordLine->text();
+    if (!res.isEmpty() && !acc.isEmpty() && !pas.isEmpty()) {
+        if (isAdding) {
+            emit addAccount(res, acc, pas);
+        } else {
+            emit editAccount(res, acc, pas);
+        }
+    }
+    isAdding = false;
     this->close();
 }

@@ -8,6 +8,7 @@
 #include <QListWidget>
 #include <QMainWindow>
 #include <QPushButton>
+#include <QSortFilterProxyModel>
 #include <QVBoxLayout>
 #include <memory>
 
@@ -29,8 +30,7 @@ class AkkWindow : public QDialog {
 
     std::shared_ptr<AccountModel> model;
     std::shared_ptr<AccountView> view;
-
-    //    QList<Account> akks;
+    QSortFilterProxyModel * proxy;
 
     DialogAddEdit * dialog;
 
@@ -43,8 +43,6 @@ class AkkWindow : public QDialog {
     QLabel * resValLabel;
     QLabel * logValLabel;
     QLabel * pasValLabel;
-    //    QListWidget * result;
-    //    QListView * result;
 
     QPushButton * addButton;
     QPushButton * editButton;
@@ -54,32 +52,21 @@ class AkkWindow : public QDialog {
 
     void successSave(QString file);
 
-    bool addPushed;
-    bool editPushed;
     bool isSaved;
 
-    void refreshResult();
+  protected:
+    void keyPressEvent(QKeyEvent * ev) override;
 
-    //*******try AES*************
-    //    QLineEdit * encryptLine;
-    //    QLineEdit * decryptLine;
-    //    QPushButton * encryptButton;
-    //    QPushButton * decryptButton;
-    //***************************
   private slots:
-    void currentItemValues(int curRow);
-    void listDoubleClicked(const QModelIndex & index);
+    void currentItemValues(const QString & res, const QString & acc, const QString & pas);
     void PassTextChanged(QString str);
     void SearchTextChanged(QString str);
     void LoadClicked();
     void addClicked();
+    void addAccount(const QString & res, const QString & acc, const QString & pas);
     void editClicked();
+    void editAccount(const QString & res, const QString & acc, const QString & pas);
     void delClicked();
     void saveClicked();
     void saveAsClicked();
-    void addToAkks();
-    //*******try AES*************
-    //    void encryptClicked();
-    //    void decryptClicked();
-    //***************************
 };

@@ -2,7 +2,13 @@
 
 #include <QObject>
 
-enum AccountRole { Display = Qt::DisplayRole, User = Qt::UserRole, GetResource };
+enum AccountRole {
+    Display = Qt::DisplayRole,
+    User    = Qt::UserRole,
+    GetResource,
+    GetAccountName,
+    GetPassword
+};
 
 enum AccountTypes { ROOT, FOLDER, ACCOUNT };
 

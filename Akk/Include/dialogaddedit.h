@@ -11,10 +11,8 @@ class DialogAddEdit : public QDialog {
     Q_OBJECT
   public:
     DialogAddEdit(QDialog * p);
-    void setLines(QString res, QString akk, QString pass, QString str);
-    void setFocusOnResource();
-    QPushButton * ok;
-    //    Account getAkk(bool editPushed);
+    void setLines(const QString & str = "button", const QString res = QString(),
+                  const QString & akk = QString(), const QString & pas = QString());
 
   private:
     QLabel * resourceLabel;
@@ -25,9 +23,17 @@ class DialogAddEdit : public QDialog {
     QLineEdit * passwordLine;
 
     QPushButton * no;
+    QPushButton * ok;
+
+    bool isAdding = false;
   public slots:
     void resourceChanged(QString str);
     void loginChanged(QString str);
     void passwordChanged(QString str);
     void noClicked();
+    void okClicked();
+
+  signals:
+    void addAccount(const QString & res, const QString & acc, const QString & pas);
+    void editAccount(const QString & res, const QString & acc, const QString & pas);
 };

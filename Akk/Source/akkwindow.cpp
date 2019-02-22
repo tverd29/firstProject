@@ -4,6 +4,7 @@
 #include <QFile>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QMouseEvent>
 #include <QRegExp>
 #include <QTextCodec>
 #include <QTextStream>
@@ -17,14 +18,19 @@ AkkWindow::AkkWindow(QWidget * parent) : QDialog(parent) {
 
     model = std::make_shared<AccountModel>(this);
     view  = std::make_shared<AccountView>(this);
-    view->setModel(model.get());
+    proxy = new QSortFilterProxyModel(this);
+    proxy->setSourceModel(model.get());
+    proxy->setDynamicSortFilter(true);
+    view->setModel(proxy);
+    connect(this->view.get(), &AccountView::currentAkkSelected, this,
+            &AkkWindow::currentItemValues);
+    connect(this->view.get(), &AccountView::doubleClicked, this, &AkkWindow::editClicked);
 
     dialog = new DialogAddEdit(this);
-    connect(this->dialog->ok, &QPushButton::clicked, this, &AkkWindow::addToAkks);
+    connect(this->dialog, &DialogAddEdit::addAccount, this, &AkkWindow::addAccount);
+    connect(this->dialog, &DialogAddEdit::editAccount, this, &AkkWindow::editAccount);
 
-    isSaved    = false;
-    addPushed  = false;
-    editPushed = false;
+    isSaved = false;
 
     passwordLine = new QLineEdit;
     passwordLine->setPlaceholderText("Password...");
@@ -65,11 +71,6 @@ AkkWindow::AkkWindow(QWidget * parent) : QDialog(parent) {
     searchLine = new QLineEdit;
     searchLine->setPlaceholderText("Search...");
     connect(this->searchLine, &QLineEdit::textChanged, this, &AkkWindow::SearchTextChanged);
-
-    //    result = new QListView;
-    //    connect(this->result, &QListWidget::currentRowChanged, this,
-    //    &AkkWindow::currentItemValues); connect(this->result, &QListWidget::doubleClicked, this,
-    //    &AkkWindow::listDoubleClicked);
 
     addButton = new QPushButton("Add");
     addButton->setEnabled(false);
@@ -117,7 +118,6 @@ AkkWindow::AkkWindow(QWidget * parent) : QDialog(parent) {
 
     QVBoxLayout * left = new QVBoxLayout;
     left->addWidget(searchLine);
-    //    left->addWidget(result);
     left->addWidget(view.get());
     left->addLayout(labelsLayout);
 
@@ -134,27 +134,6 @@ AkkWindow::AkkWindow(QWidget * parent) : QDialog(parent) {
     main->addLayout(midL);
     main->addLayout(bottom);
 
-    //*************try AES*************
-    //  encryptLine = new QLineEdit;
-    //  decryptLine = new QLineEdit;
-    //  encryptButton = new QPushButton("Encrypt");
-    //  connect(encryptButton, SIGNAL(clicked()), this, SLOT(encryptClicked()));
-    //  decryptButton = new QPushButton("Decrypt");
-    //  connect(decryptButton, SIGNAL(clicked()), this, SLOT(decryptClicked()));
-
-    //  QHBoxLayout *encryptLayout = new QHBoxLayout;
-    //  encryptLayout->addWidget(encryptLine);
-    //  encryptLayout->addWidget(encryptButton);
-    //  QHBoxLayout *decryptLayout = new QHBoxLayout;
-    //  decryptLayout->addWidget(decryptLine);
-    //  decryptLayout->addWidget(decryptButton);
-    //  QVBoxLayout *crypto = new QVBoxLayout;
-    //  crypto->addLayout(encryptLayout);
-    //  crypto->addLayout(decryptLayout);
-    //  main->addLayout(crypto);
-    //  passwordLine->setText("12345");
-    //*********************************
-
     setLayout(main);
     setWindowTitle("Akk");
     setMinimumHeight(600);
@@ -162,17 +141,6 @@ AkkWindow::AkkWindow(QWidget * parent) : QDialog(parent) {
 
     passwordLine->setFocus();
 }
-
-//*************try AES*************
-// void AkkWindow::encryptClicked() {
-//  key = passwordLine->text();
-//  encryptLine->setText(cod->Encoding(encryptLine->text(), key));
-//}
-// void AkkWindow::decryptClicked() {
-//  key = passwordLine->text();
-//  decryptLine->setText(cod->Decoding(decryptLine->text(), key));
-//}
-//*********************************
 
 AkkWindow::~AkkWindow() {
     if (!openedFile.isEmpty() && !passwordLine->text().isEmpty()) {
@@ -207,7 +175,6 @@ void AkkWindow::SearchTextChanged(QString str) {
         //            }
         //        }
     } else {
-        refreshResult();
         editButton->setEnabled(false);
         delButton->setEnabled(false);
     }
@@ -219,8 +186,6 @@ void AkkWindow::LoadClicked() {
 
         key = passwordLine->text();
 
-        //        akks.clear();
-        refreshResult();
         openedFile =
             QFileDialog::getOpenFileName(this, tr("Load file"), "", tr("Recommended (*.txt)"));
         QFile file(openedFile);
@@ -254,9 +219,7 @@ void AkkWindow::LoadClicked() {
             if (akkValues.count() != 3) {
                 throw 4;
             }
-            //            Account akk(akkValues[0], akkValues[1], akkValues[2]);
 
-            //            akks.append(&akk);
             Account akk;
             akk.resource = akkValues[0];
             akk.name     = akkValues[1];
@@ -265,7 +228,6 @@ void AkkWindow::LoadClicked() {
         }
 
         model->reloadModel(akks);
-        refreshResult();
 
         addButton->setEnabled(true);
         saveButton->setEnabled(true);
@@ -279,45 +241,39 @@ void AkkWindow::LoadClicked() {
     }
 }
 
-void AkkWindow::currentItemValues(int curRow) {
-    if (curRow >= 0) {
-        //        resValLabel->setText(akks[curRow].getResource());
-        //        logValLabel->setText(akks[curRow].getName());
-        //        pasValLabel->setText(akks[curRow].getPassword());
-        delButton->setEnabled(true);
-        editButton->setEnabled(true);
-    }
-}
-
-void AkkWindow::listDoubleClicked(const QModelIndex & index) {
-    if (index.row() > -1) {
-        editClicked();
-    }
+void AkkWindow::currentItemValues(const QString & res, const QString & acc, const QString & pas) {
+    resValLabel->setText(res);
+    logValLabel->setText(acc);
+    pasValLabel->setText(pas);
+    delButton->setEnabled(true);
+    editButton->setEnabled(true);
 }
 
 void AkkWindow::addClicked() {
-    addPushed = true;
     dialog->setWindowTitle("Add");
-    dialog->setLines("", "", "", "Add");
-    dialog->setFocusOnResource();
+    dialog->setLines("Add");
     dialog->exec();
+}
 
-    refreshResult();
-    //    result->setCurrentRow(result->count() - 1);
+void AkkWindow::addAccount(const QString & res, const QString & acc, const QString & pas) {
+    Account akk;
+    akk.resource = res;
+    akk.name     = acc;
+    akk.password = pas;
+    model->insert(akk);
+    isSaved = false;
 }
 
 void AkkWindow::editClicked() {
-    //    editPushed  = true;
-    //    int curItem = result->currentRow();
-    //    dialog->setLines(akks[curItem].getResource(), akks[curItem].getName(),
-    //                     akks[curItem].getPassword(), "Edit");
-    //    dialog->setWindowTitle("Edit");
-    //    dialog->setFocusOnResource();
-    //    dialog->exec();
+    dialog->setWindowTitle("Edit");
+    dialog->setLines("Edit", resValLabel->text(), logValLabel->text(), pasValLabel->text());
+    dialog->exec();
+}
 
-    //    refreshResult();
-    //    result->setCurrentRow(curItem);
-    //    searchLine->clear();
+void AkkWindow::editAccount(const QString & res, const QString & acc, const QString & pas) {
+    model->edit(this->view->getCurrentIndex(), res, acc, pas);
+    this->currentItemValues(res, acc, pas);
+    isSaved = false;
 }
 
 void AkkWindow::delClicked() {
@@ -325,17 +281,8 @@ void AkkWindow::delClicked() {
     msg = QMessageBox::question(this, "Deleting", "Are you sure?",
                                 QMessageBox::Yes | QMessageBox::No);
     if (msg == QMessageBox::Yes) {
-        //        akks.removeAt(result->currentRow());
-        //        refreshResult();
-        //        searchLine->clear();
-        //        if (akks.count() > 0) {
-        //            result->setCurrentRow(result->count() - 1);
-        //        } else {
-        //            delButton->setEnabled(false);
-        //            editButton->setEnabled(false);
-        //        }
-
-        //        isSaved = false;
+        model->remove(this->view->getCurrentIndex());
+        isSaved = false;
     }
 }
 
@@ -350,24 +297,15 @@ void AkkWindow::saveAsClicked() {
     }
 }
 
-void AkkWindow::refreshResult() {
-    //    result->clear();
-    //    for (auto & elem : akks) {
-    //        result->addItem(elem.getResource());
-    //    }
-    // TODO need to add sorting
-    //    result->sortItems(Qt::AscendingOrder);
-}
-
 void AkkWindow::successSave(QString f) {
     QFile file(f);
     key = passwordLine->text();
     if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        QString str = "";
-        //        for (auto & elem : akks) {
-        //            str += elem.getResource() + "|" + elem.getName() + "|" + elem.getPassword() +
-        //            "<elem>";
-        //        }
+        QString str         = "";
+        QList<Account> akks = model->getAllAkks();
+        for (auto & elem : akks) {
+            str += elem.resource + "|" + elem.name + "|" + elem.password + "<elem>";
+        }
         QTextStream writeStream(&file);
 
         // Encoding
@@ -387,6 +325,21 @@ void AkkWindow::successSave(QString f) {
     }
 }
 
+void AkkWindow::keyPressEvent(QKeyEvent * ev) {
+    if (ev->key() == Qt::Key_Escape) {
+        this->view->selectionModel()->clear();
+        resValLabel->setText(QString());
+        logValLabel->setText(QString());
+        pasValLabel->setText(QString());
+        return;
+    } else if (ev->key() == Qt::Key_Delete && !openedFile.isEmpty()) {
+        this->delClicked();
+    } else if (ev->key() == Qt::Key_Insert && !openedFile.isEmpty()) {
+        this->addClicked();
+    }
+    QDialog::keyPressEvent(ev);
+}
+
 void Error(int x) {
     QMessageBox msgBox;
     msgBox.setWindowTitle("Error: " + QVariant(x).toString());
@@ -404,19 +357,4 @@ void Error(int x) {
             msgBox.setText("Incorrect password");
     }
     msgBox.exec();
-}
-
-void AkkWindow::addToAkks() {
-    //    Account akk = dialog->getAkk(editPushed);
-    if (addPushed) {
-        //        akks.append(akk);
-    }
-    if (editPushed) {
-        //        akks[result->currentRow()].setValues(akk.getResource(), akk.getName(),
-        //        akk.getPassword());
-    }
-    dialog->close();
-    addPushed  = false;
-    editPushed = false;
-    isSaved    = false;
 }
