@@ -22,6 +22,8 @@ AkkWindow::AkkWindow(QWidget * parent) : QDialog(parent) {
     proxy->setSourceModel(model.get());
     proxy->setDynamicSortFilter(true);
     view->setModel(proxy);
+    // Sorting
+    //    view->setSortingEnabled(true);
     connect(this->view.get(), &AccountView::currentAkkSelected, this,
             &AkkWindow::currentItemValues);
     connect(this->view.get(), &AccountView::doubleClicked, this, &AkkWindow::editClicked);
@@ -164,20 +166,7 @@ void AkkWindow::PassTextChanged(QString str) {
 }
 
 void AkkWindow::SearchTextChanged(QString str) {
-    if (!str.isEmpty()) {
-        //        if (akks.count() > 0) {
-        //            for (int i = 0; i < akks.count(); i++) {
-        //                if (akks[i].getResource().toLower().contains(str.toLower())) {
-        //                    //                    result->item(i)->setHidden(false);
-        //                } else {
-        //                    //                    result->item(i)->setHidden(true);
-        //                }
-        //            }
-        //        }
-    } else {
-        editButton->setEnabled(false);
-        delButton->setEnabled(false);
-    }
+    // TODO Filter
 }
 
 void AkkWindow::LoadClicked() {
@@ -202,9 +191,10 @@ void AkkWindow::LoadClicked() {
         er           = false;
         QString pass = passwordLine->text();
 
-        // Decoding
+        // -----------Decoding------------
         if (!str.isEmpty())
             str = cod->Decoding(str, key);
+        // -------------------------------
 
         str.replace(QRegExp("[\n\r]"), "");
         QStringList strList = str.split("<elem>");
@@ -262,6 +252,8 @@ void AkkWindow::addAccount(const QString & res, const QString & acc, const QStri
     akk.password = pas;
     model->insert(akk);
     isSaved = false;
+    editButton->setEnabled(true);
+    delButton->setEnabled(true);
 }
 
 void AkkWindow::editClicked() {
@@ -283,6 +275,10 @@ void AkkWindow::delClicked() {
     if (msg == QMessageBox::Yes) {
         model->remove(this->view->getCurrentIndex());
         isSaved = false;
+        if (!model->getRowCount()) {
+            editButton->setEnabled(false);
+            delButton->setEnabled(false);
+        }
     }
 }
 
@@ -308,9 +304,10 @@ void AkkWindow::successSave(QString f) {
         }
         QTextStream writeStream(&file);
 
-        // Encoding
+        // -----------Encoding-------------
         if (!str.isEmpty())
             str = cod->Encoding(str, key);
+        // --------------------------------
 
         writeStream << str;
         file.close();
@@ -331,10 +328,12 @@ void AkkWindow::keyPressEvent(QKeyEvent * ev) {
         resValLabel->setText(QString());
         logValLabel->setText(QString());
         pasValLabel->setText(QString());
+        editButton->setEnabled(false);
+        delButton->setEnabled(false);
         return;
-    } else if (ev->key() == Qt::Key_Delete && !openedFile.isEmpty()) {
+    } else if (ev->key() == Qt::Key_Delete && delButton->isEnabled()) {
         this->delClicked();
-    } else if (ev->key() == Qt::Key_Insert && !openedFile.isEmpty()) {
+    } else if (ev->key() == Qt::Key_Insert && addButton->isEnabled()) {
         this->addClicked();
     }
     QDialog::keyPressEvent(ev);

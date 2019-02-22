@@ -123,6 +123,10 @@ QList<Account> AccountModel::getAllAkks() {
     return this->rootItem->getAllAkks();
 }
 
+int AccountModel::getRowCount() {
+    return this->rootItem->childCount();
+}
+
 void AccountModel::clearModel() {
     rootItem = new AccountItem(AccountTypes::ROOT);
 }

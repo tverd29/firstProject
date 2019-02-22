@@ -33,6 +33,7 @@ class AccountModel : public QAbstractItemModel {
     void edit(const QModelIndex & index, const QString & res, const QString & acc,
               const QString & pas);
     QList<Account> getAllAkks();
+    int getRowCount();
 
   private:
     void clearModel();
