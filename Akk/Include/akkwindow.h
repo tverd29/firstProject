@@ -56,6 +56,8 @@ class AkkWindow : public QDialog {
 
     bool isSaved;
 
+    void Error(int x);
+
   protected:
     void keyPressEvent(QKeyEvent * ev) override;
 

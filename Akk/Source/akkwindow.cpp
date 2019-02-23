@@ -14,8 +14,6 @@
 #include "Include/AkksModel/AccountView.h"
 #include "Include/structs.h"
 
-void Error(int x);
-
 AkkWindow::AkkWindow(QWidget * parent) : QDialog(parent) {
     this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
@@ -40,11 +38,11 @@ AkkWindow::AkkWindow(QWidget * parent) : QDialog(parent) {
     isSaved = false;
 
     passwordLine = new QLineEdit;
-    passwordLine->setPlaceholderText("Password...");
+    passwordLine->setPlaceholderText(tr("Password..."));
     passwordLine->setEchoMode(QLineEdit::Password);
     connect(this->passwordLine, &QLineEdit::textChanged, this, &AkkWindow::PassTextChanged);
 
-    loadButton = new QPushButton("load");
+    loadButton = new QPushButton(tr("load"));
     loadButton->setEnabled(false);
     connect(this->loadButton, &QPushButton::clicked, this, &AkkWindow::LoadClicked);
 
@@ -53,7 +51,7 @@ AkkWindow::AkkWindow(QWidget * parent) : QDialog(parent) {
     QLabel * resLabel = new QLabel;
     resLabel->setMinimumHeight(height);
     resLabel->setMaximumWidth(width);
-    resLabel->setText("Resource:");
+    resLabel->setText(tr("Resource:"));
     resValLabel = new QLabel;
     resValLabel->setMinimumHeight(height);
     resValLabel->setTextInteractionFlags(resValLabel->textInteractionFlags() |
@@ -61,7 +59,7 @@ AkkWindow::AkkWindow(QWidget * parent) : QDialog(parent) {
     QLabel * logLabel = new QLabel;
     logLabel->setMinimumHeight(height);
     logLabel->setMaximumWidth(width);
-    logLabel->setText("Account:");
+    logLabel->setText(tr("Account:"));
     logValLabel = new QLabel;
     logValLabel->setMinimumHeight(height);
     logValLabel->setTextInteractionFlags(logValLabel->textInteractionFlags() |
@@ -69,33 +67,33 @@ AkkWindow::AkkWindow(QWidget * parent) : QDialog(parent) {
     QLabel * pasLabel = new QLabel;
     pasLabel->setMinimumHeight(height);
     pasLabel->setMaximumWidth(width);
-    pasLabel->setText("Password:");
+    pasLabel->setText(tr("Password:"));
     pasValLabel = new QLabel;
     pasValLabel->setMinimumHeight(height);
     pasValLabel->setTextInteractionFlags(pasValLabel->textInteractionFlags() |
                                          Qt::TextSelectableByMouse);
 
     searchLine = new QLineEdit;
-    searchLine->setPlaceholderText("Search...");
+    searchLine->setPlaceholderText(tr("Search..."));
     connect(this->searchLine, &QLineEdit::textChanged, this->proxy, &AccountProxy::setFilter);
 
-    addButton = new QPushButton("Add");
+    addButton = new QPushButton(tr("Add"));
     addButton->setEnabled(false);
     connect(this->addButton, &QPushButton::clicked, this, &AkkWindow::addClicked);
 
-    editButton = new QPushButton("Edit");
+    editButton = new QPushButton(tr("Edit"));
     connect(this->editButton, &QPushButton::clicked, this, &AkkWindow::editClicked);
     editButton->setEnabled(false);
 
-    delButton = new QPushButton("Delete");
+    delButton = new QPushButton(tr("Delete"));
     connect(this->delButton, &QPushButton::clicked, this, &AkkWindow::delClicked);
     delButton->setEnabled(false);
 
-    saveButton = new QPushButton("save");
+    saveButton = new QPushButton(tr("save"));
     saveButton->setEnabled(false);
     connect(this->saveButton, &QPushButton::clicked, this, &AkkWindow::saveClicked);
 
-    saveAsButton = new QPushButton("save as...");
+    saveAsButton = new QPushButton(tr("save as..."));
     saveAsButton->setEnabled(false);
     connect(this->saveAsButton, &QPushButton::clicked, this, &AkkWindow::saveAsClicked);
 
@@ -153,7 +151,7 @@ AkkWindow::~AkkWindow() {
     if (!openedFile.isEmpty() && !passwordLine->text().isEmpty()) {
         if (!isSaved) {
             QMessageBox::StandardButton msg;
-            msg = QMessageBox::question(this, "Saving", "Do you want to save?",
+            msg = QMessageBox::question(this, tr("Saving"), tr("Do you want to save?"),
                                         QMessageBox::Yes | QMessageBox::No);
             if (msg == QMessageBox::Yes) {
                 successSave(openedFile);
@@ -172,12 +170,16 @@ void AkkWindow::PassTextChanged(const QString & str) {
 
 void AkkWindow::LoadClicked() {
     try {
-        bool er = true;
-
         key = passwordLine->text();
 
-        openedFile =
+        QString tempFile =
             QFileDialog::getOpenFileName(this, tr("Load file"), "", tr("Recommended (*.txt)"));
+        if (tempFile.isEmpty()) {
+            return;
+        }
+
+        openedFile = tempFile;
+
         QFile file(openedFile);
         QByteArray data;
         QString str;
@@ -188,8 +190,6 @@ void AkkWindow::LoadClicked() {
         } else {
             throw 1;
         }
-
-        er           = false;
         QString pass = passwordLine->text();
 
         // -----------Decoding------------
@@ -249,8 +249,8 @@ void AkkWindow::currentItemValues(const QString & res, const QString & acc, cons
 }
 
 void AkkWindow::addClicked() {
-    dialog->setWindowTitle("Add");
-    dialog->setLines("Add");
+    dialog->setWindowTitle(tr("Add"));
+    dialog->setLines(tr("Add"));
     dialog->exec();
 }
 
@@ -266,8 +266,8 @@ void AkkWindow::addAccount(const QString & res, const QString & acc, const QStri
 }
 
 void AkkWindow::editClicked() {
-    dialog->setWindowTitle("Edit");
-    dialog->setLines("Edit", resValLabel->text(), logValLabel->text(), pasValLabel->text());
+    dialog->setWindowTitle(tr("Edit"));
+    dialog->setLines(tr("Edit"), resValLabel->text(), logValLabel->text(), pasValLabel->text());
     dialog->exec();
 }
 
@@ -279,7 +279,7 @@ void AkkWindow::editAccount(const QString & res, const QString & acc, const QStr
 
 void AkkWindow::delClicked() {
     QMessageBox::StandardButton msg;
-    msg = QMessageBox::question(this, "Deleting", "Are you sure?",
+    msg = QMessageBox::question(this, tr("Deleting"), tr("Are you sure?"),
                                 QMessageBox::Yes | QMessageBox::No);
     if (msg == QMessageBox::Yes) {
         model->remove(this->view->getCurrentIndex());
@@ -304,6 +304,8 @@ void AkkWindow::saveAsClicked() {
 
 void AkkWindow::successSave(const QString & f) {
     try {
+        if (f.isEmpty())
+            throw 1;
         QFile file(f);
         key = passwordLine->text();
         if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
@@ -322,8 +324,8 @@ void AkkWindow::successSave(const QString & f) {
             writeStream << str;
             file.close();
             QMessageBox msg;
-            msg.setWindowTitle("Saving");
-            msg.setText("Saving complete");
+            msg.setWindowTitle(tr("Saving"));
+            msg.setText(tr("Saving complete"));
             msg.exec();
 
             isSaved = true;
@@ -352,21 +354,21 @@ void AkkWindow::keyPressEvent(QKeyEvent * ev) {
     QDialog::keyPressEvent(ev);
 }
 
-void Error(int x) {
+void AkkWindow::Error(int x) {
     QMessageBox msgBox;
     msgBox.setWindowTitle("Error: " + QVariant(x).toString());
     switch (x) {
         case 1:
-            msgBox.setText("Error openning file");
+            msgBox.setText(tr("Error openning file"));
             break;
         case 2:
-            msgBox.setText("Save Error");
+            msgBox.setText(tr("Save Error"));
             break;
         case 3:
-            msgBox.setText("Bad File");
+            msgBox.setText(tr("Bad File"));
             break;
         case 4:
-            msgBox.setText("Incorrect password");
+            msgBox.setText(tr("Incorrect password"));
     }
     msgBox.exec();
 }

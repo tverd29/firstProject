@@ -2,11 +2,11 @@
 
 DialogAddEdit::DialogAddEdit(QDialog * p) : QDialog(p) {
     resourceLabel = new QLabel;
-    resourceLabel->setText("Resource:");
+    resourceLabel->setText(tr("Resource:"));
     loginLabel = new QLabel;
-    loginLabel->setText("Account:");
+    loginLabel->setText(tr("Account:"));
     passwordLabel = new QLabel;
-    passwordLabel->setText("Password:");
+    passwordLabel->setText(tr("Password:"));
 
     resourceLine = new QLineEdit;
     connect(this->resourceLine, &QLineEdit::textChanged, this, &DialogAddEdit::resourceChanged);
@@ -20,7 +20,7 @@ DialogAddEdit::DialogAddEdit(QDialog * p) : QDialog(p) {
     ok->setEnabled(false);
     connect(this->ok, &QPushButton::clicked, this, &DialogAddEdit::okClicked);
 
-    no = new QPushButton("Cancel");
+    no = new QPushButton(tr("Cancel"));
     connect(this->no, &QPushButton::clicked, this, &DialogAddEdit::noClicked);
 
     QVBoxLayout * left = new QVBoxLayout;

@@ -24,6 +24,9 @@
 !*.png
 !*.psd
 
+#translate filse
+!*.ts
+
 # C/C++ source files
 !*.c
 !*.cc

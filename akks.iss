@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Akks"
-#define MyAppVersion "1.0"
+#define MyAppVersion "1.01"
 #define MyAppPublisher "Tverd29"
 #define MyAppURL "https://vk.com/id17172613"
 #define MyAppExeName "Akk.exe"
@@ -23,7 +23,7 @@ AppUpdatesURL={#MyAppURL}
 DefaultDirName=C:\{#MyAppName}
 DefaultGroupName={#MyAppName}
 AllowNoIcons=yes
-OutputDir=V:\Git\First\Installers\Akks_1.0
+OutputDir=V:\Git\First\Installers\Akks_1.01
 OutputBaseFilename=Akks setup
 PrivilegesRequired = admin
 SetupIconFile=V:\Git\First\3rdParty\akks.ico
