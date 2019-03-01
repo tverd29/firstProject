@@ -5,7 +5,7 @@
 
 #include "Include/structs.h"
 
-AccountView::AccountView(QWidget * parent) : QListView(parent) {
+AccountView::AccountView(QWidget * parent) : QTreeView(parent) {
 }
 
 void AccountView::mouseReleaseEvent(QMouseEvent * ev) {
@@ -16,11 +16,11 @@ void AccountView::mousePressEvent(QMouseEvent * ev) {
     if (index.isValid()) {
         changeSelected(index);
     }
-    QListView::mousePressEvent(ev);
+    QTreeView::mousePressEvent(ev);
 }
 
 void AccountView::mouseDoubleClickEvent(QMouseEvent * ev) {
-    QListView::mouseDoubleClickEvent(ev);
+    QTreeView::mouseDoubleClickEvent(ev);
 }
 
 void AccountView::selectionChanged(const QItemSelection & selected,
@@ -33,7 +33,7 @@ void AccountView::selectionChanged(const QItemSelection & selected,
     } else {
         emit currentAkkSelected(QString(), QString(), QString());
     }
-    QListView::selectionChanged(selected, deselected);
+    QTreeView::selectionChanged(selected, deselected);
 }
 
 void AccountView::changeSelected(const QModelIndex & index) {

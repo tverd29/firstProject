@@ -25,8 +25,10 @@ AkkWindow::AkkWindow(QWidget * parent) : QDialog(parent) {
     proxy->setSourceModel(model.get());
     proxy->setDynamicSortFilter(true);
     view->setModel(proxy);
-    // Sorting
-    //    view->setSortingEnabled(true);
+    view->setSortingEnabled(true);
+    view->sortByColumn(0, Qt::SortOrder::AscendingOrder);
+    view->setRootIsDecorated(false);
+
     connect(this->view.get(), &AccountView::currentAkkSelected, this,
             &AkkWindow::currentItemValues);
     connect(this->view.get(), &AccountView::doubleClicked, this, &AkkWindow::editClicked);

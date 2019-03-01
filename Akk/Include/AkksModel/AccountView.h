@@ -1,9 +1,9 @@
 #pragma once
 
-#include <QListView>
 #include <QObject>
+#include <QTreeView>
 
-class AccountView : public QListView {
+class AccountView : public QTreeView {
     Q_OBJECT
 
   public:
