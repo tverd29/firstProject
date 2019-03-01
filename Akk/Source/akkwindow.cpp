@@ -12,44 +12,86 @@
 #include "Include/AkksModel/AccountModel.h"
 #include "Include/AkksModel/AccountProxy.h"
 #include "Include/AkksModel/AccountView.h"
+#include "Include/coder.h"
+#include "Include/dialogaddedit.h"
 #include "Include/structs.h"
 
-AkkWindow::AkkWindow(QWidget * parent) : QDialog(parent) {
+AkkWindow::AkkWindow(QWidget * parent) : QMainWindow(parent) {
     this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
-    cod = new Coder();
+    initAccModel();
 
-    model = std::make_shared<AccountModel>(this);
-    view  = std::make_shared<AccountView>(this);
-    proxy = new AccountProxy(this);
-    proxy->setSourceModel(model.get());
-    proxy->setDynamicSortFilter(true);
-    view->setModel(proxy);
-    view->setSortingEnabled(true);
-    view->sortByColumn(0, Qt::SortOrder::AscendingOrder);
-    view->setRootIsDecorated(false);
+    cod    = new Coder();
+    dialog = new DialogAddEdit(this);
+
+    isSaved = false;
+
+    QWidget * w = new QWidget(this);
+    w->setLayout(initMainLayout());
+    initConnections();
+
+    setCentralWidget(w);
+    setWindowTitle("Akk");
+    setFixedHeight(600);
+    setFixedWidth(600);
+
+    passwordLine->setFocus();
+}
+
+AkkWindow::~AkkWindow() {
+    if (!openedFile.isEmpty() && !passwordLine->text().isEmpty()) {
+        if (!isSaved) {
+            QMessageBox::StandardButton msg;
+            msg = QMessageBox::question(this, tr("Saving"), tr("Do you want to save?"),
+                                        QMessageBox::Yes | QMessageBox::No);
+            if (msg == QMessageBox::Yes) {
+                successSave(openedFile);
+            }
+        }
+    }
+}
+
+void AkkWindow::initAccModel() {
+    this->model = std::make_shared<AccountModel>(this);
+    this->view  = std::make_shared<AccountView>(this);
+    this->proxy = new AccountProxy(this);
+    this->proxy->setSourceModel(model.get());
+    this->proxy->setDynamicSortFilter(true);
+    this->view->setModel(proxy);
+    this->view->setSortingEnabled(true);
+    this->view->sortByColumn(0, Qt::SortOrder::AscendingOrder);
+    this->view->setRootIsDecorated(false);
 
     connect(this->view.get(), &AccountView::currentAkkSelected, this,
             &AkkWindow::currentItemValues);
     connect(this->view.get(), &AccountView::doubleClicked, this, &AkkWindow::editClicked);
+}
 
-    dialog = new DialogAddEdit(this);
+void AkkWindow::initConnections() {
     connect(this->dialog, &DialogAddEdit::addAccount, this, &AkkWindow::addAccount);
     connect(this->dialog, &DialogAddEdit::editAccount, this, &AkkWindow::editAccount);
+    connect(this->passwordLine, &QLineEdit::textChanged, this, &AkkWindow::PassTextChanged);
+    connect(this->loadButton, &QPushButton::clicked, this, &AkkWindow::LoadClicked);
+    connect(this->searchLine, &QLineEdit::textChanged, this->proxy, &AccountProxy::setFilter);
+    connect(this->addButton, &QPushButton::clicked, this, &AkkWindow::addClicked);
+    connect(this->editButton, &QPushButton::clicked, this, &AkkWindow::editClicked);
+    connect(this->delButton, &QPushButton::clicked, this, &AkkWindow::delClicked);
+    connect(this->saveButton, &QPushButton::clicked, this, &AkkWindow::saveClicked);
+    connect(this->saveAsButton, &QPushButton::clicked, this, &AkkWindow::saveAsClicked);
+}
 
-    isSaved = false;
-
+QLayout * AkkWindow::initMainLayout() {
     passwordLine = new QLineEdit;
+    passwordLine->setFixedWidth(500);
     passwordLine->setPlaceholderText(tr("Password..."));
     passwordLine->setEchoMode(QLineEdit::Password);
-    connect(this->passwordLine, &QLineEdit::textChanged, this, &AkkWindow::PassTextChanged);
 
     loadButton = new QPushButton(tr("load"));
     loadButton->setEnabled(false);
-    connect(this->loadButton, &QPushButton::clicked, this, &AkkWindow::LoadClicked);
 
-    int height        = 20;
-    int width         = 60;
+    int height = 20;
+    int width  = 60;
+
     QLabel * resLabel = new QLabel;
     resLabel->setMinimumHeight(height);
     resLabel->setMaximumWidth(width);
@@ -77,27 +119,21 @@ AkkWindow::AkkWindow(QWidget * parent) : QDialog(parent) {
 
     searchLine = new QLineEdit;
     searchLine->setPlaceholderText(tr("Search..."));
-    connect(this->searchLine, &QLineEdit::textChanged, this->proxy, &AccountProxy::setFilter);
 
     addButton = new QPushButton(tr("Add"));
     addButton->setEnabled(false);
-    connect(this->addButton, &QPushButton::clicked, this, &AkkWindow::addClicked);
 
     editButton = new QPushButton(tr("Edit"));
-    connect(this->editButton, &QPushButton::clicked, this, &AkkWindow::editClicked);
     editButton->setEnabled(false);
 
     delButton = new QPushButton(tr("Delete"));
-    connect(this->delButton, &QPushButton::clicked, this, &AkkWindow::delClicked);
     delButton->setEnabled(false);
 
     saveButton = new QPushButton(tr("save"));
     saveButton->setEnabled(false);
-    connect(this->saveButton, &QPushButton::clicked, this, &AkkWindow::saveClicked);
 
     saveAsButton = new QPushButton(tr("save as..."));
     saveAsButton->setEnabled(false);
-    connect(this->saveAsButton, &QPushButton::clicked, this, &AkkWindow::saveAsClicked);
 
     QHBoxLayout * passLayout = new QHBoxLayout;
     passLayout->addWidget(passwordLine);
@@ -141,25 +177,7 @@ AkkWindow::AkkWindow(QWidget * parent) : QDialog(parent) {
     main->addLayout(midL);
     main->addLayout(bottom);
 
-    setLayout(main);
-    setWindowTitle("Akk");
-    setMinimumHeight(600);
-    setMinimumWidth(600);
-
-    passwordLine->setFocus();
-}
-
-AkkWindow::~AkkWindow() {
-    if (!openedFile.isEmpty() && !passwordLine->text().isEmpty()) {
-        if (!isSaved) {
-            QMessageBox::StandardButton msg;
-            msg = QMessageBox::question(this, tr("Saving"), tr("Do you want to save?"),
-                                        QMessageBox::Yes | QMessageBox::No);
-            if (msg == QMessageBox::Yes) {
-                successSave(openedFile);
-            }
-        }
-    }
+    return main;
 }
 
 void AkkWindow::PassTextChanged(const QString & str) {
@@ -353,7 +371,7 @@ void AkkWindow::keyPressEvent(QKeyEvent * ev) {
     } else if (ev->key() == Qt::Key_Insert && addButton->isEnabled()) {
         this->addClicked();
     }
-    QDialog::keyPressEvent(ev);
+    QMainWindow::keyPressEvent(ev);
 }
 
 void AkkWindow::Error(int x) {

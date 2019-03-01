@@ -1,25 +1,18 @@
 #pragma once
 
-#include <QDialog>
-#include <QFile>
-#include <QHBoxLayout>
 #include <QLabel>
 #include <QLineEdit>
-#include <QListWidget>
 #include <QMainWindow>
 #include <QPushButton>
-#include <QSortFilterProxyModel>
-#include <QVBoxLayout>
 #include <memory>
-
-#include "coder.h"
-#include "dialogaddedit.h"
 
 class AccountModel;
 class AccountView;
 class AccountProxy;
+class Coder;
+class DialogAddEdit;
 
-class AkkWindow : public QDialog {
+class AkkWindow : public QMainWindow {
     Q_OBJECT
 
   public:
@@ -52,10 +45,11 @@ class AkkWindow : public QDialog {
     QPushButton * saveButton;
     QPushButton * saveAsButton;
 
+    void initAccModel();
+    void initConnections();
+    QLayout * initMainLayout();
     void successSave(const QString & file);
-
     bool isSaved;
-
     void Error(int x);
 
   protected:

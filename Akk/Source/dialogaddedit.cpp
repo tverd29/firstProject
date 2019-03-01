@@ -1,6 +1,6 @@
 #include "Include\dialogaddedit.h"
 
-DialogAddEdit::DialogAddEdit(QDialog * p) : QDialog(p) {
+DialogAddEdit::DialogAddEdit(QWidget * p) : QDialog(p) {
     resourceLabel = new QLabel;
     resourceLabel->setText(tr("Resource:"));
     loginLabel = new QLabel;
