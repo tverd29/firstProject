@@ -26,6 +26,7 @@
 
 #translate filse
 !*.ts
+!*.qm
 
 # C/C++ source files
 !*.c
