@@ -53,13 +53,5 @@ DISTFILES += \
     akks \
     yourappname.exe.manifest
 
-#win32: LIBS += -LC:/OpenSSL-Win32/lib/ -lopenssl
-
-#INCLUDEPATH += C:/OpenSSL-Win32/include
-#DEPENDPATH += C:/OpenSSL-Win32/include
-
-
-#win32: LIBS += -LC:/OpenSSL-Win32/lib/VC/static/ -llibcrypto32MD
-
-#INCLUDEPATH += C:/OpenSSL-Win32/lib/VC/static
-#DEPENDPATH += C:/OpenSSL-Win32/lib/VC/static
+TRANSLATIONS = akk_en.ts \
+    akk_ru.ts
