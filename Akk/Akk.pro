@@ -55,3 +55,5 @@ DISTFILES += \
 
 TRANSLATIONS = akk_en.ts \
     akk_ru.ts
+
+CODECFORSRC     = UTF-8

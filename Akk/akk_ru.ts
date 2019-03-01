@@ -5,147 +5,147 @@
     <name>AkkWindow</name>
     <message>
         <location filename="Source/akkwindow.cpp" line="43"/>
-        <source>Пароль...</source>
-        <translation type="finished"></translation>
+        <source>Password...</source>
+        <translation>Пароль...</translation>
     </message>
     <message>
         <location filename="Source/akkwindow.cpp" line="47"/>
-        <source>загрузить</source>
-        <translation type="finished"></translation>
+        <source>load</source>
+        <translation>Загрузить</translation>
     </message>
     <message>
         <location filename="Source/akkwindow.cpp" line="56"/>
-        <source>Ресурс:</source>
-        <translation type="finished"></translation>
+        <source>Resource:</source>
+        <translation>Ресурс:</translation>
     </message>
     <message>
         <location filename="Source/akkwindow.cpp" line="64"/>
-        <source>Аккаунт:</source>
-        <translation type="finished"></translation>
+        <source>Account:</source>
+        <translation>Аккаунт:</translation>
     </message>
     <message>
         <location filename="Source/akkwindow.cpp" line="72"/>
-        <source>Пароль:</source>
-        <translation type="finished"></translation>
+        <source>Password:</source>
+        <translation>Пароль:</translation>
     </message>
     <message>
         <location filename="Source/akkwindow.cpp" line="79"/>
-        <source>Поиск...</source>
-        <translation type="finished"></translation>
+        <source>Search...</source>
+        <translation>Поиск...</translation>
     </message>
     <message>
         <location filename="Source/akkwindow.cpp" line="82"/>
         <location filename="Source/akkwindow.cpp" line="254"/>
         <location filename="Source/akkwindow.cpp" line="255"/>
-        <source>Добавить</source>
-        <translation type="finished"></translation>
+        <source>Add</source>
+        <translation>Добавить</translation>
     </message>
     <message>
         <location filename="Source/akkwindow.cpp" line="86"/>
         <location filename="Source/akkwindow.cpp" line="271"/>
         <location filename="Source/akkwindow.cpp" line="272"/>
-        <source>Редактировать</source>
-        <translation type="finished"></translation>
+        <source>Edit</source>
+        <translation>Редактирование</translation>
     </message>
     <message>
         <location filename="Source/akkwindow.cpp" line="90"/>
-        <source>Удалить</source>
-        <translation type="finished"></translation>
+        <source>Delete</source>
+        <translation>Удалить</translation>
     </message>
     <message>
         <location filename="Source/akkwindow.cpp" line="94"/>
-        <source>Сохранить</source>
-        <translation type="finished"></translation>
+        <source>save</source>
+        <translation>Сохранить</translation>
     </message>
     <message>
         <location filename="Source/akkwindow.cpp" line="98"/>
-        <source>Сохранить как...</source>
-        <translation type="finished"></translation>
+        <source>save as...</source>
+        <translation>Сохранить как...</translation>
     </message>
     <message>
         <location filename="Source/akkwindow.cpp" line="156"/>
         <location filename="Source/akkwindow.cpp" line="329"/>
-        <source>Сохранение</source>
-        <translation type="finished"></translation>
+        <source>Saving</source>
+        <translation>Сохранение</translation>
     </message>
     <message>
         <location filename="Source/akkwindow.cpp" line="156"/>
-        <source>Вы хотите сохранить?</source>
-        <translation type="finished"></translation>
+        <source>Do you want to save?</source>
+        <translation>Вы хотите сохранить?</translation>
     </message>
     <message>
         <location filename="Source/akkwindow.cpp" line="178"/>
-        <source>Загрузка файла</source>
-        <translation type="finished"></translation>
+        <source>Load file</source>
+        <translation>Загрузка файла</translation>
     </message>
     <message>
         <location filename="Source/akkwindow.cpp" line="178"/>
         <location filename="Source/akkwindow.cpp" line="301"/>
-        <source>Рекомендовано (*.txt)</source>
-        <translation type="finished"></translation>
+        <source>Recommended (*.txt)</source>
+        <translation>Рекомендовано (*.txt)</translation>
     </message>
     <message>
         <location filename="Source/akkwindow.cpp" line="284"/>
-        <source>Удаление</source>
-        <translation type="finished"></translation>
+        <source>Deleting</source>
+        <translation>Удаление</translation>
     </message>
     <message>
         <location filename="Source/akkwindow.cpp" line="284"/>
-        <source>Вы уверены?</source>
-        <translation type="finished"></translation>
+        <source>Are you sure?</source>
+        <translation>Вы уверены?</translation>
     </message>
     <message>
         <location filename="Source/akkwindow.cpp" line="301"/>
-        <source>Сохранить файл</source>
-        <translation type="finished"></translation>
+        <source>Save file</source>
+        <translation>Сохранить файл</translation>
     </message>
     <message>
         <location filename="Source/akkwindow.cpp" line="330"/>
-        <source>Сохранение успешно</source>
-        <translation type="finished"></translation>
+        <source>Saving complete</source>
+        <translation>Сохранение успешно</translation>
     </message>
     <message>
         <location filename="Source/akkwindow.cpp" line="364"/>
-        <source>Ошибка отерытия файла</source>
-        <translation type="finished"></translation>
+        <source>Error openning file</source>
+        <translation>Ошибка открытия файла</translation>
     </message>
     <message>
         <location filename="Source/akkwindow.cpp" line="367"/>
-        <source>Ошибка сохранения</source>
-        <translation type="finished"></translation>
+        <source>Save Error</source>
+        <translation>Ошибка сохранения</translation>
     </message>
     <message>
         <location filename="Source/akkwindow.cpp" line="370"/>
-        <source>Плохой файл</source>
-        <translation type="finished"></translation>
+        <source>Bad File</source>
+        <translation>Плохой файл</translation>
     </message>
     <message>
         <location filename="Source/akkwindow.cpp" line="373"/>
-        <source>Неправильный пароль</source>
-        <translation type="finished"></translation>
+        <source>Incorrect password</source>
+        <translation>Некорректный пароль</translation>
     </message>
 </context>
 <context>
     <name>DialogAddEdit</name>
     <message>
         <location filename="Source/dialogaddedit.cpp" line="5"/>
-        <source>Ресурс:</source>
-        <translation type="finished"></translation>
+        <source>Resource:</source>
+        <translation>Ресурс:</translation>
     </message>
     <message>
         <location filename="Source/dialogaddedit.cpp" line="7"/>
-        <source>Аккаунт:</source>
-        <translation type="finished"></translation>
+        <source>Account:</source>
+        <translation>Аккаунт:</translation>
     </message>
     <message>
         <location filename="Source/dialogaddedit.cpp" line="9"/>
-        <source>Пароль:</source>
-        <translation type="finished"></translation>
+        <source>Password:</source>
+        <translation>Пароль:</translation>
     </message>
     <message>
         <location filename="Source/dialogaddedit.cpp" line="23"/>
-        <source>Отмена</source>
-        <translation type="finished"></translation>
+        <source>Cancel</source>
+        <translation>Закрыть</translation>
     </message>
 </context>
 </TS>
