@@ -53,6 +53,7 @@ Source: "V:\Git\First\3rdParty\qt_libs\iconengines\*"; DestDir: "{app}\iconengin
 Source: "V:\Git\First\3rdParty\qt_libs\imageformats\*"; DestDir: "{app}\imageformats"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "V:\Git\First\3rdParty\qt_libs\platforms\*"; DestDir: "{app}\platforms"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "V:\Git\First\3rdParty\qt_libs\translations\*"; DestDir: "{app}\translations"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "V:\Git\First\3rdParty\imgs\icons\*"; DestDir: "{app}\icons"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
