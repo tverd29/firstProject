@@ -6,6 +6,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QMouseEvent>
+#include <QProcess>
 #include <QRegExp>
 #include <QTextCodec>
 #include <QTextStream>
@@ -29,7 +30,8 @@ AkkWindow::AkkWindow(QWidget * parent) : QMainWindow(parent) {
 
     isSaved = false;
 
-    this->addToolBar(Qt::TopToolBarArea, initToolbar());
+    initToolbar();
+    this->addToolBar(Qt::TopToolBarArea, this->toolbar);
 
     QWidget * w = new QWidget(this);
     w->setLayout(initMainLayout());
@@ -173,7 +175,7 @@ QLayout * AkkWindow::initMainLayout() {
     return main;
 }
 
-QToolBar * AkkWindow::initToolbar() {
+void AkkWindow::initToolbar() {
     passwordLine = new QLineEdit();
     passwordLine->setPlaceholderText(tr("Password..."));
     passwordLine->setEchoMode(QLineEdit::Password);
@@ -182,10 +184,14 @@ QToolBar * AkkWindow::initToolbar() {
     loadAction = new QAction(QIcon(QPixmap("icons/file_open.png")), tr("load"));
     loadAction->setEnabled(false);
 
-    restartWarning     = new QLabel(tr("need to restart app"));
-    restartWarningIcon = new QLabel();
-    restartWarningIcon->setFixedHeight(25);
-    restartWarningIcon->setPixmap(QPixmap("icons/warning.png").scaled(25, 25));
+    QLabel * warning = new QLabel(tr("need to restart app"));
+    warning->setVisible(false);
+    QLabel * warningIcon = new QLabel();
+    warningIcon->setFixedHeight(25);
+    warningIcon->setPixmap(QPixmap("icons/warning.png").scaled(25, 25));
+    warningIcon->setVisible(false);
+    restartAction = new QAction(QIcon(QPixmap("icons/restart.png")), tr("restart"));
+    restartAction->setVisible(false);
 
     settings->beginGroup("main_settings");
     auto x = settings->value("language", "").toString();
@@ -200,18 +206,18 @@ QToolBar * AkkWindow::initToolbar() {
     }
     settings->endGroup();
 
-    QToolBar * toolbar = new QToolBar(this);
+    toolbar = new QToolBar(this);
     toolbar->addWidget(passwordLine);
     toolbar->addAction(loadAction);
     toolbar->addSeparator();
-    toolbar->addWidget(restartWarningIcon);
-    toolbar->addWidget(restartWarning);
+    restartWarningIcon = toolbar->addWidget(warningIcon);
+    restartWarning     = toolbar->addWidget(warning);
+    toolbar->addAction(restartAction);
     QWidget * spacerWidget = new QWidget(this);
     spacerWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     spacerWidget->setVisible(true);
     toolbar->addWidget(spacerWidget);
     toolbar->addAction(languageAction);
-    return toolbar;
 }
 
 void AkkWindow::PassTextChanged(const QString & str) {
@@ -287,26 +293,31 @@ void AkkWindow::LoadClicked() {
 }
 
 void AkkWindow::LanguageClicked() {
+    settings->beginGroup("main_settings");
+    if (languageAction->text() == "RU") {
+        languageAction->setText("EN");
+        settings->setValue("language", "en_US");
+    } else if (languageAction->text() == "EN") {
+        languageAction->setText("RU");
+        settings->setValue("language", "ru_RU");
+    }
+    settings->endGroup();
+
     if (curLang == languageAction->text()) {
         restartWarning->setVisible(false);
         restartWarningIcon->setVisible(false);
+        restartAction->setVisible(false);
 
     } else {
         restartWarning->setVisible(true);
         restartWarningIcon->setVisible(true);
+        restartAction->setVisible(true);
     }
+}
 
-    settings->beginGroup("main_settings");
-    if (languageAction->text() == "RU") {
-        curLang = "en_US";
-        languageAction->setText("EN");
-        settings->setValue("language", curLang);
-    } else if (languageAction->text() == "EN") {
-        curLang = "ru_RU";
-        languageAction->setText("RU");
-        settings->setValue("language", curLang);
-    }
-    settings->endGroup();
+void AkkWindow::RestartClicked() {
+    qApp->quit();
+    QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
 }
 
 void AkkWindow::currentItemValues(const QString & res, const QString & acc, const QString & pas) {
