@@ -190,7 +190,10 @@ void AkkWindow::initToolbar() {
     }
     settings->endGroup();
 
-    toolbar = new QToolBar(this);
+    toolbar                = new QToolBar(this);
+    QWidget * marginWidget = new QWidget(this);
+    marginWidget->setFixedWidth(8);
+    toolbar->addWidget(marginWidget);
     toolbar->addWidget(passwordLine);
     toolbar->addAction(loadAction);
     toolbar->addSeparator();
@@ -202,9 +205,9 @@ void AkkWindow::initToolbar() {
     toolbar->addAction(restartAction);
     QWidget * spacerWidget = new QWidget(this);
     spacerWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-    spacerWidget->setVisible(true);
     toolbar->addWidget(spacerWidget);
     toolbar->addAction(languageAction);
+    toolbar->setMovable(false);
 }
 
 void AkkWindow::PassTextChanged(const QString & str) {
