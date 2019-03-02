@@ -35,6 +35,8 @@ class AkkWindow : public QMainWindow {
 
     QLineEdit * passwordLine;
     QAction * loadAction;
+    QAction * saveAction;
+    QAction * saveAsAction;
     QAction * languageAction;
     QString curLang;
     QAction * restartAction;
@@ -51,8 +53,6 @@ class AkkWindow : public QMainWindow {
     QPushButton * addButton;
     QPushButton * editButton;
     QPushButton * delButton;
-    QPushButton * saveButton;
-    QPushButton * saveAsButton;
 
     void initAccModel();
     void initConnections();
@@ -61,6 +61,7 @@ class AkkWindow : public QMainWindow {
     void successSave(const QString & file);
     bool isSaved;
     void Error(int x);
+    void needToClose();
 
   protected:
     void keyPressEvent(QKeyEvent * ev) override;

@@ -46,16 +46,7 @@ AkkWindow::AkkWindow(QWidget * parent) : QMainWindow(parent) {
 }
 
 AkkWindow::~AkkWindow() {
-    if (!openedFile.isEmpty() && !passwordLine->text().isEmpty()) {
-        if (!isSaved) {
-            QMessageBox::StandardButton msg;
-            msg = QMessageBox::question(this, tr("Saving"), tr("Do you want to save?"),
-                                        QMessageBox::Yes | QMessageBox::No);
-            if (msg == QMessageBox::Yes) {
-                successSave(openedFile);
-            }
-        }
-    }
+    needToClose();
 }
 
 void AkkWindow::initAccModel() {
@@ -85,8 +76,8 @@ void AkkWindow::initConnections() {
     connect(this->addButton, &QPushButton::clicked, this, &AkkWindow::addClicked);
     connect(this->editButton, &QPushButton::clicked, this, &AkkWindow::editClicked);
     connect(this->delButton, &QPushButton::clicked, this, &AkkWindow::delClicked);
-    connect(this->saveButton, &QPushButton::clicked, this, &AkkWindow::saveClicked);
-    connect(this->saveAsButton, &QPushButton::clicked, this, &AkkWindow::saveAsClicked);
+    connect(this->saveAction, &QAction::triggered, this, &AkkWindow::saveClicked);
+    connect(this->saveAsAction, &QAction::triggered, this, &AkkWindow::saveAsClicked);
 }
 
 QLayout * AkkWindow::initMainLayout() {
@@ -131,12 +122,6 @@ QLayout * AkkWindow::initMainLayout() {
     delButton = new QPushButton(tr("Delete"));
     delButton->setEnabled(false);
 
-    saveButton = new QPushButton(tr("save"));
-    saveButton->setEnabled(false);
-
-    saveAsButton = new QPushButton(tr("save as..."));
-    saveAsButton->setEnabled(false);
-
     QVBoxLayout * rightL = new QVBoxLayout;
     rightL->addWidget(addButton);
     rightL->addWidget(editButton);
@@ -162,17 +147,9 @@ QLayout * AkkWindow::initMainLayout() {
     left->addWidget(view.get());
     left->addLayout(labelsLayout);
 
-    QHBoxLayout * midL = new QHBoxLayout;
-    midL->addLayout(left);
-    midL->addLayout(rightL);
-
-    QHBoxLayout * bottom = new QHBoxLayout;
-    bottom->addWidget(saveButton, 2);
-    bottom->addWidget(saveAsButton, 1);
-
-    QVBoxLayout * main = new QVBoxLayout;
-    main->addLayout(midL);
-    main->addLayout(bottom);
+    QHBoxLayout * main = new QHBoxLayout;
+    main->addLayout(left);
+    main->addLayout(rightL);
 
     return main;
 }
@@ -185,6 +162,12 @@ void AkkWindow::initToolbar() {
 
     loadAction = new QAction(QIcon(QPixmap("icons/file_open.png")), tr("load"));
     loadAction->setEnabled(false);
+
+    saveAction = new QAction(QIcon(QPixmap("icons/save.png")), tr("save"));
+    saveAction->setEnabled(false);
+
+    saveAsAction = new QAction(QIcon(QPixmap("icons/save_as.png")), tr("save as..."));
+    saveAsAction->setEnabled(false);
 
     QLabel * warning = new QLabel(tr("need to restart app"));
     warning->setVisible(false);
@@ -212,6 +195,9 @@ void AkkWindow::initToolbar() {
     toolbar->addWidget(passwordLine);
     toolbar->addAction(loadAction);
     toolbar->addSeparator();
+    toolbar->addAction(saveAction);
+    toolbar->addAction(saveAsAction);
+    toolbar->addSeparator();
     restartWarningIcon = toolbar->addWidget(warningIcon);
     restartWarning     = toolbar->addWidget(warning);
     toolbar->addAction(restartAction);
@@ -225,8 +211,8 @@ void AkkWindow::initToolbar() {
 void AkkWindow::PassTextChanged(const QString & str) {
     loadAction->setEnabled(!str.isEmpty());
     if (!openedFile.isEmpty()) {
-        saveButton->setEnabled(!str.isEmpty());
-        saveAsButton->setEnabled(!str.isEmpty());
+        saveAction->setEnabled(!str.isEmpty());
+        saveAsAction->setEnabled(!str.isEmpty());
     }
 }
 
@@ -283,8 +269,8 @@ void AkkWindow::LoadClicked() {
         model->reloadModel(akks);
 
         addButton->setEnabled(true);
-        saveButton->setEnabled(true);
-        saveAsButton->setEnabled(true);
+        saveAction->setEnabled(true);
+        saveAsAction->setEnabled(true);
 
         searchLine->setFocus();
 
@@ -318,6 +304,7 @@ void AkkWindow::LanguageClicked() {
 }
 
 void AkkWindow::RestartClicked() {
+    needToClose();
     qApp->quit();
     QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
 }
@@ -440,6 +427,12 @@ void AkkWindow::keyPressEvent(QKeyEvent * ev) {
         this->delClicked();
     } else if (ev->key() == Qt::Key_Insert && addButton->isEnabled()) {
         this->addClicked();
+    } else if (ev->key() == Qt::Key_Enter) {
+        if (passwordLine->hasFocus()) {
+            this->LoadClicked();
+        } else if (view->hasFocus()) {
+            this->editClicked();
+        }
     }
     QMainWindow::keyPressEvent(ev);
 }
@@ -461,4 +454,18 @@ void AkkWindow::Error(int x) {
             msgBox.setText(tr("Incorrect password"));
     }
     msgBox.exec();
+}
+
+void AkkWindow::needToClose() {
+    if (!openedFile.isEmpty() && !passwordLine->text().isEmpty()) {
+        if (!isSaved) {
+            QMessageBox::StandardButton msg;
+            msg = QMessageBox::question(this, tr("Saving"), tr("Do you want to save?"),
+                                        QMessageBox::Yes | QMessageBox::No);
+            if (msg == QMessageBox::Yes) {
+                successSave(openedFile);
+            }
+        }
+    }
+    isSaved = true;
 }
