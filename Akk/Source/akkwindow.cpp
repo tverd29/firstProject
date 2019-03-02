@@ -1,6 +1,7 @@
 #include "Include\akkwindow.h"
 
 #include <QApplication>
+#include <QComboBox>
 #include <QFile>
 #include <QFileDialog>
 #include <QMessageBox>
@@ -8,6 +9,7 @@
 #include <QRegExp>
 #include <QTextCodec>
 #include <QTextStream>
+#include <QToolBar>
 
 #include "Include/AkksModel/AccountModel.h"
 #include "Include/AkksModel/AccountProxy.h"
@@ -18,6 +20,7 @@
 
 AkkWindow::AkkWindow(QWidget * parent) : QMainWindow(parent) {
     this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    this->settings = new QSettings("settings_conf", QSettings::IniFormat);
 
     initAccModel();
 
@@ -25,6 +28,8 @@ AkkWindow::AkkWindow(QWidget * parent) : QMainWindow(parent) {
     dialog = new DialogAddEdit(this);
 
     isSaved = false;
+
+    this->addToolBar(Qt::TopToolBarArea, initToolbar());
 
     QWidget * w = new QWidget(this);
     w->setLayout(initMainLayout());
@@ -71,7 +76,8 @@ void AkkWindow::initConnections() {
     connect(this->dialog, &DialogAddEdit::addAccount, this, &AkkWindow::addAccount);
     connect(this->dialog, &DialogAddEdit::editAccount, this, &AkkWindow::editAccount);
     connect(this->passwordLine, &QLineEdit::textChanged, this, &AkkWindow::PassTextChanged);
-    connect(this->loadButton, &QPushButton::clicked, this, &AkkWindow::LoadClicked);
+    connect(this->loadAction, &QAction::triggered, this, &AkkWindow::LoadClicked);
+    connect(this->languageAction, &QAction::triggered, this, &AkkWindow::LanguageClicked);
     connect(this->searchLine, &QLineEdit::textChanged, this->proxy, &AccountProxy::setFilter);
     connect(this->addButton, &QPushButton::clicked, this, &AkkWindow::addClicked);
     connect(this->editButton, &QPushButton::clicked, this, &AkkWindow::editClicked);
@@ -81,14 +87,6 @@ void AkkWindow::initConnections() {
 }
 
 QLayout * AkkWindow::initMainLayout() {
-    passwordLine = new QLineEdit;
-    passwordLine->setFixedWidth(500);
-    passwordLine->setPlaceholderText(tr("Password..."));
-    passwordLine->setEchoMode(QLineEdit::Password);
-
-    loadButton = new QPushButton(tr("load"));
-    loadButton->setEnabled(false);
-
     int height = 20;
     int width  = 60;
 
@@ -135,10 +133,6 @@ QLayout * AkkWindow::initMainLayout() {
     saveAsButton = new QPushButton(tr("save as..."));
     saveAsButton->setEnabled(false);
 
-    QHBoxLayout * passLayout = new QHBoxLayout;
-    passLayout->addWidget(passwordLine);
-    passLayout->addWidget(loadButton);
-
     QVBoxLayout * rightL = new QVBoxLayout;
     rightL->addWidget(addButton);
     rightL->addWidget(editButton);
@@ -173,15 +167,55 @@ QLayout * AkkWindow::initMainLayout() {
     bottom->addWidget(saveAsButton, 1);
 
     QVBoxLayout * main = new QVBoxLayout;
-    main->addLayout(passLayout);
     main->addLayout(midL);
     main->addLayout(bottom);
 
     return main;
 }
 
+QToolBar * AkkWindow::initToolbar() {
+    passwordLine = new QLineEdit();
+    passwordLine->setPlaceholderText(tr("Password..."));
+    passwordLine->setEchoMode(QLineEdit::Password);
+    passwordLine->setFixedWidth(200);
+
+    loadAction = new QAction(QIcon(QPixmap("icons/file_open.png")), tr("load"));
+    loadAction->setEnabled(false);
+
+    restartWarning     = new QLabel(tr("need to restart app"));
+    restartWarningIcon = new QLabel();
+    restartWarningIcon->setFixedHeight(25);
+    restartWarningIcon->setPixmap(QPixmap("icons/warning.png").scaled(25, 25));
+
+    settings->beginGroup("main_settings");
+    auto x = settings->value("language", "").toString();
+    if (settings->value("language", "").toString().contains("ru")) {
+        curLang        = "RU";
+        languageAction = new QAction(curLang);
+    } else if (settings->value("language", "").toString().contains("en")) {
+        curLang        = "EN";
+        languageAction = new QAction(curLang);
+    } else {
+        languageAction = new QAction();
+    }
+    settings->endGroup();
+
+    QToolBar * toolbar = new QToolBar(this);
+    toolbar->addWidget(passwordLine);
+    toolbar->addAction(loadAction);
+    toolbar->addSeparator();
+    toolbar->addWidget(restartWarningIcon);
+    toolbar->addWidget(restartWarning);
+    QWidget * spacerWidget = new QWidget(this);
+    spacerWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    spacerWidget->setVisible(true);
+    toolbar->addWidget(spacerWidget);
+    toolbar->addAction(languageAction);
+    return toolbar;
+}
+
 void AkkWindow::PassTextChanged(const QString & str) {
-    loadButton->setEnabled(!str.isEmpty());
+    loadAction->setEnabled(!str.isEmpty());
     if (!openedFile.isEmpty()) {
         saveButton->setEnabled(!str.isEmpty());
         saveAsButton->setEnabled(!str.isEmpty());
@@ -250,6 +284,29 @@ void AkkWindow::LoadClicked() {
     } catch (int x) {
         Error(x);
     }
+}
+
+void AkkWindow::LanguageClicked() {
+    if (curLang == languageAction->text()) {
+        restartWarning->setVisible(false);
+        restartWarningIcon->setVisible(false);
+
+    } else {
+        restartWarning->setVisible(true);
+        restartWarningIcon->setVisible(true);
+    }
+
+    settings->beginGroup("main_settings");
+    if (languageAction->text() == "RU") {
+        curLang = "en_US";
+        languageAction->setText("EN");
+        settings->setValue("language", curLang);
+    } else if (languageAction->text() == "EN") {
+        curLang = "ru_RU";
+        languageAction->setText("RU");
+        settings->setValue("language", curLang);
+    }
+    settings->endGroup();
 }
 
 void AkkWindow::currentItemValues(const QString & res, const QString & acc, const QString & pas) {

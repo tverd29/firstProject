@@ -11,18 +11,19 @@ int main(int argc, char * argv[]) {
     QSettings settings("settings_conf", QSettings::IniFormat);
     settings.beginGroup("main_settings");
     QString lang = settings.value("language", "").toString();
-    //    settings.setValue("language", "ru_RU");
-    settings.endGroup();
-
     QTranslator translator;
     if (lang.isEmpty()) {
         lang = QLocale::system().name();
+        settings.setValue("language", lang);
     }
+    settings.endGroup();
+
     QString z = QDir::currentPath();
     QString y = "V:/Git/First/Akk";
     if (translator.load("akk_" + lang, y)) {
         qApp->installTranslator(&translator);
     }
+
     AkkWindow w;
     w.show();
 

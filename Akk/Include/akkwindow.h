@@ -4,6 +4,7 @@
 #include <QLineEdit>
 #include <QMainWindow>
 #include <QPushButton>
+#include <QSettings>
 #include <memory>
 
 class AccountModel;
@@ -20,6 +21,8 @@ class AkkWindow : public QMainWindow {
     ~AkkWindow();
 
   private:
+    QSettings * settings;
+
     QString key;
     Coder * cod;
 
@@ -30,8 +33,12 @@ class AkkWindow : public QMainWindow {
     DialogAddEdit * dialog;
 
     QLineEdit * passwordLine;
+    QAction * loadAction;
+    QAction * languageAction;
+    QString curLang;
+    QLabel * restartWarning;
+    QLabel * restartWarningIcon;
     QString openedFile;
-    QPushButton * loadButton;
 
     QLineEdit * searchLine;
 
@@ -48,6 +55,7 @@ class AkkWindow : public QMainWindow {
     void initAccModel();
     void initConnections();
     QLayout * initMainLayout();
+    QToolBar * initToolbar();
     void successSave(const QString & file);
     bool isSaved;
     void Error(int x);
@@ -59,6 +67,7 @@ class AkkWindow : public QMainWindow {
     void currentItemValues(const QString & res, const QString & acc, const QString & pas);
     void PassTextChanged(const QString & str);
     void LoadClicked();
+    void LanguageClicked();
     void addClicked();
     void addAccount(const QString & res, const QString & acc, const QString & pas);
     void editClicked();
