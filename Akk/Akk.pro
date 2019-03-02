@@ -53,7 +53,7 @@ DISTFILES += \
     akks \
     yourappname.exe.manifest
 
-TRANSLATIONS = akk_en.ts \
-    akk_ru.ts
+TRANSLATIONS = Language/akk_en.ts \
+    Language/akk_ru.ts
 
 CODECFORSRC     = UTF-8

@@ -31,13 +31,15 @@ class AkkWindow : public QMainWindow {
     AccountProxy * proxy;
 
     DialogAddEdit * dialog;
+    QToolBar * toolbar;
 
     QLineEdit * passwordLine;
     QAction * loadAction;
     QAction * languageAction;
     QString curLang;
-    QLabel * restartWarning;
-    QLabel * restartWarningIcon;
+    QAction * restartAction;
+    QAction * restartWarning;
+    QAction * restartWarningIcon;
     QString openedFile;
 
     QLineEdit * searchLine;
@@ -55,7 +57,7 @@ class AkkWindow : public QMainWindow {
     void initAccModel();
     void initConnections();
     QLayout * initMainLayout();
-    QToolBar * initToolbar();
+    void initToolbar();
     void successSave(const QString & file);
     bool isSaved;
     void Error(int x);
@@ -68,6 +70,7 @@ class AkkWindow : public QMainWindow {
     void PassTextChanged(const QString & str);
     void LoadClicked();
     void LanguageClicked();
+    void RestartClicked();
     void addClicked();
     void addAccount(const QString & res, const QString & acc, const QString & pas);
     void editClicked();
