@@ -80,6 +80,7 @@ void AkkWindow::initConnections() {
     connect(this->passwordLine, &QLineEdit::textChanged, this, &AkkWindow::PassTextChanged);
     connect(this->loadAction, &QAction::triggered, this, &AkkWindow::LoadClicked);
     connect(this->languageAction, &QAction::triggered, this, &AkkWindow::LanguageClicked);
+    connect(this->restartAction, &QAction::triggered, this, &AkkWindow::RestartClicked);
     connect(this->searchLine, &QLineEdit::textChanged, this->proxy, &AccountProxy::setFilter);
     connect(this->addButton, &QPushButton::clicked, this, &AkkWindow::addClicked);
     connect(this->editButton, &QPushButton::clicked, this, &AkkWindow::editClicked);
@@ -122,6 +123,7 @@ QLayout * AkkWindow::initMainLayout() {
 
     addButton = new QPushButton(tr("Add"));
     addButton->setEnabled(false);
+    addButton->setToolTip(tr("Add"));
 
     editButton = new QPushButton(tr("Edit"));
     editButton->setEnabled(false);
