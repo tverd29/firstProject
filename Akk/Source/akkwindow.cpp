@@ -29,8 +29,8 @@ AkkWindow::AkkWindow(QWidget * parent) : QMainWindow(parent) {
 
     isSaved = false;
 
-    initToolbar();
-    this->addToolBar(Qt::TopToolBarArea, this->toolbar);
+    this->addToolBar(Qt::TopToolBarArea, initTopToolbar());
+    this->addToolBar(Qt::BottomToolBarArea, initBottomToolbar());
 
     QWidget * w = new QWidget(this);
     w->setLayout(initMainLayout());
@@ -67,14 +67,18 @@ void AkkWindow::initAccModel() {
 void AkkWindow::initConnections() {
     connect(this->dialog, &DialogAddEdit::addAccount, this, &AkkWindow::addAccount);
     connect(this->dialog, &DialogAddEdit::editAccount, this, &AkkWindow::editAccount);
+
     connect(this->passwordLine, &QLineEdit::textChanged, this, &AkkWindow::PassTextChanged);
     connect(this->loadAction, &QAction::triggered, this, &AkkWindow::LoadClicked);
     connect(this->languageAction, &QAction::triggered, this, &AkkWindow::LanguageClicked);
     connect(this->restartAction, &QAction::triggered, this, &AkkWindow::RestartClicked);
+
     connect(this->searchLine, &QLineEdit::textChanged, this->proxy, &AccountProxy::setFilter);
-    connect(this->addButton, &QPushButton::clicked, this, &AkkWindow::addClicked);
-    connect(this->editButton, &QPushButton::clicked, this, &AkkWindow::editClicked);
-    connect(this->delButton, &QPushButton::clicked, this, &AkkWindow::delClicked);
+
+    connect(this->addAction, &QAction::triggered, this, &AkkWindow::addClicked);
+    connect(this->editAction, &QAction::triggered, this, &AkkWindow::editClicked);
+    connect(this->delAction, &QAction::triggered, this, &AkkWindow::delClicked);
+
     connect(this->saveAction, &QAction::triggered, this, &AkkWindow::saveClicked);
     connect(this->saveAsAction, &QAction::triggered, this, &AkkWindow::saveAsClicked);
 }
@@ -111,22 +115,6 @@ QLayout * AkkWindow::initMainLayout() {
     searchLine = new QLineEdit;
     searchLine->setPlaceholderText(tr("Search..."));
 
-    addButton = new QPushButton(tr("Add"));
-    addButton->setEnabled(false);
-    addButton->setToolTip(tr("Add"));
-
-    editButton = new QPushButton(tr("Edit"));
-    editButton->setEnabled(false);
-
-    delButton = new QPushButton(tr("Delete"));
-    delButton->setEnabled(false);
-
-    QVBoxLayout * rightL = new QVBoxLayout;
-    rightL->addWidget(addButton);
-    rightL->addWidget(editButton);
-    rightL->addWidget(delButton);
-    rightL->addSpacing(80);
-
     QVBoxLayout * leftLabels = new QVBoxLayout;
     leftLabels->addWidget(resLabel);
     leftLabels->addWidget(logLabel);
@@ -141,19 +129,15 @@ QLayout * AkkWindow::initMainLayout() {
     labelsLayout->addLayout(leftLabels, 1);
     labelsLayout->addLayout(rightLabels, 5);
 
-    QVBoxLayout * left = new QVBoxLayout;
-    left->addWidget(searchLine);
-    left->addWidget(view.get());
-    left->addLayout(labelsLayout);
-
-    QHBoxLayout * main = new QHBoxLayout;
-    main->addLayout(left);
-    main->addLayout(rightL);
+    QVBoxLayout * main = new QVBoxLayout;
+    main->addWidget(searchLine);
+    main->addWidget(view.get());
+    main->addLayout(labelsLayout);
 
     return main;
 }
 
-void AkkWindow::initToolbar() {
+QToolBar * AkkWindow::initTopToolbar() {
     passwordLine = new QLineEdit();
     passwordLine->setPlaceholderText(tr("Password..."));
     passwordLine->setEchoMode(QLineEdit::Password);
@@ -190,10 +174,8 @@ void AkkWindow::initToolbar() {
     }
     settings->endGroup();
 
-    toolbar                = new QToolBar(this);
-    QWidget * marginWidget = new QWidget(this);
-    marginWidget->setFixedWidth(8);
-    toolbar->addWidget(marginWidget);
+    QToolBar * toolbar = new QToolBar(this);
+    toolbar->addWidget(getMarginWidget());
     toolbar->addWidget(passwordLine);
     toolbar->addAction(loadAction);
     toolbar->addSeparator();
@@ -203,11 +185,46 @@ void AkkWindow::initToolbar() {
     restartWarningIcon = toolbar->addWidget(warningIcon);
     restartWarning     = toolbar->addWidget(warning);
     toolbar->addAction(restartAction);
+    toolbar->addWidget(getSpacerWidget());
+    toolbar->addAction(languageAction);
+    toolbar->addWidget(getMarginWidget());
+    toolbar->setMovable(false);
+    return toolbar;
+}
+
+QToolBar * AkkWindow::initBottomToolbar() {
+    addAction = new QAction(QIcon(QPixmap("icons/add.png")), tr("Add"));
+    addAction->setEnabled(false);
+
+    editAction = new QAction(QIcon(QPixmap("icons/edit.png")), tr("Edit"));
+    editAction->setEnabled(false);
+
+    delAction = new QAction(QIcon(QPixmap("icons/del_2.png")), tr("Delete"));
+    delAction->setEnabled(false);
+
+    QToolBar * toolbar = new QToolBar(this);
+
+    toolbar->addWidget(getSpacerWidget());
+    toolbar->addAction(addAction);
+    toolbar->addWidget(getSpacerWidget());
+    toolbar->addAction(editAction);
+    toolbar->addWidget(getSpacerWidget());
+    toolbar->addAction(delAction);
+    toolbar->addWidget(getSpacerWidget());
+    toolbar->setMovable(false);
+    return toolbar;
+}
+
+QWidget * AkkWindow::getSpacerWidget() {
     QWidget * spacerWidget = new QWidget(this);
     spacerWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-    toolbar->addWidget(spacerWidget);
-    toolbar->addAction(languageAction);
-    toolbar->setMovable(false);
+    return spacerWidget;
+}
+
+QWidget * AkkWindow::getMarginWidget(const int margin) {
+    QWidget * marginWidget = new QWidget(this);
+    marginWidget->setFixedWidth(margin);
+    return marginWidget;
 }
 
 void AkkWindow::PassTextChanged(const QString & str) {
@@ -270,7 +287,8 @@ void AkkWindow::LoadClicked() {
 
         model->reloadModel(akks);
 
-        addButton->setEnabled(true);
+        addAction->setEnabled(true);
+
         saveAction->setEnabled(true);
         saveAsAction->setEnabled(true);
 
@@ -316,14 +334,14 @@ void AkkWindow::currentItemValues(const QString & res, const QString & acc, cons
         resValLabel->setText(res);
         logValLabel->setText(acc);
         pasValLabel->setText(pas);
-        delButton->setEnabled(true);
-        editButton->setEnabled(true);
+        delAction->setEnabled(true);
+        editAction->setEnabled(true);
     } else {
         resValLabel->setText(QString());
         logValLabel->setText(QString());
         pasValLabel->setText(QString());
-        delButton->setEnabled(false);
-        editButton->setEnabled(false);
+        delAction->setEnabled(false);
+        editAction->setEnabled(false);
     }
 }
 
@@ -340,8 +358,8 @@ void AkkWindow::addAccount(const QString & res, const QString & acc, const QStri
     akk.password = pas;
     model->insert(akk);
     isSaved = false;
-    editButton->setEnabled(true);
-    delButton->setEnabled(true);
+    delAction->setEnabled(true);
+    editAction->setEnabled(true);
 }
 
 void AkkWindow::editClicked() {
@@ -364,8 +382,8 @@ void AkkWindow::delClicked() {
         model->remove(this->view->getCurrentIndex());
         isSaved = false;
         if (!model->getRowCount()) {
-            editButton->setEnabled(false);
-            delButton->setEnabled(false);
+            delAction->setEnabled(false);
+            editAction->setEnabled(false);
         }
     }
 }
@@ -422,12 +440,12 @@ void AkkWindow::keyPressEvent(QKeyEvent * ev) {
         resValLabel->setText(QString());
         logValLabel->setText(QString());
         pasValLabel->setText(QString());
-        editButton->setEnabled(false);
-        delButton->setEnabled(false);
+        delAction->setEnabled(false);
+        editAction->setEnabled(false);
         return;
-    } else if (ev->key() == Qt::Key_Delete && delButton->isEnabled()) {
+    } else if (ev->key() == Qt::Key_Delete && delAction->isEnabled()) {
         this->delClicked();
-    } else if (ev->key() == Qt::Key_Insert && addButton->isEnabled()) {
+    } else if (ev->key() == Qt::Key_Insert && addAction->isEnabled()) {
         this->addClicked();
     } else if (ev->key() == Qt::Key_Enter) {
         if (passwordLine->hasFocus()) {

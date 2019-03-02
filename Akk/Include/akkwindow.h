@@ -31,7 +31,6 @@ class AkkWindow : public QMainWindow {
     AccountProxy * proxy;
 
     DialogAddEdit * dialog;
-    QToolBar * toolbar;
 
     QLineEdit * passwordLine;
     QAction * loadAction;
@@ -50,14 +49,17 @@ class AkkWindow : public QMainWindow {
     QLabel * logValLabel;
     QLabel * pasValLabel;
 
-    QPushButton * addButton;
-    QPushButton * editButton;
-    QPushButton * delButton;
+    QAction * addAction;
+    QAction * editAction;
+    QAction * delAction;
 
     void initAccModel();
     void initConnections();
     QLayout * initMainLayout();
-    void initToolbar();
+    QToolBar * initTopToolbar();
+    QToolBar * initBottomToolbar();
+    QWidget * getSpacerWidget();
+    QWidget * getMarginWidget(const int margin = 8);
     void successSave(const QString & file);
     bool isSaved;
     void Error(int x);
