@@ -20,7 +20,6 @@
 #include "Include/structs.h"
 
 AkkWindow::AkkWindow(QWidget * parent) : QMainWindow(parent) {
-    this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
     this->settings = new QSettings("settings_conf", QSettings::IniFormat);
 
     initAccModel();
