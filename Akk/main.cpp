@@ -18,9 +18,7 @@ int main(int argc, char * argv[]) {
     }
     settings.endGroup();
 
-    QString z = QDir::currentPath();
-    QString y = "V:/Git/First/Akk/Language";
-    if (translator.load("akk_" + lang, y)) {
+    if (translator.load("akk_" + lang, QDir::currentPath() + "/Language")) {
         qApp->installTranslator(&translator);
     }
 
