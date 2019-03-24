@@ -57,3 +57,7 @@ TRANSLATIONS = Language/akk_en.ts \
     Language/akk_ru.ts
 
 CODECFORSRC     = UTF-8
+
+win32:RC_ICONS += ..\3rdParty\akks.ico
+
+VERSION = 1.1.0.0
