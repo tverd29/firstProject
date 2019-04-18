@@ -347,7 +347,7 @@ void AkkWindow::currentItemValues(const QString & res, const QString & acc, cons
 
 void AkkWindow::addClicked() {
     dialog->setWindowTitle(tr("Add"));
-    dialog->setLines(tr("Add"));
+    dialog->setLines(tr("Add"), true);
     dialog->exec();
 }
 
@@ -364,7 +364,8 @@ void AkkWindow::addAccount(const QString & res, const QString & acc, const QStri
 
 void AkkWindow::editClicked() {
     dialog->setWindowTitle(tr("Edit"));
-    dialog->setLines(tr("Edit"), resValLabel->text(), logValLabel->text(), pasValLabel->text());
+    dialog->setLines(tr("Edit"), false, resValLabel->text(), logValLabel->text(),
+                     pasValLabel->text());
     dialog->exec();
 }
 

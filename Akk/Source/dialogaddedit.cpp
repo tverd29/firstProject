@@ -61,11 +61,10 @@ void DialogAddEdit::passwordChanged(QString str) {
     ok->setEnabled(!resourceLine->text().isEmpty() && !loginLine->text().isEmpty() &&
                    !str.isEmpty());
 }
-void DialogAddEdit::setLines(const QString & str, const QString res, const QString & akk,
-                             const QString & pas) {
-    if (str == "Add") {
-        isAdding = true;
-    }
+void DialogAddEdit::setLines(const QString & str, bool isAdding, const QString res,
+                             const QString & akk, const QString & pas) {
+    this->isAdding = isAdding;
+
     ok->setText(str);
     resourceLine->setText(res);
     loginLine->setText(akk);
