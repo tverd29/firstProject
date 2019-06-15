@@ -1,4 +1,4 @@
-#include "Include/AkksModel/AccountProxy.h"
+#include "Source/AkksModel/AccountProxy.h"
 
 AccountProxy::AccountProxy(QObject * parent) : QSortFilterProxyModel(parent) {
 }

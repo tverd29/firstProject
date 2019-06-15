@@ -1,4 +1,4 @@
-#include "Include\akkwindow.h"
+#include "Source\akkwindow.h"
 
 #include <QApplication>
 #include <QComboBox>
@@ -12,12 +12,12 @@
 #include <QTextStream>
 #include <QToolBar>
 
-#include "Include/AkksModel/AccountModel.h"
-#include "Include/AkksModel/AccountProxy.h"
-#include "Include/AkksModel/AccountView.h"
-#include "Include/coder.h"
-#include "Include/dialogaddedit.h"
-#include "Include/structs.h"
+#include "Source/AkksModel/AccountModel.h"
+#include "Source/AkksModel/AccountProxy.h"
+#include "Source/AkksModel/AccountView.h"
+#include "Source/coder.h"
+#include "Source/dialogaddedit.h"
+#include "Source/structs.h"
 
 AkkWindow::AkkWindow(QWidget * parent) : QMainWindow(parent) {
     this->settings = new QSettings("settings_conf", QSettings::IniFormat);

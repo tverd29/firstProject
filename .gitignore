@@ -114,3 +114,6 @@
 
 # Don't ignore markdown files.
 !*.md
+
+# Ignore desktop.ini
+desktop.ini

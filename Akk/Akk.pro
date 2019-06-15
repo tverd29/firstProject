@@ -33,14 +33,14 @@ SOURCES += \
     Source/AkksModel/AccountProxy.cpp
 
 HEADERS += \
-    Include\akkwindow.h \
-    Include\dialogaddedit.h \
-    Include\coder.h \
-    Include/AkksModel/AccountModel.h \
-    Include/AkksModel/AccountView.h \
-    Include/structs.h \
-    Include/AkksModel/AccountItem.h \
-    Include/AkksModel/AccountProxy.h
+    Source\akkwindow.h \
+    Source\dialogaddedit.h \
+    Source\coder.h \
+    Source/AkksModel/AccountModel.h \
+    Source/AkksModel/AccountView.h \
+    Source/structs.h \
+    Source/AkksModel/AccountItem.h \
+    Source/AkksModel/AccountProxy.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

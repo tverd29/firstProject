@@ -1,4 +1,6 @@
-#include "Include/AkksModel/AccountModel.h"
+#include "Source/AkksModel/AccountModel.h"
+
+#include "Source/AkksModel/AccountItem.h"
 
 AccountModel::AccountModel(QObject * parent) : QAbstractItemModel(parent) {
     rootItem = new AccountItem(AccountTypes::ROOT);

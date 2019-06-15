@@ -4,8 +4,9 @@
 #include <QVariant>
 #include <memory>
 
-#include "Include/AkksModel/AccountItem.h"
-#include "Include/structs.h"
+#include "Source/structs.h"
+
+class AccountItem;
 
 class AccountModel : public QAbstractItemModel {
     Q_OBJECT

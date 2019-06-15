@@ -1,9 +1,9 @@
-#include "Include/AkksModel/AccountView.h"
+#include "Source/AkksModel/AccountView.h"
 
 #include <QMouseEvent>
 #include <QSortFilterProxyModel>
 
-#include "Include/structs.h"
+#include "Source/structs.h"
 
 AccountView::AccountView(QWidget * parent) : QTreeView(parent) {
 }

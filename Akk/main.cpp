@@ -3,7 +3,7 @@
 #include <QSettings>
 #include <QTranslator>
 
-#include "Include\akkwindow.h"
+#include "Source\akkwindow.h"
 
 int main(int argc, char * argv[]) {
     QApplication a(argc, argv);

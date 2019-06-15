@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Include/structs.h"
+#include "Source/structs.h"
 
 class AccountItem {
   private:
