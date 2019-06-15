@@ -19,3 +19,14 @@ bool AccountProxy::filterAcceptsRow(int sourceRow, const QModelIndex & sourcePar
     }
     return false;
 }
+
+bool AccountProxy::lessThan(const QModelIndex & source_left,
+                            const QModelIndex & source_right) const {
+    auto leftValue  = source_left.data().toString().toLower();
+    auto rightValue = source_right.data().toString().toLower();
+
+    if (leftValue < rightValue) {
+        return true;
+    }
+    return false;
+}

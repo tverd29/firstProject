@@ -12,7 +12,9 @@ class AccountProxy : public QSortFilterProxyModel {
     ~AccountProxy() = default;
 
   protected:
-    bool filterAcceptsRow(int sourceRow, const QModelIndex & sourceParent) const override;
+    virtual bool filterAcceptsRow(int sourceRow, const QModelIndex & sourceParent) const override;
+    virtual bool lessThan(const QModelIndex & source_left,
+                          const QModelIndex & source_right) const override;
 
   public slots:
     void setFilter(const QString & filter);
