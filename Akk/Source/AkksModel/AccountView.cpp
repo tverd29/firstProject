@@ -9,6 +9,7 @@ AccountView::AccountView(QWidget * parent) : QTreeView(parent) {
 }
 
 void AccountView::mouseReleaseEvent(QMouseEvent * ev) {
+    QTreeView::mouseReleaseEvent(ev);
 }
 
 void AccountView::mousePressEvent(QMouseEvent * ev) {

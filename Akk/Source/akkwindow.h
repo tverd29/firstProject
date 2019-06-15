@@ -7,6 +7,7 @@
 #include <QSettings>
 #include <memory>
 
+class AccountItemDelegate;
 class AccountModel;
 class AccountView;
 class AccountProxy;
@@ -21,38 +22,41 @@ class AkkWindow : public QMainWindow {
     ~AkkWindow();
 
   private:
-    QSettings * settings;
+    QSettings * settings = nullptr;
 
     QString key;
-    Coder * cod;
+    Coder * cod = nullptr;
 
     std::shared_ptr<AccountModel> model;
     std::shared_ptr<AccountView> view;
-    AccountProxy * proxy;
+    AccountItemDelegate * delegate = nullptr;
+    AccountProxy * proxy           = nullptr;
 
-    DialogAddEdit * dialog;
+    DialogAddEdit * dialog = nullptr;
 
-    QLineEdit * passwordLine;
-    QAction * loadAction;
-    QAction * saveAction;
-    QAction * saveAsAction;
-    QAction * languageAction;
+    QLineEdit * passwordLine     = nullptr;
+    QAction * loadAction         = nullptr;
+    QAction * saveAction         = nullptr;
+    QAction * saveAsAction       = nullptr;
+    QAction * languageAction     = nullptr;
+    QAction * restartAction      = nullptr;
+    QAction * restartWarning     = nullptr;
+    QAction * restartWarningIcon = nullptr;
+
     QString curLang;
-    QAction * restartAction;
-    QAction * restartWarning;
-    QAction * restartWarningIcon;
     QString openedFile;
 
-    QLineEdit * searchLine;
+    QLineEdit * searchLine = nullptr;
 
-    QLabel * resValLabel;
-    QLabel * logValLabel;
-    QLabel * pasValLabel;
+    QLabel * resValLabel = nullptr;
+    QLabel * logValLabel = nullptr;
+    QLabel * pasValLabel = nullptr;
 
-    QAction * addAction;
-    QAction * editAction;
-    QAction * delAction;
+    QAction * addAction  = nullptr;
+    QAction * editAction = nullptr;
+    QAction * delAction  = nullptr;
 
+  private:
     void initAccModel();
     void initConnections();
     QLayout * initMainLayout();

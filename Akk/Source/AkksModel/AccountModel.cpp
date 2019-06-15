@@ -1,5 +1,7 @@
 #include "Source/AkksModel/AccountModel.h"
 
+#include <QColor>
+
 #include "Source/AkksModel/AccountItem.h"
 
 AccountModel::AccountModel(QObject * parent) : QAbstractItemModel(parent) {
@@ -19,7 +21,17 @@ QVariant AccountModel::data(const QModelIndex & index, int role) const {
         return QVariant();
     }
 
-    return item->data(index.column(), role);
+    switch (role) {
+        case Qt::BackgroundRole:
+            return QVariant(QColor("white"));
+        case Qt::DisplayRole:
+        case Qt::EditRole:
+        case AccountRole::GetResource:
+        case AccountRole::GetAccountName:
+        case AccountRole::GetPassword:
+            return item->data(index.column(), role);
+    }
+    return QVariant();
 }
 
 Qt::ItemFlags AccountModel::flags(const QModelIndex & index) const {

@@ -23,6 +23,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+    Source/AkksModel/AccountItemDelegate.cpp \
     main.cpp \
     Source\akkwindow.cpp \
     Source\dialogaddedit.cpp \
@@ -33,6 +34,7 @@ SOURCES += \
     Source/AkksModel/AccountProxy.cpp
 
 HEADERS += \
+    Source/AkksModel/AccountItemDelegate.h \
     Source\akkwindow.h \
     Source\dialogaddedit.h \
     Source\coder.h \

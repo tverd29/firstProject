@@ -12,6 +12,7 @@
 #include <QTextStream>
 #include <QToolBar>
 
+#include "Source/AkksModel/AccountItemDelegate.h"
 #include "Source/AkksModel/AccountModel.h"
 #include "Source/AkksModel/AccountProxy.h"
 #include "Source/AkksModel/AccountView.h"
@@ -51,13 +52,19 @@ AkkWindow::~AkkWindow() {
 void AkkWindow::initAccModel() {
     this->model = std::make_shared<AccountModel>(this);
     this->view  = std::make_shared<AccountView>(this);
+
     this->proxy = new AccountProxy(this);
     this->proxy->setSourceModel(model.get());
     this->proxy->setDynamicSortFilter(true);
+
+    this->delegate = new AccountItemDelegate(this);
+
     this->view->setModel(proxy);
+    this->view->setItemDelegate(delegate);
     this->view->setSortingEnabled(true);
     this->view->sortByColumn(0, Qt::SortOrder::AscendingOrder);
     this->view->setRootIsDecorated(false);
+    this->view->setIndentation(0);
 
     connect(this->view.get(), &AccountView::currentAkkSelected, this,
             &AkkWindow::currentItemValues);
