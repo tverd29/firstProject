@@ -64,11 +64,14 @@ void AkkWindow::initAccModel() {
     this->view->setSortingEnabled(true);
     this->view->sortByColumn(0, Qt::SortOrder::AscendingOrder);
     this->view->setRootIsDecorated(false);
+    this->view->setUniformRowHeights(false);
     this->view->setIndentation(0);
 
     connect(this->view.get(), &AccountView::currentAkkSelected, this,
             &AkkWindow::currentItemValues);
     connect(this->view.get(), &AccountView::doubleClicked, this, &AkkWindow::editClicked);
+    connect(this->view->selectionModel(), &QItemSelectionModel::selectionChanged, this,
+            [this]() { this->view->update(); });
 }
 
 void AkkWindow::initConnections() {

@@ -50,3 +50,7 @@ const QModelIndex AccountView::getCurrentIndex() {
     auto proxy = dynamic_cast<QSortFilterProxyModel *>(this->model());
     return proxy->mapToSource(this->currentIndex());
 }
+
+void AccountView::updateG() {
+    QTreeView::updateGeometry();
+}
