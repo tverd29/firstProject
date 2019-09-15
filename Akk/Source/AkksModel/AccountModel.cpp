@@ -142,5 +142,6 @@ int AccountModel::getRowCount() {
 }
 
 void AccountModel::clearModel() {
+    delete this->rootItem;
     rootItem = new AccountItem(AccountTypes::ROOT);
 }

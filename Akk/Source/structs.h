@@ -10,7 +10,7 @@ enum AccountRole {
     GetPassword
 };
 
-enum AccountTypes { ROOT, FOLDER, ACCOUNT };
+enum AccountTypes { ROOT, FOLDER, ACCOUNT, ACCOUNT_CHILD, PASSWORD_CHILD };
 
 enum AccountColumns { Resource, ColumnCount };
 

@@ -8,17 +8,8 @@ AccountItem::AccountItem(const Account & akk, AccountItem * parentItem)
 
 AccountItem::AccountItem(const int type, AccountItem * parentItem) : m_parentItem(parentItem) {
     Account akk;
-    switch (type) {
-        case AccountTypes::ROOT: {
-            akk.isAkk = type;
-            break;
-        }
-        case AccountTypes::FOLDER: {
-            akk.isAkk = type;
-            break;
-        }
-    }
-    m_akk = akk;
+    akk.isAkk = type;
+    m_akk     = akk;
 }
 
 AccountItem::~AccountItem() {
