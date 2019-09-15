@@ -15,13 +15,23 @@ void AccountView::mouseReleaseEvent(QMouseEvent * ev) {
 void AccountView::mousePressEvent(QMouseEvent * ev) {
     auto index = this->indexAt(ev->pos());
     if (index.isValid()) {
-        changeSelected(index);
+        auto type = index.data(AccountRole::GetType).toInt();
+        if (type == AccountTypes::ACCOUNT_CHILD || type == AccountTypes::PASSWORD_CHILD) {
+            return;
+        }
+        QTreeView::mousePressEvent(ev);
     }
-    QTreeView::mousePressEvent(ev);
 }
 
 void AccountView::mouseDoubleClickEvent(QMouseEvent * ev) {
-    QTreeView::mouseDoubleClickEvent(ev);
+    auto index = this->indexAt(ev->pos());
+    if (index.isValid()) {
+        auto type = index.data(AccountRole::GetType).toInt();
+        if (type == AccountTypes::ACCOUNT_CHILD || type == AccountTypes::PASSWORD_CHILD) {
+            return;
+        }
+        emit editStart();
+    }
 }
 
 void AccountView::selectionChanged(const QItemSelection & selected,
@@ -29,6 +39,10 @@ void AccountView::selectionChanged(const QItemSelection & selected,
     if (selected.indexes().count()) {
         auto index = selected.indexes().first();
         if (index.isValid()) {
+            auto type = index.data(AccountRole::GetType).toInt();
+            if (type == AccountTypes::ACCOUNT_CHILD || type == AccountTypes::PASSWORD_CHILD) {
+                return;
+            }
             changeSelected(index);
         }
     } else {
@@ -38,6 +52,8 @@ void AccountView::selectionChanged(const QItemSelection & selected,
 }
 
 void AccountView::changeSelected(const QModelIndex & index) {
+    this->collapseAll();
+    this->expand(index);
     QString res = index.data(AccountRole::GetResource).toString();
     QString acc = index.data(AccountRole::GetAccountName).toString();
     QString pas = index.data(AccountRole::GetPassword).toString();
@@ -49,8 +65,4 @@ void AccountView::changeSelected(const QModelIndex & index) {
 const QModelIndex AccountView::getCurrentIndex() {
     auto proxy = dynamic_cast<QSortFilterProxyModel *>(this->model());
     return proxy->mapToSource(this->currentIndex());
-}
-
-void AccountView::updateG() {
-    QTreeView::updateGeometry();
 }

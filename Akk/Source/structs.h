@@ -7,16 +7,17 @@ enum AccountRole {
     User    = Qt::UserRole,
     GetResource,
     GetAccountName,
-    GetPassword
+    GetPassword,
+    GetType
 };
 
-enum AccountTypes { ROOT, FOLDER, ACCOUNT, ACCOUNT_CHILD, PASSWORD_CHILD };
+enum AccountTypes { ROOT, ACCOUNT, ACCOUNT_CHILD, PASSWORD_CHILD };
 
 enum AccountColumns { Resource, ColumnCount };
 
 struct Account {
   public:
-    int isAkk        = AccountTypes::FOLDER;
+    int type         = AccountTypes::ACCOUNT;
     QString resource = "";
     QString name     = "";
     QString password = "";

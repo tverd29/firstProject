@@ -26,4 +26,6 @@ class AccountItem {
     int row() const;
     AccountItem * parent();
     Account getAccount();
+
+    void clear();
 };

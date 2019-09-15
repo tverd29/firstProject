@@ -15,8 +15,11 @@ void AccountItemDelegate::paint(QPainter * painter, const QStyleOptionViewItem &
 
     QRect rect = option.rect;
 
+    auto type = index.data(AccountRole::GetType).toInt();
+
     painter->save();
-    if (option.state & QStyle::State_Selected) {
+    if (option.state & QStyle::State_Selected || type == AccountTypes::ACCOUNT_CHILD ||
+        type == AccountTypes::PASSWORD_CHILD) {
         painter->setBrush(QBrush(QColor(228, 241, 254)));
         painter->setPen(QColor(228, 241, 254));
     } else {
@@ -26,8 +29,17 @@ void AccountItemDelegate::paint(QPainter * painter, const QStyleOptionViewItem &
     painter->drawRect(rect);
 
     painter->setPen(QColor("black"));
-    painter->drawText(rect.left(), rect.center().y(),
-                      index.data(AccountRole::GetResource).toString());
+    if (type == AccountTypes::ACCOUNT_CHILD) {
+        painter->drawText(rect.left() + 25, rect.center().y() + 2,
+                          tr("Account: ") + index.data(AccountRole::GetResource).toString());
+    } else if (type == AccountTypes::PASSWORD_CHILD) {
+        painter->drawText(rect.left() + 25, rect.center().y() + 2,
+                          tr("Password: ") + index.data(AccountRole::GetResource).toString());
+    } else {
+        painter->drawText(rect.left() + 5, rect.center().y() + 2,
+                          index.data(AccountRole::GetResource).toString());
+    }
+
     painter->restore();
 }
 
@@ -38,10 +50,11 @@ QSize AccountItemDelegate::sizeHint(const QStyleOptionViewItem & option,
     }
 
     QSize size = QItemDelegate::sizeHint(option, index);
-    if (option.state & QStyle::State_Selected) {
-        size.setHeight(50);
-    } else {
+    auto type  = index.data(AccountRole::GetType).toInt();
+    if (type == AccountTypes::ACCOUNT_CHILD || type == AccountTypes::PASSWORD_CHILD) {
         size.setHeight(20);
+    } else {
+        size.setHeight(30);
     }
 
     return size;

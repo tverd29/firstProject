@@ -69,9 +69,7 @@ void AkkWindow::initAccModel() {
 
     connect(this->view.get(), &AccountView::currentAkkSelected, this,
             &AkkWindow::currentItemValues);
-    connect(this->view.get(), &AccountView::doubleClicked, this, &AkkWindow::editClicked);
-    connect(this->view->selectionModel(), &QItemSelectionModel::selectionChanged, this,
-            [this]() { this->view->update(); });
+    connect(this->view.get(), &AccountView::editStart, this, &AkkWindow::editClicked);
 }
 
 void AkkWindow::initConnections() {

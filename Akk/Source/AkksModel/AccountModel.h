@@ -38,4 +38,5 @@ class AccountModel : public QAbstractItemModel {
 
   private:
     void clearModel();
+    void addItem(AccountItem * item);
 };

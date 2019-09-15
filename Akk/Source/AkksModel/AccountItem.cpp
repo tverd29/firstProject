@@ -8,8 +8,8 @@ AccountItem::AccountItem(const Account & akk, AccountItem * parentItem)
 
 AccountItem::AccountItem(const int type, AccountItem * parentItem) : m_parentItem(parentItem) {
     Account akk;
-    akk.isAkk = type;
-    m_akk     = akk;
+    akk.type = type;
+    m_akk    = akk;
 }
 
 AccountItem::~AccountItem() {
@@ -57,13 +57,29 @@ int AccountItem::columnCount() const {
 }
 
 QVariant AccountItem::data(int column, int role) const {
-    if (role == AccountRole::Display || role == AccountRole::GetResource) {
-        return m_akk.resource;
-    } else if (role == AccountRole::GetAccountName) {
-        return m_akk.name;
-    } else if (role == AccountRole::GetPassword) {
-        return m_akk.password;
+    switch (role) {
+        case AccountRole::Display:
+            if (m_akk.type == AccountTypes::ACCOUNT_CHILD) {
+                return this->row();
+            } else if (m_akk.type == AccountTypes::PASSWORD_CHILD) {
+                return this->row();
+            }
+            return m_akk.resource;
+        case AccountRole::GetResource:
+            if (m_akk.type == AccountTypes::ACCOUNT_CHILD) {
+                return m_parentItem->data(AccountColumns::Resource, AccountRole::GetAccountName);
+            } else if (m_akk.type == AccountTypes::PASSWORD_CHILD) {
+                return m_parentItem->data(AccountColumns::Resource, AccountRole::GetPassword);
+            }
+            return m_akk.resource;
+        case AccountRole::GetAccountName:
+            return m_akk.name;
+        case AccountRole::GetPassword:
+            return m_akk.password;
+        case AccountRole::GetType:
+            return m_akk.type;
     }
+
     return QVariant();
 }
 
@@ -80,4 +96,11 @@ AccountItem * AccountItem::parent() {
 
 Account AccountItem::getAccount() {
     return this->m_akk;
+}
+
+void AccountItem::clear() {
+    for (auto child : this->m_childItems) {
+        child->clear();
+    }
+    delete this;
 }

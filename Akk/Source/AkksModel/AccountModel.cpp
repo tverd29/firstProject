@@ -29,6 +29,7 @@ QVariant AccountModel::data(const QModelIndex & index, int role) const {
         case AccountRole::GetResource:
         case AccountRole::GetAccountName:
         case AccountRole::GetPassword:
+        case AccountRole::GetType:
             return item->data(index.column(), role);
     }
     return QVariant();
@@ -103,7 +104,7 @@ void AccountModel::reloadModel(QList<Account> & akks) {
 
     for (auto & akk : akks) {
         AccountItem * item = new AccountItem(akk, rootItem);
-        rootItem->appendChild(item);
+        this->addItem(item);
     }
     this->endResetModel();
 }
@@ -112,7 +113,7 @@ void AccountModel::insert(Account & akk) {
     this->beginInsertRows(QModelIndex(), rootItem->childCount(), rootItem->childCount());
 
     AccountItem * item = new AccountItem(akk, rootItem);
-    rootItem->appendChild(item);
+    this->addItem(item);
 
     this->endInsertRows();
 }
@@ -142,6 +143,14 @@ int AccountModel::getRowCount() {
 }
 
 void AccountModel::clearModel() {
-    delete this->rootItem;
+    this->rootItem->clear();
     rootItem = new AccountItem(AccountTypes::ROOT);
+}
+
+void AccountModel::addItem(AccountItem * item) {
+    rootItem->appendChild(item);
+    AccountItem * accItem  = new AccountItem(AccountTypes::ACCOUNT_CHILD, item);
+    AccountItem * passItem = new AccountItem(AccountTypes::PASSWORD_CHILD, item);
+    item->appendChild(accItem);
+    item->appendChild(passItem);
 }
