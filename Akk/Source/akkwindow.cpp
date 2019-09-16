@@ -488,9 +488,8 @@ void AkkWindow::Error(int x) {
 void AkkWindow::needToClose() {
     if (!openedFile.isEmpty() && !passwordLine->text().isEmpty()) {
         if (!isSaved) {
-            QMessageBox::StandardButton msg;
-            msg = QMessageBox::question(this, tr("Saving"), tr("Do you want to save?"),
-                                        QMessageBox::Yes | QMessageBox::No);
+            auto msg = QMessageBox::question(this, tr("Saving"), tr("Do you want to save?"),
+                                             QMessageBox::Yes | QMessageBox::No);
             if (msg == QMessageBox::Yes) {
                 successSave(openedFile);
             }
