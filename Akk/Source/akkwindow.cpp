@@ -445,7 +445,7 @@ void AkkWindow::successSave(const QString & f) {
 
 void AkkWindow::keyPressEvent(QKeyEvent * ev) {
     if (ev->key() == Qt::Key_Escape) {
-        this->view->selectionModel()->clear();
+        this->view->clearSelected();
         resValLabel->setText(QString());
         logValLabel->setText(QString());
         pasValLabel->setText(QString());

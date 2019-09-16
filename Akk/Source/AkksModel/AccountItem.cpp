@@ -44,6 +44,10 @@ QList<Account> AccountItem::getAllAkks() {
     return akks;
 }
 
+QList<AccountItem *> AccountItem::getChildrens() {
+    return this->m_childItems;
+}
+
 AccountItem * AccountItem::child(int row) {
     return m_childItems.value(row);
 }
@@ -96,6 +100,14 @@ AccountItem * AccountItem::parent() {
 
 Account AccountItem::getAccount() {
     return this->m_akk;
+}
+
+bool AccountItem::isSelected() {
+    return this->selected;
+}
+
+void AccountItem::setSelected(bool value) {
+    this->selected = value;
 }
 
 void AccountItem::clear() {

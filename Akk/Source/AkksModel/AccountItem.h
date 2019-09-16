@@ -7,6 +7,7 @@ class AccountItem {
     Account m_akk;
     AccountItem * m_parentItem;
     QList<AccountItem *> m_childItems;
+    bool selected = false;
 
   public:
     explicit AccountItem(const Account & akk, AccountItem * parentItem = nullptr);
@@ -18,7 +19,7 @@ class AccountItem {
     void editChild(int row, const QString & res, const QString & acc, const QString & pas);
     void setAcc(const QString & res, const QString & acc, const QString & pas);
     QList<Account> getAllAkks();
-
+    QList<AccountItem *> getChildrens();
     AccountItem * child(int row);
     int childCount() const;
     int columnCount() const;
@@ -26,6 +27,9 @@ class AccountItem {
     int row() const;
     AccountItem * parent();
     Account getAccount();
+
+    bool isSelected();
+    void setSelected(bool value);
 
     void clear();
 };

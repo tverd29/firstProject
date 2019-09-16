@@ -8,7 +8,10 @@ enum AccountRole {
     GetResource,
     GetAccountName,
     GetPassword,
-    GetType
+    GetType,
+    SetSelected,
+    IsSelected,
+    ClearSelection
 };
 
 enum AccountTypes { ROOT, ACCOUNT, ACCOUNT_CHILD, PASSWORD_CHILD };

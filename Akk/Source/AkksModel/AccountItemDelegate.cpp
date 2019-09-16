@@ -15,11 +15,11 @@ void AccountItemDelegate::paint(QPainter * painter, const QStyleOptionViewItem &
 
     QRect rect = option.rect;
 
-    auto type = index.data(AccountRole::GetType).toInt();
+    auto type       = index.data(AccountRole::GetType).toInt();
+    auto isSelected = index.data(AccountRole::IsSelected).toBool();
 
     painter->save();
-    if (option.state & QStyle::State_Selected || type == AccountTypes::ACCOUNT_CHILD ||
-        type == AccountTypes::PASSWORD_CHILD) {
+    if (isSelected || type == AccountTypes::ACCOUNT_CHILD || type == AccountTypes::PASSWORD_CHILD) {
         painter->setBrush(QBrush(QColor(228, 241, 254)));
         painter->setPen(QColor(228, 241, 254));
     } else {

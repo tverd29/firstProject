@@ -9,6 +9,10 @@ AccountView::AccountView(QWidget * parent) : QTreeView(parent) {
 }
 
 void AccountView::mouseReleaseEvent(QMouseEvent * ev) {
+    auto index = this->indexAt(ev->pos());
+    if (!index.isValid()) {
+        this->clearSelected();
+    }
     QTreeView::mouseReleaseEvent(ev);
 }
 
@@ -44,6 +48,7 @@ void AccountView::selectionChanged(const QItemSelection & selected,
                 return;
             }
             changeSelected(index);
+            this->model()->setData(index, true, AccountRole::SetSelected);
         }
     } else {
         emit currentAkkSelected(QString(), QString(), QString());
@@ -65,4 +70,9 @@ void AccountView::changeSelected(const QModelIndex & index) {
 const QModelIndex AccountView::getCurrentIndex() {
     auto proxy = dynamic_cast<QSortFilterProxyModel *>(this->model());
     return proxy->mapToSource(this->currentIndex());
+}
+
+void AccountView::clearSelected() {
+    this->collapseAll();
+    this->model()->setData(QModelIndex(), true, AccountRole::ClearSelection);
 }

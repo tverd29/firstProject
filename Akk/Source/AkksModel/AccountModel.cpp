@@ -31,8 +31,30 @@ QVariant AccountModel::data(const QModelIndex & index, int role) const {
         case AccountRole::GetPassword:
         case AccountRole::GetType:
             return item->data(index.column(), role);
+        case AccountRole::IsSelected:
+            return item->isSelected();
     }
     return QVariant();
+}
+
+bool AccountModel::setData(const QModelIndex & index, const QVariant & value, int role) {
+    if (role == AccountRole::ClearSelection) {
+        this->unSelectAll();
+        return true;
+    }
+    if (!index.isValid()) {
+        return false;
+    }
+    if (role == AccountRole::SetSelected) {
+        this->unSelectAll();
+        AccountItem * item = static_cast<AccountItem *>(index.internalPointer());
+        if (!item) {
+            return false;
+        }
+        item->setSelected(value.toBool());
+        return true;
+    }
+    return false;
 }
 
 Qt::ItemFlags AccountModel::flags(const QModelIndex & index) const {
@@ -153,4 +175,10 @@ void AccountModel::addItem(AccountItem * item) {
     AccountItem * passItem = new AccountItem(AccountTypes::PASSWORD_CHILD, item);
     item->appendChild(accItem);
     item->appendChild(passItem);
+}
+
+void AccountModel::unSelectAll() {
+    for (auto & item : this->rootItem->getChildrens()) {
+        item->setSelected(false);
+    }
 }

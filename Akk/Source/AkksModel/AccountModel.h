@@ -19,6 +19,8 @@ class AccountModel : public QAbstractItemModel {
     ~AccountModel();
 
     QVariant data(const QModelIndex & index, int role) const override;
+    bool setData(const QModelIndex & index, const QVariant & value,
+                 int role = Qt::EditRole) override;
     Qt::ItemFlags flags(const QModelIndex & index) const override;
     QVariant headerData(int section, Qt::Orientation orientation,
                         int role = Qt::DisplayRole) const override;
@@ -39,4 +41,5 @@ class AccountModel : public QAbstractItemModel {
   private:
     void clearModel();
     void addItem(AccountItem * item);
+    void unSelectAll();
 };
