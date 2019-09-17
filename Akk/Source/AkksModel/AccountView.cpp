@@ -26,6 +26,7 @@ void AccountView::mousePressEvent(QMouseEvent * ev) {
             auto res = index.data(AccountRole::GetResource).toString();
             if (auto clipBoard = QApplication::clipboard()) {
                 clipBoard->setText(res);
+                // TODO need to add popup about copy to buffer
             }
             return;
         }
