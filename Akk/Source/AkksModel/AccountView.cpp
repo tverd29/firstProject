@@ -62,6 +62,22 @@ void AccountView::selectionChanged(const QItemSelection & selected,
     QTreeView::selectionChanged(selected, deselected);
 }
 
+void AccountView::keyPressEvent(QKeyEvent * event) {
+    auto row = this->currentIndex().row();
+    if (event->key() == Qt::Key_Up) {
+        if (row > 0) {
+            setCurrentIndex(this->model()->index(row - 1, currentIndex().column()));
+        }
+        return;
+    } else if (event->key() == Qt::Key_Down) {
+        if (row < this->model()->rowCount() - 1) {
+            setCurrentIndex(this->model()->index(row + 1, currentIndex().column()));
+        }
+        return;
+    }
+    QTreeView::keyPressEvent(event);
+}
+
 void AccountView::changeSelected(const QModelIndex & index) {
     this->collapseAll();
     this->expand(index);
