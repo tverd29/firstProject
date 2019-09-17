@@ -30,6 +30,4 @@ class AccountItem {
 
     bool isSelected();
     void setSelected(bool value);
-
-    void clear();
 };

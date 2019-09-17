@@ -109,10 +109,3 @@ bool AccountItem::isSelected() {
 void AccountItem::setSelected(bool value) {
     this->selected = value;
 }
-
-void AccountItem::clear() {
-    for (auto child : this->m_childItems) {
-        child->clear();
-    }
-    delete this;
-}
