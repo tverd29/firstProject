@@ -19,9 +19,14 @@ class AccountView : public QTreeView {
     void changeSelected(const QModelIndex & index);
     const QModelIndex getCurrentIndex();
 
+    const QString getCurrentResource();
+    const QString getCurrentLogin();
+    const QString getCurrentPassword();
+
     void clearSelected();
 
   signals:
     void editStart();
     void currentAkkSelected(const QString & res, const QString & acc, const QString & pas);
+    void clearSelection();
 };

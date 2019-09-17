@@ -48,10 +48,6 @@ class AkkWindow : public QMainWindow {
 
     QLineEdit * searchLine = nullptr;
 
-    QLabel * resValLabel = nullptr;
-    QLabel * logValLabel = nullptr;
-    QLabel * pasValLabel = nullptr;
-
     QAction * addAction  = nullptr;
     QAction * editAction = nullptr;
     QAction * delAction  = nullptr;
@@ -85,4 +81,5 @@ class AkkWindow : public QMainWindow {
     void delClicked();
     void saveClicked();
     void saveAsClicked();
+    void clearSelection();
 };

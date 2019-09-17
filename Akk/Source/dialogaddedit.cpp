@@ -65,6 +65,7 @@ void DialogAddEdit::setLines(const QString & str, bool isAdding, const QString r
                              const QString & akk, const QString & pas) {
     this->isAdding = isAdding;
 
+    this->setWindowTitle(str);
     ok->setText(str);
     resourceLine->setText(res);
     loginLine->setText(akk);

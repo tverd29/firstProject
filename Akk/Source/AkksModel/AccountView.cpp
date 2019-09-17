@@ -1,5 +1,7 @@
 #include "Source/AkksModel/AccountView.h"
 
+#include <QApplication>
+#include <QClipboard>
 #include <QMouseEvent>
 #include <QSortFilterProxyModel>
 
@@ -21,6 +23,10 @@ void AccountView::mousePressEvent(QMouseEvent * ev) {
     if (index.isValid()) {
         auto type = index.data(AccountRole::GetType).toInt();
         if (type == AccountTypes::ACCOUNT_CHILD || type == AccountTypes::PASSWORD_CHILD) {
+            auto res = index.data(AccountRole::GetResource).toString();
+            if (auto clipBoard = QApplication::clipboard()) {
+                clipBoard->setText(res);
+            }
             return;
         }
         QTreeView::mousePressEvent(ev);
@@ -72,7 +78,20 @@ const QModelIndex AccountView::getCurrentIndex() {
     return proxy->mapToSource(this->currentIndex());
 }
 
+const QString AccountView::getCurrentResource() {
+    return this->currentIndex().data(AccountRole::GetResource).toString();
+}
+
+const QString AccountView::getCurrentLogin() {
+    return this->currentIndex().data(AccountRole::GetAccountName).toString();
+}
+
+const QString AccountView::getCurrentPassword() {
+    return this->currentIndex().data(AccountRole::GetPassword).toString();
+}
+
 void AccountView::clearSelected() {
     this->collapseAll();
     this->model()->setData(QModelIndex(), true, AccountRole::ClearSelection);
+    emit clearSelection();
 }

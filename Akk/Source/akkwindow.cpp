@@ -70,6 +70,7 @@ void AkkWindow::initAccModel() {
     connect(this->view.get(), &AccountView::currentAkkSelected, this,
             &AkkWindow::currentItemValues);
     connect(this->view.get(), &AccountView::editStart, this, &AkkWindow::editClicked);
+    connect(this->view.get(), &AccountView::clearSelection, this, &AkkWindow::clearSelection);
 }
 
 void AkkWindow::initConnections() {
@@ -92,55 +93,12 @@ void AkkWindow::initConnections() {
 }
 
 QLayout * AkkWindow::initMainLayout() {
-    int height = 20;
-    int width  = 60;
-
-    QLabel * resLabel = new QLabel;
-    resLabel->setMinimumHeight(height);
-    resLabel->setMaximumWidth(width);
-    resLabel->setText(tr("Resource:"));
-    resValLabel = new QLabel;
-    resValLabel->setMinimumHeight(height);
-    resValLabel->setTextInteractionFlags(resValLabel->textInteractionFlags() |
-                                         Qt::TextSelectableByMouse);
-    QLabel * logLabel = new QLabel;
-    logLabel->setMinimumHeight(height);
-    logLabel->setMaximumWidth(width);
-    logLabel->setText(tr("Account:"));
-    logValLabel = new QLabel;
-    logValLabel->setMinimumHeight(height);
-    logValLabel->setTextInteractionFlags(logValLabel->textInteractionFlags() |
-                                         Qt::TextSelectableByMouse);
-    QLabel * pasLabel = new QLabel;
-    pasLabel->setMinimumHeight(height);
-    pasLabel->setMaximumWidth(width);
-    pasLabel->setText(tr("Password:"));
-    pasValLabel = new QLabel;
-    pasValLabel->setMinimumHeight(height);
-    pasValLabel->setTextInteractionFlags(pasValLabel->textInteractionFlags() |
-                                         Qt::TextSelectableByMouse);
-
     searchLine = new QLineEdit;
     searchLine->setPlaceholderText(tr("Search..."));
-
-    QVBoxLayout * leftLabels = new QVBoxLayout;
-    leftLabels->addWidget(resLabel);
-    leftLabels->addWidget(logLabel);
-    leftLabels->addWidget(pasLabel);
-
-    QVBoxLayout * rightLabels = new QVBoxLayout;
-    rightLabels->addWidget(resValLabel);
-    rightLabels->addWidget(logValLabel);
-    rightLabels->addWidget(pasValLabel);
-
-    QHBoxLayout * labelsLayout = new QHBoxLayout;
-    labelsLayout->addLayout(leftLabels, 1);
-    labelsLayout->addLayout(rightLabels, 5);
 
     QVBoxLayout * main = new QVBoxLayout;
     main->addWidget(searchLine);
     main->addWidget(view.get());
-    main->addLayout(labelsLayout);
 
     return main;
 }
@@ -339,22 +297,15 @@ void AkkWindow::RestartClicked() {
 
 void AkkWindow::currentItemValues(const QString & res, const QString & acc, const QString & pas) {
     if (!res.isEmpty() && !acc.isEmpty() && !pas.isEmpty()) {
-        resValLabel->setText(res);
-        logValLabel->setText(acc);
-        pasValLabel->setText(pas);
         delAction->setEnabled(true);
         editAction->setEnabled(true);
     } else {
-        resValLabel->setText(QString());
-        logValLabel->setText(QString());
-        pasValLabel->setText(QString());
         delAction->setEnabled(false);
         editAction->setEnabled(false);
     }
 }
 
 void AkkWindow::addClicked() {
-    dialog->setWindowTitle(tr("Add"));
     dialog->setLines(tr("Add"), true);
     dialog->exec();
 }
@@ -371,9 +322,10 @@ void AkkWindow::addAccount(const QString & res, const QString & acc, const QStri
 }
 
 void AkkWindow::editClicked() {
-    dialog->setWindowTitle(tr("Edit"));
-    dialog->setLines(tr("Edit"), false, resValLabel->text(), logValLabel->text(),
-                     pasValLabel->text());
+    auto curRes = this->view->getCurrentResource();
+    auto curLog = this->view->getCurrentLogin();
+    auto curPas = this->view->getCurrentPassword();
+    dialog->setLines(tr("Edit"), false, curRes, curLog, curPas);
     dialog->exec();
 }
 
@@ -406,6 +358,11 @@ void AkkWindow::saveAsClicked() {
     if (!f.isEmpty()) {
         successSave(f);
     }
+}
+
+void AkkWindow::clearSelection() {
+    delAction->setEnabled(false);
+    editAction->setEnabled(false);
 }
 
 void AkkWindow::successSave(const QString & f) {
@@ -446,11 +403,6 @@ void AkkWindow::successSave(const QString & f) {
 void AkkWindow::keyPressEvent(QKeyEvent * ev) {
     if (ev->key() == Qt::Key_Escape) {
         this->view->clearSelected();
-        resValLabel->setText(QString());
-        logValLabel->setText(QString());
-        pasValLabel->setText(QString());
-        delAction->setEnabled(false);
-        editAction->setEnabled(false);
         return;
     } else if (ev->key() == Qt::Key_Delete && delAction->isEnabled()) {
         this->delClicked();
