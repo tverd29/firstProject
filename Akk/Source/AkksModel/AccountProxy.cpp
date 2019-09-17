@@ -1,5 +1,7 @@
 #include "Source/AkksModel/AccountProxy.h"
 
+#include "Source/structs.h"
+
 AccountProxy::AccountProxy(QObject * parent) : QSortFilterProxyModel(parent) {
 }
 
@@ -13,8 +15,12 @@ bool AccountProxy::filterAcceptsRow(int sourceRow, const QModelIndex & sourcePar
         return true;
     }
     QModelIndex index = sourceModel()->index(sourceRow, filterKeyColumn(), sourceParent);
-    QString res       = index.data().toString().toLower();
+    auto res          = index.data().toString().toLower();
+    auto type         = index.data(AccountRole::GetType).toInt();
     if (res.contains(filter.toLower())) {
+        return true;
+    }
+    if (type == AccountTypes::ACCOUNT_CHILD || type == AccountTypes::PASSWORD_CHILD) {
         return true;
     }
     return false;
