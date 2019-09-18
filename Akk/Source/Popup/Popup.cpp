@@ -67,7 +67,7 @@ void Popup::paintEvent(QPaintEvent * event) {
     roundedRect.setHeight(rect().height() - 10);
 
     // Кисть настраиваем на чёрный цвет в режиме полупрозрачности 180 из 255
-    painter.setBrush(QBrush(QColor(40, 40, 40, 240)));
+    painter.setBrush(QBrush(QColor(60, 60, 60, 200)));
     painter.setPen(Qt::NoPen);  // Край уведомления не будет выделен
 
     // Отрисовываем фон с закруглением краёв в 10px
@@ -75,6 +75,9 @@ void Popup::paintEvent(QPaintEvent * event) {
 }
 
 void Popup::setPopupText(const QString & text) {
+    if (text != label.text()) {
+        needCorrection = true;
+    }
     label.setText(text);  // Устанавливаем текст в Label
     adjustSize();         // С пересчётом размеров уведомления
 }
@@ -82,12 +85,11 @@ void Popup::setPopupText(const QString & text) {
 void Popup::show() {
     setWindowOpacity(0.0);  // Устанавливаем прозрачность в ноль
 
-    animation.setDuration(150);  // Настраиваем длительность анимации
+    animation.setDuration(200);  // Настраиваем длительность анимации
     animation.setStartValue(0.0);  // Стартовое значение будет 0 (полностью прозрачный виджет)
     animation.setEndValue(1.0);  // Конечное - полностью непрозрачный виджет
 
     if (needCorrection) {
-        needCorrection = false;
         this->updateGeometry(this->geometry().topLeft());
     }
 
@@ -95,18 +97,19 @@ void Popup::show() {
 
     animation.start();  // И запускаем анимацию
     timer->start(
-        2000);  // А также стартуем таймер, который запустит скрытие уведомления через 2 секунды
+        1000);  // А также стартуем таймер, который запустит скрытие уведомления через 2 секунды
 }
 
 void Popup::updateGeometry(QPoint topLeft) {
+    needCorrection = false;
     topLeft.setX(topLeft.x() - (width() / 2));
     QRect rect(topLeft, topLeft);
     setGeometry(rect);
 }
 
 void Popup::hideAnimation() {
-    timer->stop();                // Останавливаем таймер
-    animation.setDuration(1000);  // Настраиваем длительность анимации
+    timer->stop();               // Останавливаем таймер
+    animation.setDuration(500);  // Настраиваем длительность анимации
     animation.setStartValue(1.0);  // Стартовое значение будет 1 (полностью непрозрачный виджет)
     animation.setEndValue(0.0);  // Конечное - полностью прозрачный виджет
     animation.start();           // И запускаем анимацию
