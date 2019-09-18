@@ -16,12 +16,15 @@
 #include "Source/AkksModel/AccountModel.h"
 #include "Source/AkksModel/AccountProxy.h"
 #include "Source/AkksModel/AccountView.h"
+#include "Source/Popup/Popup.h"
 #include "Source/coder.h"
 #include "Source/dialogaddedit.h"
 #include "Source/structs.h"
 
 AkkWindow::AkkWindow(QWidget * parent) : QMainWindow(parent) {
     this->settings = new QSettings("settings_conf", QSettings::IniFormat);
+
+    this->popUp = Popup::Instance();
 
     initAccModel();
 

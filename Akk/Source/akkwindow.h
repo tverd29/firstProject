@@ -13,6 +13,7 @@ class AccountView;
 class AccountProxy;
 class Coder;
 class DialogAddEdit;
+class Popup;
 
 class AkkWindow : public QMainWindow {
     Q_OBJECT
@@ -23,6 +24,8 @@ class AkkWindow : public QMainWindow {
 
   private:
     QSettings * settings = nullptr;
+
+    Popup * popUp = nullptr;
 
     QString key;
     Coder * cod = nullptr;

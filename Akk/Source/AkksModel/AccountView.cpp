@@ -5,6 +5,7 @@
 #include <QMouseEvent>
 #include <QSortFilterProxyModel>
 
+#include "Source/Popup/Popup.h"
 #include "Source/structs.h"
 
 AccountView::AccountView(QWidget * parent) : QTreeView(parent) {
@@ -26,7 +27,10 @@ void AccountView::mousePressEvent(QMouseEvent * ev) {
             auto res = index.data(AccountRole::GetResource).toString();
             if (auto clipBoard = QApplication::clipboard()) {
                 clipBoard->setText(res);
-                // TODO need to add popup about copy to buffer
+
+                auto popUp = Popup::Instance();
+                popUp->setPopupText(tr("copied to the clipboard"));
+                popUp->show();
             }
             return;
         }
