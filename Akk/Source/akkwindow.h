@@ -13,6 +13,7 @@ class AccountView;
 class AccountProxy;
 class Coder;
 class DialogAddEdit;
+class Popup;
 
 class AkkWindow : public QMainWindow {
     Q_OBJECT
@@ -23,6 +24,8 @@ class AkkWindow : public QMainWindow {
 
   private:
     QSettings * settings = nullptr;
+
+    Popup * popUp = nullptr;
 
     QString key;
     Coder * cod = nullptr;
@@ -65,8 +68,12 @@ class AkkWindow : public QMainWindow {
     void Error(int x);
     void needToClose();
 
+    void updatePopupGeometry();
+
   protected:
     void keyPressEvent(QKeyEvent * ev) override;
+    void paintEvent(QPaintEvent * ev) override;
+    void moveEvent(QMoveEvent * ev) override;
 
   private slots:
     void currentItemValues(const QString & res, const QString & acc, const QString & pas);

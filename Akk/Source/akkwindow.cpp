@@ -16,12 +16,15 @@
 #include "Source/AkksModel/AccountModel.h"
 #include "Source/AkksModel/AccountProxy.h"
 #include "Source/AkksModel/AccountView.h"
+#include "Source/Popup/Popup.h"
 #include "Source/coder.h"
 #include "Source/dialogaddedit.h"
 #include "Source/structs.h"
 
 AkkWindow::AkkWindow(QWidget * parent) : QMainWindow(parent) {
     this->settings = new QSettings("settings_conf", QSettings::IniFormat);
+
+    this->popUp = Popup::Instance();
 
     initAccModel();
 
@@ -418,6 +421,16 @@ void AkkWindow::keyPressEvent(QKeyEvent * ev) {
     QMainWindow::keyPressEvent(ev);
 }
 
+void AkkWindow::paintEvent(QPaintEvent * ev) {
+    QMainWindow::paintEvent(ev);
+    updatePopupGeometry();
+}
+
+void AkkWindow::moveEvent(QMoveEvent * ev) {
+    QMainWindow::moveEvent(ev);
+    updatePopupGeometry();
+}
+
 void AkkWindow::Error(int x) {
     QMessageBox msgBox;
     msgBox.setWindowTitle("Error: " + QVariant(x).toString());
@@ -448,4 +461,11 @@ void AkkWindow::needToClose() {
         }
     }
     isSaved = true;
+}
+
+void AkkWindow::updatePopupGeometry() {
+    auto topLeft = this->geometry().topLeft();
+    topLeft.setX(topLeft.x() + 300);
+    topLeft.setY(topLeft.y() + 500);
+    this->popUp->updateGeometry(topLeft);
 }
