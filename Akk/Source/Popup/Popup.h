@@ -20,6 +20,7 @@ class Popup : public QWidget {
     QTimer * timer = nullptr;  // Таймер, по которому виджет будет скрыт
 
     static Popup * m_instance;
+    bool needCorrection = true;
 
   public:
     static Popup * Instance();
@@ -39,7 +40,7 @@ class Popup : public QWidget {
     void show(); /* Собственный метод показа виджета
                   * Необходимо для преварительной настройки анимации
                   * */
-    void updateGeometry(QPoint & topLeft);
+    void updateGeometry(QPoint topLeft);
 
   private slots:
     void hideAnimation();  // Слот для запуска анимации скрытия

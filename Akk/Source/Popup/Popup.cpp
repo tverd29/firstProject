@@ -86,11 +86,10 @@ void Popup::show() {
     animation.setStartValue(0.0);  // Стартовое значение будет 0 (полностью прозрачный виджет)
     animation.setEndValue(1.0);  // Конечное - полностью непрозрачный виджет
 
-    //    setGeometry(QApplication::desktop()->availableGeometry().width() - 36 - width() +
-    //                    QApplication::desktop()->availableGeometry().x(),
-    //                QApplication::desktop()->availableGeometry().height() - 36 - height() +
-    //                    QApplication::desktop()->availableGeometry().y(),
-    //                width(), height());
+    if (needCorrection) {
+        needCorrection = false;
+        this->updateGeometry(this->geometry().topLeft());
+    }
 
     QWidget::show();  // Отображаем виджет, который полностью прозрачен
 
@@ -99,8 +98,7 @@ void Popup::show() {
         2000);  // А также стартуем таймер, который запустит скрытие уведомления через 2 секунды
 }
 
-void Popup::updateGeometry(QPoint & topLeft) {
-    auto w = width();
+void Popup::updateGeometry(QPoint topLeft) {
     topLeft.setX(topLeft.x() - (width() / 2));
     QRect rect(topLeft, topLeft);
     setGeometry(rect);

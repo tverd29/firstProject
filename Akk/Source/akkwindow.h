@@ -68,8 +68,12 @@ class AkkWindow : public QMainWindow {
     void Error(int x);
     void needToClose();
 
+    void updatePopupGeometry();
+
   protected:
     void keyPressEvent(QKeyEvent * ev) override;
+    void paintEvent(QPaintEvent * ev) override;
+    void moveEvent(QMoveEvent * ev) override;
 
   private slots:
     void currentItemValues(const QString & res, const QString & acc, const QString & pas);
