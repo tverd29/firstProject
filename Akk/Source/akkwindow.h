@@ -64,9 +64,10 @@ class AkkWindow : public QMainWindow {
     QWidget * getSpacerWidget();
     QWidget * getMarginWidget(const int margin = 8);
     void successSave(const QString & file);
-    bool isSaved;
+    bool isSaved = true;
     void Error(int x);
     void needToClose();
+    void savingQuestion();
 
     void updatePopupGeometry();
 

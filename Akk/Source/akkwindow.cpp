@@ -31,8 +31,6 @@ AkkWindow::AkkWindow(QWidget * parent) : QMainWindow(parent) {
     cod    = new Coder();
     dialog = new DialogAddEdit(this);
 
-    isSaved = false;
-
     this->addToolBar(Qt::TopToolBarArea, initTopToolbar());
     this->addToolBar(Qt::BottomToolBarArea, initBottomToolbar());
 
@@ -206,6 +204,8 @@ void AkkWindow::PassTextChanged(const QString & str) {
 
 void AkkWindow::LoadClicked() {
     try {
+        savingQuestion();
+
         key = passwordLine->text();
 
         QString tempFile =
@@ -437,15 +437,19 @@ void AkkWindow::Error(int x) {
 
 void AkkWindow::needToClose() {
     if (!openedFile.isEmpty() && !passwordLine->text().isEmpty()) {
-        if (!isSaved) {
-            auto msg = QMessageBox::question(this, tr("Saving"), tr("Do you want to save?"),
-                                             QMessageBox::Yes | QMessageBox::No);
-            if (msg == QMessageBox::Yes) {
-                successSave(openedFile);
-            }
-        }
+        savingQuestion();
     }
     isSaved = true;
+}
+
+void AkkWindow::savingQuestion() {
+    if (!isSaved) {
+        auto msg = QMessageBox::question(this, tr("Saving"), tr("Do you want to save?"),
+                                         QMessageBox::Yes | QMessageBox::No);
+        if (msg == QMessageBox::Yes) {
+            successSave(openedFile);
+        }
+    }
 }
 
 void AkkWindow::changeEDButEnabled(bool value) {
