@@ -13,7 +13,12 @@ AccountView::AccountView(QWidget * parent) : QTreeView(parent) {
 
 void AccountView::mouseReleaseEvent(QMouseEvent * ev) {
     auto index = this->indexAt(ev->pos());
-    if (!index.isValid()) {
+    if (index.isValid()) {
+        auto type = index.data(AccountRole::GetType).toInt();
+        if (type == AccountTypes::ACCOUNT_CHILD || type == AccountTypes::PASSWORD_CHILD) {
+            return;
+        }
+    } else {
         this->clearSelected();
     }
     QTreeView::mouseReleaseEvent(ev);
@@ -36,6 +41,17 @@ void AccountView::mousePressEvent(QMouseEvent * ev) {
         }
         QTreeView::mousePressEvent(ev);
     }
+}
+
+void AccountView::mouseMoveEvent(QMouseEvent * ev) {
+    auto index = this->indexAt(ev->pos());
+    if (index.isValid()) {
+        auto type = index.data(AccountRole::GetType).toInt();
+        if (type == AccountTypes::ACCOUNT_CHILD || type == AccountTypes::PASSWORD_CHILD) {
+            return;
+        }
+    }
+    QTreeView::mouseMoveEvent(ev);
 }
 
 void AccountView::mouseDoubleClickEvent(QMouseEvent * ev) {

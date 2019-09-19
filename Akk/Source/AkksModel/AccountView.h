@@ -12,6 +12,7 @@ class AccountView : public QTreeView {
 
     void mouseReleaseEvent(QMouseEvent * ev) override;
     void mousePressEvent(QMouseEvent * ev) override;
+    void mouseMoveEvent(QMouseEvent * ev) override;
     void mouseDoubleClickEvent(QMouseEvent * ev) override;
     void selectionChanged(const QItemSelection & selected,
                           const QItemSelection & deselected) override;
