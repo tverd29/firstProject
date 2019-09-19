@@ -73,6 +73,7 @@ void AkkWindow::initAccModel() {
     connect(this->view.get(), &AccountView::selectedChanged, this, &AkkWindow::changeEDButEnabled);
     connect(this->view.get(), &AccountView::editStart, this, &AkkWindow::editClicked);
     connect(this->view.get(), &AccountView::clearSelection, this, &AkkWindow::clearSelection);
+    connect(this->model.get(), &AccountModel::addedItem, this->view.get(), &AccountView::addedItem);
 }
 
 void AkkWindow::initConnections() {

@@ -1,8 +1,9 @@
 #pragma once
 
+#include <memory>
+
 #include <QAbstractItemModel>
 #include <QVariant>
-#include <memory>
 
 #include "Source/structs.h"
 
@@ -42,4 +43,7 @@ class AccountModel : public QAbstractItemModel {
     void clearModel();
     void addItem(AccountItem * item);
     void unSelectAll();
+
+  signals:
+    void addedItem(const QString & id);
 };

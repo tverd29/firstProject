@@ -26,6 +26,7 @@ QVariant AccountModel::data(const QModelIndex & index, int role) const {
             return QVariant(QColor("white"));
         case Qt::DisplayRole:
         case Qt::EditRole:
+        case AccountRole::GetId:
         case AccountRole::GetResource:
         case AccountRole::GetAccountName:
         case AccountRole::GetPassword:
@@ -138,6 +139,8 @@ void AccountModel::insert(Account & akk) {
     this->addItem(item);
 
     this->endInsertRows();
+
+    emit addedItem(item->getId());
 }
 
 void AccountModel::remove(const QModelIndex & index) {

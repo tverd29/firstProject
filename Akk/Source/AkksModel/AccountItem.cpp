@@ -1,12 +1,14 @@
 #include "Source/AkksModel/AccountItem.h"
 
-#include "QVariant"
+#include <QUuid>
+#include <QVariant>
 
 AccountItem::AccountItem(const Account & akk, AccountItem * parentItem)
-    : m_akk(akk), m_parentItem(parentItem) {
+    : m_akk(akk), id(QUuid::createUuid().toString()), m_parentItem(parentItem) {
 }
 
-AccountItem::AccountItem(const int type, AccountItem * parentItem) : m_parentItem(parentItem) {
+AccountItem::AccountItem(const int type, AccountItem * parentItem)
+    : id(QUuid::createUuid().toString()), m_parentItem(parentItem) {
     Account akk;
     akk.type = type;
     m_akk    = akk;
@@ -82,6 +84,8 @@ QVariant AccountItem::data(int column, int role) const {
             return m_akk.password;
         case AccountRole::GetType:
             return m_akk.type;
+        case AccountRole::GetId:
+            return this->id;
     }
 
     return QVariant();
@@ -100,6 +104,10 @@ AccountItem * AccountItem::parent() {
 
 Account AccountItem::getAccount() {
     return this->m_akk;
+}
+
+const QString AccountItem::getId() {
+    return this->id;
 }
 
 bool AccountItem::isSelected() {

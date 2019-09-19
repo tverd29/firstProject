@@ -132,3 +132,13 @@ void AccountView::clearSelected() {
     emit clearSelection();
     this->isDisabledLastIndex = true;
 }
+
+void AccountView::addedItem(const QString & newId) {
+    for (int row = 0; row < this->model()->rowCount(); row++) {
+        auto index = this->model()->index(row, AccountColumns::Resource);
+        auto id    = index.data(AccountRole::GetId).toString();
+        if (newId == id) {
+            this->setCurrentIndex(index);
+        }
+    }
+}

@@ -5,6 +5,7 @@
 class AccountItem {
   private:
     Account m_akk;
+    QString id;
     AccountItem * m_parentItem;
     QList<AccountItem *> m_childItems;
     bool selected = false;
@@ -27,6 +28,8 @@ class AccountItem {
     int row() const;
     AccountItem * parent();
     Account getAccount();
+
+    const QString getId();
 
     bool isSelected();
     void setSelected(bool value);

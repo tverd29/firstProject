@@ -30,6 +30,9 @@ class AccountView : public QTreeView {
 
     void clearSelected();
 
+  public slots:
+    void addedItem(const QString & newId);
+
   signals:
     void editStart();
     void selectedChanged(bool);

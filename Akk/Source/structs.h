@@ -5,6 +5,7 @@
 enum AccountRole {
     Display = Qt::DisplayRole,
     User    = Qt::UserRole,
+    GetId,
     GetResource,
     GetAccountName,
     GetPassword,
