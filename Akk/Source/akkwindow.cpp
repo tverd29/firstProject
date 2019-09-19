@@ -70,8 +70,7 @@ void AkkWindow::initAccModel() {
     this->view->setUniformRowHeights(false);
     this->view->setIndentation(0);
 
-    connect(this->view.get(), &AccountView::currentAkkSelected, this,
-            &AkkWindow::currentItemValues);
+    connect(this->view.get(), &AccountView::selectedChanged, this, &AkkWindow::changeEDButEnabled);
     connect(this->view.get(), &AccountView::editStart, this, &AkkWindow::editClicked);
     connect(this->view.get(), &AccountView::clearSelection, this, &AkkWindow::clearSelection);
 }
@@ -298,16 +297,6 @@ void AkkWindow::RestartClicked() {
     QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
 }
 
-void AkkWindow::currentItemValues(const QString & res, const QString & acc, const QString & pas) {
-    if (!res.isEmpty() && !acc.isEmpty() && !pas.isEmpty()) {
-        delAction->setEnabled(true);
-        editAction->setEnabled(true);
-    } else {
-        delAction->setEnabled(false);
-        editAction->setEnabled(false);
-    }
-}
-
 void AkkWindow::addClicked() {
     dialog->setLines(tr("Add"), true);
     dialog->exec();
@@ -320,8 +309,6 @@ void AkkWindow::addAccount(const QString & res, const QString & acc, const QStri
     akk.password = pas;
     model->insert(akk);
     isSaved = false;
-    delAction->setEnabled(true);
-    editAction->setEnabled(true);
 }
 
 void AkkWindow::editClicked() {
@@ -334,7 +321,7 @@ void AkkWindow::editClicked() {
 
 void AkkWindow::editAccount(const QString & res, const QString & acc, const QString & pas) {
     model->edit(this->view->getCurrentIndex(), res, acc, pas);
-    this->currentItemValues(res, acc, pas);
+    this->changeEDButEnabled(true);
     isSaved = false;
 }
 
@@ -345,10 +332,7 @@ void AkkWindow::delClicked() {
     if (msg == QMessageBox::Yes) {
         model->remove(this->view->getCurrentIndex());
         isSaved = false;
-        if (!model->getRowCount()) {
-            delAction->setEnabled(false);
-            editAction->setEnabled(false);
-        }
+        this->changeEDButEnabled(model->getRowCount());
     }
 }
 
@@ -461,6 +445,11 @@ void AkkWindow::needToClose() {
         }
     }
     isSaved = true;
+}
+
+void AkkWindow::changeEDButEnabled(bool value) {
+    delAction->setEnabled(value);
+    editAction->setEnabled(value);
 }
 
 void AkkWindow::updatePopupGeometry() {

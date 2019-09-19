@@ -76,7 +76,7 @@ class AkkWindow : public QMainWindow {
     void moveEvent(QMoveEvent * ev) override;
 
   private slots:
-    void currentItemValues(const QString & res, const QString & acc, const QString & pas);
+    void changeEDButEnabled(bool value);
     void PassTextChanged(const QString & str);
     void LoadClicked();
     void LanguageClicked();

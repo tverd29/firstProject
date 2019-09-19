@@ -18,10 +18,13 @@ void AccountView::mouseReleaseEvent(QMouseEvent * ev) {
         if (type == AccountTypes::ACCOUNT_CHILD || type == AccountTypes::PASSWORD_CHILD) {
             return;
         }
+        if (this->isDisabledLastIndex) {
+            this->changeSelected(index);
+        }
+        QTreeView::mouseReleaseEvent(ev);
     } else {
         this->clearSelected();
     }
-    QTreeView::mouseReleaseEvent(ev);
 }
 
 void AccountView::mousePressEvent(QMouseEvent * ev) {
@@ -50,8 +53,8 @@ void AccountView::mouseMoveEvent(QMouseEvent * ev) {
         if (type == AccountTypes::ACCOUNT_CHILD || type == AccountTypes::PASSWORD_CHILD) {
             return;
         }
+        QTreeView::mouseMoveEvent(ev);
     }
-    QTreeView::mouseMoveEvent(ev);
 }
 
 void AccountView::mouseDoubleClickEvent(QMouseEvent * ev) {
@@ -75,10 +78,9 @@ void AccountView::selectionChanged(const QItemSelection & selected,
                 return;
             }
             changeSelected(index);
-            this->model()->setData(index, true, AccountRole::SetSelected);
         }
     } else {
-        emit currentAkkSelected(QString(), QString(), QString());
+        emit selectedChanged(false);
     }
     QTreeView::selectionChanged(selected, deselected);
 }
@@ -100,14 +102,11 @@ void AccountView::keyPressEvent(QKeyEvent * event) {
 }
 
 void AccountView::changeSelected(const QModelIndex & index) {
+    this->model()->setData(index, true, AccountRole::SetSelected);
     this->collapseAll();
     this->expand(index);
-    QString res = index.data(AccountRole::GetResource).toString();
-    QString acc = index.data(AccountRole::GetAccountName).toString();
-    QString pas = index.data(AccountRole::GetPassword).toString();
-    if (!res.isEmpty() && !acc.isEmpty() && !pas.isEmpty()) {
-        emit currentAkkSelected(res, acc, pas);
-    }
+    emit selectedChanged(true);
+    this->isDisabledLastIndex = false;
 }
 
 const QModelIndex AccountView::getCurrentIndex() {
@@ -131,4 +130,5 @@ void AccountView::clearSelected() {
     this->collapseAll();
     this->model()->setData(QModelIndex(), true, AccountRole::ClearSelection);
     emit clearSelection();
+    this->isDisabledLastIndex = true;
 }

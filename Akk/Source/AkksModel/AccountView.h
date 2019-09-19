@@ -6,6 +6,9 @@
 class AccountView : public QTreeView {
     Q_OBJECT
 
+  private:
+    bool isDisabledLastIndex = false;
+
   public:
     explicit AccountView(QWidget * parent = nullptr);
     ~AccountView() = default;
@@ -29,6 +32,6 @@ class AccountView : public QTreeView {
 
   signals:
     void editStart();
-    void currentAkkSelected(const QString & res, const QString & acc, const QString & pas);
+    void selectedChanged(bool);
     void clearSelection();
 };
