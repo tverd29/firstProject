@@ -25,6 +25,7 @@ CONFIG += c++11
 SOURCES += \
     Source/AkksModel/AccountItemDelegate.cpp \
     Source/Popup/Popup.cpp \
+    Source/Utils/LineEdit.cpp \
     main.cpp \
     Source\akkwindow.cpp \
     Source\dialogaddedit.cpp \
@@ -37,6 +38,7 @@ SOURCES += \
 HEADERS += \
     Source/AkksModel/AccountItemDelegate.h \
     Source/Popup/Popup.h \
+    Source/Utils/LineEdit.h \
     Source\akkwindow.h \
     Source\dialogaddedit.h \
     Source\coder.h \

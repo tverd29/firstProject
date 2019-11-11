@@ -79,11 +79,13 @@ void AkkWindow::initConnections() {
     connect(this->dialog, &DialogAddEdit::editAccount, this, &AkkWindow::editAccount);
 
     connect(this->passwordLine, &QLineEdit::textChanged, this, &AkkWindow::PassTextChanged);
+    connect(this->passwordLine, &LineEdit::clicked, this, [&]() { this->passwordLine->clear(); });
     connect(this->loadAction, &QAction::triggered, this, &AkkWindow::LoadClicked);
     connect(this->languageAction, &QAction::triggered, this, &AkkWindow::LanguageClicked);
     connect(this->restartAction, &QAction::triggered, this, &AkkWindow::RestartClicked);
 
     connect(this->searchLine, &QLineEdit::textChanged, this->proxy, &AccountProxy::setFilter);
+    connect(this->searchLine, &LineEdit::clicked, this, [&]() { this->searchLine->clear(); });
 
     connect(this->addAction, &QAction::triggered, this, &AkkWindow::addClicked);
     connect(this->editAction, &QAction::triggered, this, &AkkWindow::editClicked);
@@ -94,7 +96,7 @@ void AkkWindow::initConnections() {
 }
 
 QLayout * AkkWindow::initMainLayout() {
-    searchLine = new QLineEdit;
+    searchLine = new LineEdit;
     searchLine->setPlaceholderText(tr("Search..."));
 
     QVBoxLayout * main = new QVBoxLayout;
@@ -105,7 +107,7 @@ QLayout * AkkWindow::initMainLayout() {
 }
 
 QToolBar * AkkWindow::initTopToolbar() {
-    passwordLine = new QLineEdit();
+    passwordLine = new LineEdit();
     passwordLine->setPlaceholderText(tr("Password..."));
     passwordLine->setEchoMode(QLineEdit::Password);
     passwordLine->setFixedWidth(200);

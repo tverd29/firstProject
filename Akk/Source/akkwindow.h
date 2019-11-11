@@ -1,11 +1,14 @@
 #pragma once
 
+#include <memory>
+
 #include <QLabel>
 #include <QLineEdit>
 #include <QMainWindow>
 #include <QPushButton>
 #include <QSettings>
-#include <memory>
+
+#include "Utils/LineEdit.h"
 
 class AccountItemDelegate;
 class AccountModel;
@@ -37,7 +40,7 @@ class AkkWindow : public QMainWindow {
 
     DialogAddEdit * dialog = nullptr;
 
-    QLineEdit * passwordLine     = nullptr;
+    LineEdit * passwordLine      = nullptr;
     QAction * loadAction         = nullptr;
     QAction * saveAction         = nullptr;
     QAction * saveAsAction       = nullptr;
@@ -49,7 +52,7 @@ class AkkWindow : public QMainWindow {
     QString curLang;
     QString openedFile;
 
-    QLineEdit * searchLine = nullptr;
+    LineEdit * searchLine = nullptr;
 
     QAction * addAction  = nullptr;
     QAction * editAction = nullptr;
