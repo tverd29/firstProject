@@ -226,7 +226,7 @@ void AkkWindow::LoadClicked() {
             str  = QTextCodec::codecForMib(106)->toUnicode(data);
             file.close();
         } else {
-            throw 1;
+            throw AkkErrors::Error_OpenFile;
         }
         QString pass = passwordLine->text();
 
@@ -246,7 +246,7 @@ void AkkWindow::LoadClicked() {
 
             QStringList akkValues = elem.split("|");
             if (akkValues.count() != 3) {
-                throw 4;
+                throw AkkErrors::Error_IncorrectPassword;
             }
 
             Account akk;
@@ -358,7 +358,7 @@ void AkkWindow::clearSelection() {
 void AkkWindow::successSave(const QString & f) {
     try {
         if (f.isEmpty())
-            throw 1;
+            throw AkkErrors::Error_OpenFile;
         QFile file(f);
         key = passwordLine->text();
         if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
@@ -383,7 +383,7 @@ void AkkWindow::successSave(const QString & f) {
 
             isSaved = true;
         } else {
-            throw 2;
+            throw AkkErrors::Error_SaveFile;
         }
     } catch (int ex) {
         Error(ex);
@@ -422,16 +422,16 @@ void AkkWindow::Error(int x) {
     QMessageBox msgBox;
     msgBox.setWindowTitle("Error: " + QVariant(x).toString());
     switch (x) {
-        case 1:
+        case AkkErrors::Error_OpenFile:
             msgBox.setText(tr("Error openning file"));
             break;
-        case 2:
+        case AkkErrors::Error_SaveFile:
             msgBox.setText(tr("Save Error"));
             break;
-        case 3:
+        case AkkErrors::Error_BadFile:
             msgBox.setText(tr("Bad File"));
             break;
-        case 4:
+        case AkkErrors::Error_IncorrectPassword:
             msgBox.setText(tr("Incorrect password"));
     }
     msgBox.exec();

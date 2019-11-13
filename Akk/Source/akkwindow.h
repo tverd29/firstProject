@@ -18,6 +18,8 @@ class Coder;
 class DialogAddEdit;
 class Popup;
 
+enum AkkErrors { Error_OpenFile, Error_SaveFile, Error_BadFile, Error_IncorrectPassword };
+
 class AkkWindow : public QMainWindow {
     Q_OBJECT
 
