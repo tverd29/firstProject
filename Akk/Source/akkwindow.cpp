@@ -266,7 +266,7 @@ void AkkWindow::LoadClicked() {
         searchLine->setFocus();
 
         isSaved = true;
-    } catch (int x) {
+    } catch (AkkErrors x) {
         Error(x);
     }
 }
@@ -385,7 +385,7 @@ void AkkWindow::successSave(const QString & f) {
         } else {
             throw AkkErrors::Error_SaveFile;
         }
-    } catch (int ex) {
+    } catch (AkkErrors ex) {
         Error(ex);
     }
 }
