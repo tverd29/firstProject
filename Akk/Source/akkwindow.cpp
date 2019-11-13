@@ -266,6 +266,9 @@ void AkkWindow::LoadClicked() {
         searchLine->setFocus();
 
         isSaved = true;
+
+        popUp->setPopupText(tr("Loading %1 complete").arg(getFileName()));
+        popUp->show();
     } catch (AkkErrors x) {
         Error(x);
     }
@@ -312,6 +315,9 @@ void AkkWindow::addAccount(const QString & res, const QString & acc, const QStri
     akk.password = pas;
     model->insert(akk);
     isSaved = false;
+
+    popUp->setPopupText(tr("%1 added").arg(res));
+    popUp->show();
 }
 
 void AkkWindow::editClicked() {
@@ -326,6 +332,9 @@ void AkkWindow::editAccount(const QString & res, const QString & acc, const QStr
     model->edit(this->view->getCurrentIndex(), res, acc, pas);
     this->changeEDButEnabled(true);
     isSaved = false;
+
+    popUp->setPopupText(tr("%1 edited").arg(res));
+    popUp->show();
 }
 
 void AkkWindow::delClicked() {
@@ -333,9 +342,14 @@ void AkkWindow::delClicked() {
     msg = QMessageBox::question(this, tr("Deleting"), tr("Are you sure?"),
                                 QMessageBox::Yes | QMessageBox::No);
     if (msg == QMessageBox::Yes) {
+        auto deletedRes = this->view->getCurrentResource();
+
         model->remove(this->view->getCurrentIndex());
         isSaved = false;
         this->changeEDButEnabled(model->getRowCount());
+
+        popUp->setPopupText(tr("%1 deleted").arg(deletedRes));
+        popUp->show();
     }
 }
 
@@ -376,10 +390,9 @@ void AkkWindow::successSave(const QString & f) {
 
             writeStream << str;
             file.close();
-            QMessageBox msg;
-            msg.setWindowTitle(tr("Saving"));
-            msg.setText(tr("Saving complete"));
-            msg.exec();
+
+            popUp->setPopupText(tr("Saving %1 complete").arg(this->getFileName()));
+            popUp->show();
 
             isSaved = true;
         } else {
@@ -419,22 +432,20 @@ void AkkWindow::moveEvent(QMoveEvent * ev) {
 }
 
 void AkkWindow::Error(int x) {
-    QMessageBox msgBox;
-    msgBox.setWindowTitle("Error: " + QVariant(x).toString());
     switch (x) {
         case AkkErrors::Error_OpenFile:
-            msgBox.setText(tr("Error openning file"));
+            popUp->setPopupText(tr("Error openning file"));
             break;
         case AkkErrors::Error_SaveFile:
-            msgBox.setText(tr("Save Error"));
+            popUp->setPopupText(tr("Save Error"));
             break;
         case AkkErrors::Error_BadFile:
-            msgBox.setText(tr("Bad File"));
+            popUp->setPopupText(tr("Bad File"));
             break;
         case AkkErrors::Error_IncorrectPassword:
-            msgBox.setText(tr("Incorrect password"));
+            popUp->setPopupText(tr("Incorrect password"));
     }
-    msgBox.exec();
+    popUp->show();
 }
 
 void AkkWindow::needToClose() {
@@ -464,4 +475,11 @@ void AkkWindow::updatePopupGeometry() {
     topLeft.setX(topLeft.x() + 300);
     topLeft.setY(topLeft.y() + 500);
     this->popUp->updateGeometry(topLeft);
+}
+
+const QString AkkWindow::getFileName() const {
+    if (this->openedFile.isEmpty()) {
+        return QString();
+    }
+    return this->openedFile.split("/").last();
 }

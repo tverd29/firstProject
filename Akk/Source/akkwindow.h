@@ -76,6 +76,8 @@ class AkkWindow : public QMainWindow {
 
     void updatePopupGeometry();
 
+    const QString getFileName() const;
+
   protected:
     void keyPressEvent(QKeyEvent * ev) override;
     void paintEvent(QPaintEvent * ev) override;
