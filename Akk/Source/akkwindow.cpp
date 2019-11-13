@@ -245,7 +245,7 @@ void AkkWindow::LoadClicked() {
             }
 
             QStringList akkValues = elem.split("|");
-            if (akkValues.count() != 3) {
+            if (akkValues.count() != 3 && !str.contains("<elem>")) {
                 throw AkkErrors::Error_IncorrectPassword;
             }
 
