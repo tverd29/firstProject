@@ -6,8 +6,6 @@
 #include <QPushButton>
 #include <memory>
 
-#include "Utils/LineEdit.h"
-
 class AccountItemDelegate;
 class AccountModel;
 class AccountView;
@@ -15,6 +13,7 @@ class AccountProxy;
 class Coder;
 class DialogAddEdit;
 class Popup;
+class LineEdit;
 
 enum AkkErrors { Error_OpenFile, Error_SaveFile, Error_BadFile, Error_IncorrectPassword };
 

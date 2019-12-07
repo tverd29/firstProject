@@ -19,6 +19,7 @@
 #include "Popup/Popup.h"
 #include "Settings/settings.h"
 #include "Settings/settingsDialog.h"
+#include "Utils/LineEdit.h"
 #include "coder.h"
 #include "dialogaddedit.h"
 #include "structs.h"
