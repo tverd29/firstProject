@@ -15,6 +15,9 @@ class Settings : public QObject {
     const QString getLanguage();
     void setLanguage(const QString & language);
 
+    const QString getDefaultFile();
+    void setDefaultFile(const QString & file);
+
   private:
     explicit Settings(QObject * parrent = nullptr);
     ~Settings() = default;

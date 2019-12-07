@@ -1,5 +1,7 @@
 #include "settingsModel.h"
 
+#include "settings.h"
+
 SettingsModel::SettingsModel(QObject * parent) : QAbstractItemModel(parent) {
 }
 
