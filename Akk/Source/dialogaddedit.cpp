@@ -1,7 +1,8 @@
 #include "dialogaddedit.h"
 
 DialogAddEdit::DialogAddEdit(QWidget * p) : QDialog(p) {
-    this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint |
+                         Qt::MSWindowsFixedSizeDialogHint);
     resourceLabel = new QLabel;
     resourceLabel->setText(tr("Resource:"));
     loginLabel = new QLabel;
