@@ -1,4 +1,4 @@
-#include "Source/AkksModel/AccountItem.h"
+#include "AccountItem.h"
 
 #include <QUuid>
 #include <QVariant>

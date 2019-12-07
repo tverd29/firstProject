@@ -1,4 +1,4 @@
-#include "Source/AkksModel/AccountProxy.h"
+#include "AccountProxy.h"
 
 #include "Source/structs.h"
 

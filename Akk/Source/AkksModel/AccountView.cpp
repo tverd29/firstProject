@@ -1,4 +1,4 @@
-#include "Source/AkksModel/AccountView.h"
+#include "AccountView.h"
 
 #include <QApplication>
 #include <QClipboard>

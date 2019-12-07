@@ -1,8 +1,8 @@
-#include "Source/AkksModel/AccountModel.h"
+#include "AccountModel.h"
 
 #include <QColor>
 
-#include "Source/AkksModel/AccountItem.h"
+#include "AccountItem.h"
 
 AccountModel::AccountModel(QObject * parent) : QAbstractItemModel(parent) {
     rootItem = new AccountItem(AccountTypes::ROOT);

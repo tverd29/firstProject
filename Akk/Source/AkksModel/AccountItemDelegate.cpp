@@ -1,4 +1,4 @@
-#include "Source/AkksModel/AccountItemDelegate.h"
+#include "AccountItemDelegate.h"
 
 #include <QPainter>
 
