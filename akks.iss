@@ -2,11 +2,12 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Akks"
-#define MyAppVersion "1.1"
+#define MyAppVersion "1.2"
 #define MyAppPublisher "Tverd29"
 #define MyAppURL "https://vk.com/id17172613"
 #define MyAppExeName "Akk.exe"
 #define MyAppIconName "akks.ico"
+#define MyAppLocation "C:\git_projects\Akks"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
@@ -24,10 +25,10 @@ AppUpdatesURL={#MyAppURL}
 DefaultDirName=C:\{#MyAppName}
 DefaultGroupName={#MyAppName}
 AllowNoIcons=yes
-OutputDir=V:\Git\First\Installers\Akks_{#MyAppVersion}
+OutputDir={#MyAppLocation}\Installers\Akks_{#MyAppVersion}
 OutputBaseFilename=Akks setup
 PrivilegesRequired = admin
-SetupIconFile=V:\Git\First\3rdParty\akks.ico
+SetupIconFile={#MyAppLocation}\3rdParty\akks.ico
 Compression=lzma
 SolidCompression=yes
 
@@ -40,22 +41,22 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 0,6.1
 
 [Files]
-Source: "V:\Git\First\build-Akk-Desktop_Qt_5_9_5_MSVC2015_32bit-Release\release\Akk.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "V:\Git\First\3rdParty\akks.ico"; DestDir: "{app}"; Flags: ignoreversion
-Source: "V:\Git\First\3rdParty\qt_libs\D3Dcompiler_47.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "V:\Git\First\3rdParty\qt_libs\libEGL.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "V:\Git\First\3rdParty\qt_libs\libGLESV2.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "V:\Git\First\3rdParty\qt_libs\opengl32sw.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "V:\Git\First\3rdParty\qt_libs\Qt5Core.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "V:\Git\First\3rdParty\qt_libs\Qt5Gui.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "V:\Git\First\3rdParty\qt_libs\Qt5Svg.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "V:\Git\First\3rdParty\qt_libs\Qt5Widgets.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "V:\Git\First\3rdParty\qt_libs\iconengines\*"; DestDir: "{app}\iconengines"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "V:\Git\First\3rdParty\qt_libs\imageformats\*"; DestDir: "{app}\imageformats"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "V:\Git\First\3rdParty\qt_libs\platforms\*"; DestDir: "{app}\platforms"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "V:\Git\First\3rdParty\qt_libs\translations\*"; DestDir: "{app}\translations"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "V:\Git\First\3rdParty\imgs\icons\*"; DestDir: "{app}\icons"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "V:\Git\First\Akk\Language\*"; DestDir: "{app}\language"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "{#MyAppLocation}\build-Akk-Desktop_Qt_5_12_3_MSVC2017_32bit-Release\release\Akk.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MyAppLocation}\3rdParty\akks.ico"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MyAppLocation}\3rdParty\qt_libs\D3Dcompiler_47.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MyAppLocation}\3rdParty\qt_libs\libEGL.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MyAppLocation}\3rdParty\qt_libs\libGLESV2.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MyAppLocation}\3rdParty\qt_libs\opengl32sw.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MyAppLocation}\3rdParty\qt_libs\Qt5Core.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MyAppLocation}\3rdParty\qt_libs\Qt5Gui.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MyAppLocation}\3rdParty\qt_libs\Qt5Svg.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MyAppLocation}\3rdParty\qt_libs\Qt5Widgets.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MyAppLocation}\3rdParty\qt_libs\iconengines\*"; DestDir: "{app}\iconengines"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "{#MyAppLocation}\3rdParty\qt_libs\imageformats\*"; DestDir: "{app}\imageformats"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "{#MyAppLocation}\3rdParty\qt_libs\platforms\*"; DestDir: "{app}\platforms"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "{#MyAppLocation}\3rdParty\qt_libs\translations\*"; DestDir: "{app}\translations"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "{#MyAppLocation}\3rdParty\imgs\icons\*"; DestDir: "{app}\icons"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "{#MyAppLocation}\Akk\Language\*"; DestDir: "{app}\language"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
