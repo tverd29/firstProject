@@ -12,15 +12,16 @@
 #include <QTextStream>
 #include <QToolBar>
 
-#include "Source/AkksModel/AccountItemDelegate.h"
-#include "Source/AkksModel/AccountModel.h"
-#include "Source/AkksModel/AccountProxy.h"
-#include "Source/AkksModel/AccountView.h"
-#include "Source/Popup/Popup.h"
-#include "Source/coder.h"
-#include "Source/dialogaddedit.h"
-#include "Source/structs.h"
+#include "AkksModel/AccountItemDelegate.h"
+#include "AkksModel/AccountModel.h"
+#include "AkksModel/AccountProxy.h"
+#include "AkksModel/AccountView.h"
+#include "Popup/Popup.h"
+#include "coder.h"
+#include "dialogaddedit.h"
 #include "settings.h"
+#include "settingsDialog.h"
+#include "structs.h"
 
 AkkWindow::AkkWindow(QWidget * parent) : QMainWindow(parent) {
     this->popUp = Popup::Instance();

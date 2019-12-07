@@ -1,4 +1,4 @@
-#include "Source\coder.h"
+#include "coder.h"
 
 #include <QTextCodec>
 

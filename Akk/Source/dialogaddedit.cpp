@@ -1,4 +1,4 @@
-#include "Source\dialogaddedit.h"
+#include "dialogaddedit.h"
 
 DialogAddEdit::DialogAddEdit(QWidget * p) : QDialog(p) {
     this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
