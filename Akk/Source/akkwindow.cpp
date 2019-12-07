@@ -93,6 +93,8 @@ void AkkWindow::initConnections() {
 
     connect(this->saveAction, &QAction::triggered, this, &AkkWindow::saveClicked);
     connect(this->saveAsAction, &QAction::triggered, this, &AkkWindow::saveAsClicked);
+
+    connect(this->settingsAction, &QAction::triggered, this, &AkkWindow::settingsClicked);
 }
 
 QLayout * AkkWindow::initMainLayout() {
@@ -121,6 +123,9 @@ QToolBar * AkkWindow::initTopToolbar() {
     saveAsAction = new QAction(QIcon(QPixmap("icons/save_as.png")), tr("save as..."));
     saveAsAction->setEnabled(false);
 
+    settingsAction = new QAction(QIcon(QPixmap("icons/settings.png")), tr("settings"));
+    settingsAction->setEnabled(true);
+
     QLabel * warning = new QLabel(tr("need to restart app"));
     warning->setVisible(false);
     QLabel * warningIcon = new QLabel();
@@ -148,6 +153,8 @@ QToolBar * AkkWindow::initTopToolbar() {
     toolbar->addSeparator();
     toolbar->addAction(saveAction);
     toolbar->addAction(saveAsAction);
+    toolbar->addSeparator();
+    toolbar->addAction(settingsAction);
     toolbar->addSeparator();
     restartWarningIcon = toolbar->addWidget(warningIcon);
     restartWarning     = toolbar->addWidget(warning);
@@ -358,6 +365,11 @@ void AkkWindow::saveAsClicked() {
     if (!f.isEmpty()) {
         successSave(f);
     }
+}
+
+void AkkWindow::settingsClicked() {
+    SettingsDialog setDlg(this);
+    setDlg.exec();
 }
 
 void AkkWindow::clearSelection() {

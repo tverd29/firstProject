@@ -41,6 +41,7 @@ class AkkWindow : public QMainWindow {
     QAction * loadAction         = nullptr;
     QAction * saveAction         = nullptr;
     QAction * saveAsAction       = nullptr;
+    QAction * settingsAction     = nullptr;
     QAction * languageAction     = nullptr;
     QAction * restartAction      = nullptr;
     QAction * restartWarning     = nullptr;
@@ -91,5 +92,6 @@ class AkkWindow : public QMainWindow {
     void delClicked();
     void saveClicked();
     void saveAsClicked();
+    void settingsClicked();
     void clearSelection();
 };
