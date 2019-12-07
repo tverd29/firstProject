@@ -28,8 +28,8 @@ AkkWindow::AkkWindow(QWidget * parent) : QMainWindow(parent) {
 
     initAccModel();
 
-    cod    = new Coder();
-    dialog = new DialogAddEdit(this);
+    cod           = new Coder();
+    accountDialog = new DialogAddEdit(this);
 
     this->addToolBar(Qt::TopToolBarArea, initTopToolbar());
     this->addToolBar(Qt::BottomToolBarArea, initBottomToolbar());
@@ -75,8 +75,8 @@ void AkkWindow::initAccModel() {
 }
 
 void AkkWindow::initConnections() {
-    connect(this->dialog, &DialogAddEdit::addAccount, this, &AkkWindow::addAccount);
-    connect(this->dialog, &DialogAddEdit::editAccount, this, &AkkWindow::editAccount);
+    connect(this->accountDialog, &DialogAddEdit::addAccount, this, &AkkWindow::addAccount);
+    connect(this->accountDialog, &DialogAddEdit::editAccount, this, &AkkWindow::editAccount);
 
     connect(this->passwordLine, &QLineEdit::textChanged, this, &AkkWindow::PassTextChanged);
     connect(this->passwordLine, &LineEdit::clicked, this, [&]() { this->passwordLine->clear(); });
@@ -307,8 +307,8 @@ void AkkWindow::RestartClicked() {
 }
 
 void AkkWindow::addClicked() {
-    dialog->setLines(tr("Add"), true);
-    dialog->exec();
+    accountDialog->setLines(tr("Add"), true);
+    accountDialog->exec();
 }
 
 void AkkWindow::addAccount(const QString & res, const QString & acc, const QString & pas) {
@@ -327,8 +327,8 @@ void AkkWindow::editClicked() {
     auto curRes = this->view->getCurrentResource();
     auto curLog = this->view->getCurrentLogin();
     auto curPas = this->view->getCurrentPassword();
-    dialog->setLines(tr("Edit"), false, curRes, curLog, curPas);
-    dialog->exec();
+    accountDialog->setLines(tr("Edit"), false, curRes, curLog, curPas);
+    accountDialog->exec();
 }
 
 void AkkWindow::editAccount(const QString & res, const QString & acc, const QString & pas) {

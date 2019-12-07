@@ -35,7 +35,7 @@ class AkkWindow : public QMainWindow {
     AccountItemDelegate * delegate = nullptr;
     AccountProxy * proxy           = nullptr;
 
-    DialogAddEdit * dialog = nullptr;
+    DialogAddEdit * accountDialog = nullptr;
 
     LineEdit * passwordLine      = nullptr;
     QAction * loadAction         = nullptr;
