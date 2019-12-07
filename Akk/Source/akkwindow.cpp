@@ -370,7 +370,8 @@ void AkkWindow::saveAsClicked() {
 }
 
 void AkkWindow::settingsClicked() {
-    settingsDialog->exec();
+    if (settingsDialog->exec()) {
+    }
 }
 
 void AkkWindow::clearSelection() {

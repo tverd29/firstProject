@@ -10,7 +10,7 @@
 class DialogAddEdit : public QDialog {
     Q_OBJECT
   public:
-    DialogAddEdit(QWidget * p);
+    DialogAddEdit(QWidget * p = nullptr);
     void setLines(const QString & str = "button", bool isAdding = false,
                   const QString res = QString(), const QString & akk = QString(),
                   const QString & pas = QString());
