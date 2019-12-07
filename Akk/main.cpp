@@ -2,8 +2,8 @@
 #include <QDir>
 #include <QTranslator>
 
+#include "Source/Settings/settings.h"
 #include "Source/akkwindow.h"
-#include "Source/settings.h"
 
 int main(int argc, char * argv[]) {
     QApplication a(argc, argv);

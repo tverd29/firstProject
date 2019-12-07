@@ -29,8 +29,9 @@ AkkWindow::AkkWindow(QWidget * parent) : QMainWindow(parent) {
 
     initAccModel();
 
-    cod           = new Coder();
-    accountDialog = new DialogAddEdit(this);
+    this->cod            = new Coder();
+    this->accountDialog  = new DialogAddEdit(this);
+    this->settingsDialog = new SettingsDialog(this);
 
     this->addToolBar(Qt::TopToolBarArea, initTopToolbar());
     this->addToolBar(Qt::BottomToolBarArea, initBottomToolbar());
@@ -369,8 +370,7 @@ void AkkWindow::saveAsClicked() {
 }
 
 void AkkWindow::settingsClicked() {
-    SettingsDialog setDlg(this);
-    setDlg.exec();
+    settingsDialog->exec();
 }
 
 void AkkWindow::clearSelection() {

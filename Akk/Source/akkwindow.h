@@ -12,6 +12,7 @@ class AccountView;
 class AccountProxy;
 class Coder;
 class DialogAddEdit;
+class SettingsDialog;
 class Popup;
 class LineEdit;
 
@@ -34,7 +35,8 @@ class AkkWindow : public QMainWindow {
     AccountItemDelegate * delegate = nullptr;
     AccountProxy * proxy           = nullptr;
 
-    DialogAddEdit * accountDialog = nullptr;
+    DialogAddEdit * accountDialog   = nullptr;
+    SettingsDialog * settingsDialog = nullptr;
 
     LineEdit * passwordLine      = nullptr;
     QAction * loadAction         = nullptr;
