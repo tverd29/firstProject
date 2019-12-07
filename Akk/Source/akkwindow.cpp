@@ -17,10 +17,10 @@
 #include "AkksModel/AccountProxy.h"
 #include "AkksModel/AccountView.h"
 #include "Popup/Popup.h"
+#include "Settings/settings.h"
+#include "Settings/settingsDialog.h"
 #include "coder.h"
 #include "dialogaddedit.h"
-#include "settings.h"
-#include "settingsDialog.h"
 #include "structs.h"
 
 AkkWindow::AkkWindow(QWidget * parent) : QMainWindow(parent) {

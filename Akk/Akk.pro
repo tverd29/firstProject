@@ -26,12 +26,12 @@ SOURCES += \
     Source/AkksModel/AccountItemDelegate.cpp \
     Source/Popup/Popup.cpp \
     Source/Utils/LineEdit.cpp \
-    Source/settings.cpp \
-    Source/settingsDialog.cpp \
+    Source/Settings/settings.cpp \
+    Source/Settings/settingsDialog.cpp \
     main.cpp \
-    Source\akkwindow.cpp \
-    Source\dialogaddedit.cpp \
-    Source\coder.cpp \
+    Source/akkwindow.cpp \
+    Source/dialogaddedit.cpp \
+    Source/coder.cpp \
     Source/AkksModel/AccountModel.cpp \
     Source/AkksModel/AccountView.cpp \
     Source/AkksModel/AccountItem.cpp \
@@ -41,11 +41,11 @@ HEADERS += \
     Source/AkksModel/AccountItemDelegate.h \
     Source/Popup/Popup.h \
     Source/Utils/LineEdit.h \
-    Source/settings.h \
-    Source/settingsDialog.h \
-    Source\akkwindow.h \
-    Source\dialogaddedit.h \
-    Source\coder.h \
+    Source/Settings/settings.h \
+    Source/Settings/settingsDialog.h \
+    Source/akkwindow.h \
+    Source/dialogaddedit.h \
+    Source/coder.h \
     Source/AkksModel/AccountModel.h \
     Source/AkksModel/AccountView.h \
     Source/structs.h \
