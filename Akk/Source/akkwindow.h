@@ -28,7 +28,6 @@ class AkkWindow : public QMainWindow {
   private:
     Popup * popUp = nullptr;
 
-    QString key;
     Coder * cod = nullptr;
 
     std::shared_ptr<AccountModel> model;

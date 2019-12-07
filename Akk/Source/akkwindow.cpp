@@ -205,7 +205,7 @@ void AkkWindow::LoadClicked() {
     try {
         savingQuestion();
 
-        key = passwordLine->text();
+        auto key = passwordLine->text();
 
         QString tempFile =
             QFileDialog::getOpenFileName(this, tr("Load file"), "", tr("Recommended (*.txt)"));
@@ -369,7 +369,7 @@ void AkkWindow::successSave(const QString & f) {
         if (f.isEmpty())
             throw AkkErrors::Error_OpenFile;
         QFile file(f);
-        key = passwordLine->text();
+        auto key = passwordLine->text();
         if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
             QString str         = "";
             QList<Account> akks = model->getAllAkks();
