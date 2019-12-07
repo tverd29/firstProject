@@ -1,12 +1,10 @@
 #pragma once
 
-#include <memory>
-
 #include <QLabel>
 #include <QLineEdit>
 #include <QMainWindow>
 #include <QPushButton>
-#include <QSettings>
+#include <memory>
 
 #include "Utils/LineEdit.h"
 
@@ -25,11 +23,9 @@ class AkkWindow : public QMainWindow {
 
   public:
     AkkWindow(QWidget * parent = nullptr);
-    ~AkkWindow();
+    ~AkkWindow() override;
 
   private:
-    QSettings * settings = nullptr;
-
     Popup * popUp = nullptr;
 
     QString key;

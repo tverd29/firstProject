@@ -1,22 +1,19 @@
 #include <QApplication>
 #include <QDir>
-#include <QSettings>
 #include <QTranslator>
 
-#include "Source\akkwindow.h"
+#include "Source/akkwindow.h"
+#include "Source/settings.h"
 
 int main(int argc, char * argv[]) {
     QApplication a(argc, argv);
 
-    QSettings settings("settings_conf", QSettings::IniFormat);
-    settings.beginGroup("main_settings");
-    QString lang = settings.value("language", "").toString();
+    QString lang = Settings::Instance()->getLanguage();
     QTranslator translator;
     if (lang.isEmpty()) {
         lang = QLocale::system().name();
-        settings.setValue("language", lang);
+        Settings::Instance()->setLanguage(lang);
     }
-    settings.endGroup();
 
     if (translator.load("akk_" + lang, QDir::currentPath() + "/Language")) {
         qApp->installTranslator(&translator);

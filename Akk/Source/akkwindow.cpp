@@ -20,10 +20,9 @@
 #include "Source/coder.h"
 #include "Source/dialogaddedit.h"
 #include "Source/structs.h"
+#include "settings.h"
 
 AkkWindow::AkkWindow(QWidget * parent) : QMainWindow(parent) {
-    this->settings = new QSettings("settings_conf", QSettings::IniFormat);
-
     this->popUp = Popup::Instance();
 
     initAccModel();
@@ -130,18 +129,16 @@ QToolBar * AkkWindow::initTopToolbar() {
     restartAction = new QAction(QIcon(QPixmap("icons/restart.png")), tr("restart"));
     restartAction->setVisible(false);
 
-    settings->beginGroup("main_settings");
-    auto x = settings->value("language", "").toString();
-    if (settings->value("language", "").toString().contains("ru")) {
+    auto language = Settings::Instance()->getLanguage();
+    if (language.contains("ru")) {
         curLang        = "RU";
         languageAction = new QAction(curLang);
-    } else if (settings->value("language", "").toString().contains("en")) {
+    } else if (language.contains("en")) {
         curLang        = "EN";
         languageAction = new QAction(curLang);
     } else {
         languageAction = new QAction();
     }
-    settings->endGroup();
 
     QToolBar * toolbar = new QToolBar(this);
     toolbar->addWidget(getMarginWidget());
@@ -275,15 +272,13 @@ void AkkWindow::LoadClicked() {
 }
 
 void AkkWindow::LanguageClicked() {
-    settings->beginGroup("main_settings");
     if (languageAction->text() == "RU") {
         languageAction->setText("EN");
-        settings->setValue("language", "en_US");
+        Settings::Instance()->setLanguage("en_US");
     } else if (languageAction->text() == "EN") {
         languageAction->setText("RU");
-        settings->setValue("language", "ru_RU");
+        Settings::Instance()->setLanguage("ru_RU");
     }
-    settings->endGroup();
 
     if (curLang == languageAction->text()) {
         restartWarning->setVisible(false);
