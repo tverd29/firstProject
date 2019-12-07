@@ -75,7 +75,7 @@ void DialogAddEdit::setLines(const QString & str, bool isAdding, const QString r
 }
 
 void DialogAddEdit::noClicked() {
-    this->close();
+    this->reject();
 }
 
 void DialogAddEdit::okClicked() {
@@ -90,5 +90,5 @@ void DialogAddEdit::okClicked() {
         }
     }
     isAdding = false;
-    this->close();
+    this->accept();
 }
