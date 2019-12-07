@@ -10,17 +10,11 @@ Settings * Settings::Instance() {
 }
 
 const QString Settings::getLanguage() {
-    settings->beginGroup("main_settings");
-    auto language = settings->value("language", "").toString();
-    settings->endGroup();
-
-    return language;
+    return settings->value("language", "").toString();
 }
 
 void Settings::setLanguage(const QString & language) {
-    settings->beginGroup("main_settings");
     settings->setValue("language", language);
-    settings->endGroup();
 }
 
 Settings::Settings(QObject * parent) : QObject(parent) {
