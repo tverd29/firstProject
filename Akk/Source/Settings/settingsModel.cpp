@@ -1,8 +1,9 @@
 #include "settingsModel.h"
 
+#include "Source/structs.h"
 #include "settings.h"
 
-SettingsModel::SettingsModel(QObject * parent) : QAbstractItemModel(parent) {
+SettingsModel::SettingsModel(QObject * parent) : QAbstractTableModel(parent) {
 }
 
 QVariant SettingsModel::data(const QModelIndex & index, int role) const {
@@ -14,14 +15,10 @@ bool SettingsModel::setData(const QModelIndex & index, const QVariant & value, i
 QVariant SettingsModel::headerData(int section, Qt::Orientation orientation, int role) const {
 }
 
-QModelIndex SettingsModel::index(int row, int column, const QModelIndex & parent) const {
-}
-
-QModelIndex SettingsModel::parent(const QModelIndex & index) const {
-}
-
 int SettingsModel::rowCount(const QModelIndex & parent) const {
+    return SettingsRows::RowsCount;
 }
 
 int SettingsModel::columnCount(const QModelIndex & parent) const {
+    return SettingsColumns::ColumnsCount;
 }
