@@ -1,5 +1,7 @@
 #include "settingsDelegate.h"
 
+#include "QPainter"
+
 #include "Source/structs.h"
 
 SettingsDelegate::SettingsDelegate(QObject * parent) : QItemDelegate(parent) {
@@ -19,6 +21,12 @@ void SettingsDelegate::setModelData(QWidget * editor, QAbstractItemModel * model
     QItemDelegate::setModelData(editor, model, index);
 }
 
+void SettingsDelegate::paint(QPainter * painter, const QStyleOptionViewItem & option,
+                             const QModelIndex & index) const {
+    QTextOption opt(Qt::AlignCenter);
+    painter->drawText(option.rect, index.data().toString(), opt);
+}
+
 QSize SettingsDelegate::sizeHint(const QStyleOptionViewItem & option,
                                  const QModelIndex & index) const {
     if (!index.isValid()) {
@@ -33,6 +41,7 @@ QSize SettingsDelegate::sizeHint(const QStyleOptionViewItem & option,
             break;
         case SettingsColumns::Values:
             size.setWidth(220);
+            break;
     }
     return size;
 }
