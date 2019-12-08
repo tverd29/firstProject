@@ -2,15 +2,15 @@
 
 #include <QDialog>
 #include <QPushButton>
-#include <QTableView>
 
+class SettingsView;
 class SettingsModel;
 
 class SettingsDialog : public QDialog {
     Q_OBJECT
 
   private:
-    QTableView * settingsView     = nullptr;
+    SettingsView * settingsView   = nullptr;
     SettingsModel * settingsModel = nullptr;
 
     QPushButton * acceptButton = nullptr;
