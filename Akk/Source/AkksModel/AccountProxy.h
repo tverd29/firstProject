@@ -9,7 +9,7 @@ class AccountProxy : public QSortFilterProxyModel {
 
   public:
     explicit AccountProxy(QObject * parent = nullptr);
-    ~AccountProxy() = default;
+    ~AccountProxy() override = default;
 
   protected:
     virtual bool filterAcceptsRow(int sourceRow, const QModelIndex & sourceParent) const override;

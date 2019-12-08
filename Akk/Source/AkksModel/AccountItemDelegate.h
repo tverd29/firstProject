@@ -7,7 +7,7 @@ class AccountItemDelegate : public QItemDelegate {
 
   public:
     explicit AccountItemDelegate(QObject * parent = nullptr);
-    ~AccountItemDelegate() = default;
+    ~AccountItemDelegate() override = default;
 
     virtual void paint(QPainter * painter, const QStyleOptionViewItem & option,
                        const QModelIndex & index) const override;

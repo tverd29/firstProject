@@ -11,7 +11,7 @@ class AccountView : public QTreeView {
 
   public:
     explicit AccountView(QWidget * parent = nullptr);
-    ~AccountView() = default;
+    ~AccountView() override = default;
 
     void mouseReleaseEvent(QMouseEvent * ev) override;
     void mousePressEvent(QMouseEvent * ev) override;

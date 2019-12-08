@@ -17,7 +17,7 @@ class AccountModel : public QAbstractItemModel {
 
   public:
     explicit AccountModel(QObject * parent = nullptr);
-    ~AccountModel();
+    ~AccountModel() override;
 
     QVariant data(const QModelIndex & index, int role) const override;
     bool setData(const QModelIndex & index, const QVariant & value,
