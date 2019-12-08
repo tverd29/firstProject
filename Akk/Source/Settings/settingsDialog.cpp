@@ -2,13 +2,13 @@
 
 #include <QHBoxLayout>
 #include <QHeaderView>
+#include <QTableView>
 #include <QVBoxLayout>
 
 #include "Source/structs.h"
 #include "settings.h"
 #include "settingsDelegate.h"
 #include "settingsModel.h"
-#include "settingsView.h"
 
 SettingsDialog::SettingsDialog(QWidget * parrent) : QDialog(parrent) {
     this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint |
@@ -17,7 +17,7 @@ SettingsDialog::SettingsDialog(QWidget * parrent) : QDialog(parrent) {
 
     this->settingsModel                 = new SettingsModel(this);
     SettingsDelegate * settingsDelegate = new SettingsDelegate(this);
-    this->settingsView                  = new SettingsView(this);
+    this->settingsView                  = new QTableView(this);
     this->settingsView->setModel(this->settingsModel);
     this->settingsView->setItemDelegate(settingsDelegate);
 
@@ -32,7 +32,6 @@ SettingsDialog::SettingsDialog(QWidget * parrent) : QDialog(parrent) {
                                                                  QHeaderView::Stretch);
 
     QHBoxLayout * topLayout = new QHBoxLayout();
-    topLayout->setAlignment(Qt::AlignTop);
     topLayout->addWidget(this->settingsView);
 
     this->acceptButton = new QPushButton(tr("accept"));

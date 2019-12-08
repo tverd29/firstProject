@@ -3,14 +3,14 @@
 #include <QDialog>
 #include <QPushButton>
 
-class SettingsView;
+class QTableView;
 class SettingsModel;
 
 class SettingsDialog : public QDialog {
     Q_OBJECT
 
   private:
-    SettingsView * settingsView   = nullptr;
+    QTableView * settingsView     = nullptr;
     SettingsModel * settingsModel = nullptr;
 
     QPushButton * acceptButton = nullptr;

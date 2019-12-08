@@ -27,7 +27,6 @@ SOURCES += \
     Source/Popup/Popup.cpp \
     Source/Settings/settingsDelegate.cpp \
     Source/Settings/settingsModel.cpp \
-    Source/Settings/settingsView.cpp \
     Source/Utils/LineEdit.cpp \
     Source/Settings/settings.cpp \
     Source/Settings/settingsDialog.cpp \
@@ -45,7 +44,6 @@ HEADERS += \
     Source/Popup/Popup.h \
     Source/Settings/settingsDelegate.h \
     Source/Settings/settingsModel.h \
-    Source/Settings/settingsView.h \
     Source/Utils/LineEdit.h \
     Source/Settings/settings.h \
     Source/Settings/settingsDialog.h \
