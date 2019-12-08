@@ -40,7 +40,7 @@ QVariant SettingsModel::headerData(int section, Qt::Orientation orientation, int
             case SettingsColumns::Alias:
                 return tr("Setting name");
             case SettingsColumns::Values:
-                return tr("Setting values");
+                return tr("Setting value");
         }
     }
     return QVariant();

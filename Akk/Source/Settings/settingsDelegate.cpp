@@ -23,7 +23,15 @@ void SettingsDelegate::setModelData(QWidget * editor, QAbstractItemModel * model
 
 void SettingsDelegate::paint(QPainter * painter, const QStyleOptionViewItem & option,
                              const QModelIndex & index) const {
-    QTextOption opt(Qt::AlignCenter);
+    if (index.row() == SettingsRows::DefaultFile) {
+        painter->save();
+
+        painter->setPen(QColor("lightgrey"));
+        painter->drawLine(option.rect.topLeft(), option.rect.topRight());
+
+        painter->restore();
+    }
+    QTextOption opt(Qt::AlignVCenter | Qt::AlignLeft);
     painter->drawText(option.rect, index.data().toString(), opt);
 }
 
