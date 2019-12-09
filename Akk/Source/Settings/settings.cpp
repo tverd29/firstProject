@@ -9,6 +9,11 @@ Settings * Settings::Instance() {
     return m_settings;
 }
 
+void Settings::initLanguages() {
+    this->languages.insert("en_US", "EN");
+    this->languages.insert("ru_RU", "RU");
+}
+
 const QString Settings::getLanguage() {
     return settings->value("language", QVariant()).toString();
 }
@@ -23,6 +28,10 @@ const QString Settings::getDefaultFile() {
 
 void Settings::setDefaultFile(const QString & file) {
     settings->setValue("defaultFile", file);
+}
+
+const QHash<QString, QString> Settings::getLanguages() {
+    return this->languages;
 }
 
 Settings::Settings(QObject * parent) : QObject(parent) {

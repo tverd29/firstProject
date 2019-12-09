@@ -56,7 +56,7 @@ Source: "{#MyAppLocation}\3rdParty\qt_libs\imageformats\*"; DestDir: "{app}\imag
 Source: "{#MyAppLocation}\3rdParty\qt_libs\platforms\*"; DestDir: "{app}\platforms"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "{#MyAppLocation}\3rdParty\qt_libs\translations\*"; DestDir: "{app}\translations"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "{#MyAppLocation}\3rdParty\imgs\icons\*"; DestDir: "{app}\icons"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "{#MyAppLocation}\Akk\Language\*"; DestDir: "{app}\language"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "{#MyAppLocation}\Akk\Language\*"; DestDir: "{app}\Language"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]

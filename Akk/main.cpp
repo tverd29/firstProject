@@ -8,11 +8,18 @@
 int main(int argc, char * argv[]) {
     QApplication a(argc, argv);
 
-    QString lang = Settings::Instance()->getLanguage();
+    auto settings = Settings::Instance();
+    settings->initLanguages();
+    auto langs = settings->getLanguages();
+    auto lang  = settings->getLanguage();
     QTranslator translator;
+
     if (lang.isEmpty()) {
         lang = QLocale::system().name();
-        Settings::Instance()->setLanguage(lang);
+        if (!langs.contains(lang)) {
+            lang = "en_US";
+        }
+        settings->setLanguage(lang);
     }
 
     if (translator.load("akk_" + lang, QDir::currentPath() + "/Language")) {
