@@ -1,14 +1,33 @@
 #include "settingsDelegate.h"
 
-#include "QPainter"
+#include <QComboBox>
+#include <QFileDialog>
+#include <QPainter>
 
 #include "Source/structs.h"
+#include "settings.h"
 
 SettingsDelegate::SettingsDelegate(QObject * parent) : QItemDelegate(parent) {
 }
 
 QWidget * SettingsDelegate::createEditor(QWidget * parent, const QStyleOptionViewItem & option,
                                          const QModelIndex & index) const {
+    if (index.isValid() && index.column() == SettingsColumns::Values) {
+        switch (index.row()) {
+            case SettingsRows::DefaultFile: {
+                auto wgt = new QFileDialog(parent);
+                return wgt;
+            }
+            case SettingsRows::Language: {
+                auto wgt   = new QComboBox(parent);
+                auto langs = Settings::Instance()->getLanguages();
+                for (auto key : langs.keys()) {
+                    wgt->addItem(langs.value(key), key);
+                }
+                return wgt;
+            }
+        }
+    }
     return QItemDelegate::createEditor(parent, option, index);
 }
 

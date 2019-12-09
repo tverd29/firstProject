@@ -46,6 +46,20 @@ QVariant SettingsModel::headerData(int section, Qt::Orientation orientation, int
     return QVariant();
 }
 
+Qt::ItemFlags SettingsModel::flags(const QModelIndex & index) const {
+    if (index.isValid()) {
+        auto column = index.column();
+        switch (column) {
+            case SettingsColumns::Alias:
+                return Qt::ItemFlag::ItemIsEnabled;
+            case SettingsColumns::Values:
+                return Qt::ItemFlag::ItemIsEditable | Qt::ItemFlag::ItemIsEnabled |
+                       Qt::ItemFlag::ItemIsSelectable | Qt::ItemFlag::ItemIsUserCheckable;
+        }
+    }
+    return QAbstractItemModel::flags(index);
+}
+
 int SettingsModel::rowCount(const QModelIndex & parent) const {
     return SettingsRows::RowsCount;
 }
