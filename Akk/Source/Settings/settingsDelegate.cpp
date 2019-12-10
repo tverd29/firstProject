@@ -36,11 +36,27 @@ QWidget * SettingsDelegate::createEditor(QWidget * parent, const QStyleOptionVie
 }
 
 void SettingsDelegate::setEditorData(QWidget * editor, const QModelIndex & index) const {
+    if (index.isValid() && index.column() == SettingsColumns::Values) {
+        switch (index.row()) {
+            case SettingsRows::Language:
+                auto wgt = dynamic_cast<QComboBox *>(editor);
+                wgt->setCurrentIndex(wgt->findData(index.data(Qt::UserRole).toString()));
+                return;
+        }
+    }
     QItemDelegate::setEditorData(editor, index);
 }
 
 void SettingsDelegate::setModelData(QWidget * editor, QAbstractItemModel * model,
                                     const QModelIndex & index) const {
+    if (index.isValid() && index.column() == SettingsColumns::Values) {
+        switch (index.row()) {
+            case SettingsRows::Language:
+                auto wgt = dynamic_cast<QComboBox *>(editor);
+                Settings::Instance()->setLanguage(wgt->currentData().toString());
+                return;
+        }
+    }
     QItemDelegate::setModelData(editor, model, index);
 }
 
