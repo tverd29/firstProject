@@ -54,8 +54,19 @@ void SettingsDelegate::paint(QPainter * painter, const QStyleOptionViewItem & op
 
         painter->restore();
     }
-    QTextOption opt(Qt::AlignVCenter | Qt::AlignLeft);
-    painter->drawText(option.rect, index.data().toString(), opt);
+
+    switch (index.column()) {
+        case SettingsColumns::Alias: {
+            QTextOption opt(Qt::AlignVCenter | Qt::AlignLeft);
+            painter->drawText(option.rect, index.data().toString(), opt);
+            break;
+        }
+        case SettingsColumns::Values: {
+            QTextOption opt(Qt::AlignCenter);
+            painter->drawText(option.rect, index.data().toString(), opt);
+            break;
+        }
+    }
 }
 
 QSize SettingsDelegate::sizeHint(const QStyleOptionViewItem & option,
