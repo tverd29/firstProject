@@ -27,6 +27,8 @@
 AkkWindow::AkkWindow(QWidget * parent) : QMainWindow(parent) {
     this->popUp = Popup::Instance();
 
+    this->defaultFile = Settings::Instance()->getDefaultFile();
+
     initAccModel();
 
     this->cod            = new Coder();
@@ -116,8 +118,13 @@ QToolBar * AkkWindow::initTopToolbar() {
     passwordLine->setEchoMode(QLineEdit::Password);
     passwordLine->setFixedWidth(200);
 
-    loadAction = new QAction(QIcon(QPixmap("icons/file_open.png")), tr("load"));
-    loadAction->setEnabled(false);
+    if (this->defaultFile.isEmpty()) {
+        loadAction = new QAction(QIcon(QPixmap("icons/file_open.png")), tr("load"));
+        loadAction->setEnabled(false);
+    } else {
+        loadAction = new QAction(QIcon(QPixmap("icons/accept.png")), tr("load"));
+        loadAction->setEnabled(false);
+    }
 
     saveAction = new QAction(QIcon(QPixmap("icons/save.png")), tr("save"));
     saveAction->setEnabled(false);
@@ -217,13 +224,16 @@ void AkkWindow::LoadClicked() {
 
         auto key = passwordLine->text();
 
-        QString tempFile =
-            QFileDialog::getOpenFileName(this, tr("Load file"), "", tr("Recommended (*.txt)"));
-        if (tempFile.isEmpty()) {
-            return;
+        if (this->defaultFile.isEmpty()) {
+            QString tempFile =
+                QFileDialog::getOpenFileName(this, tr("Load file"), "", tr("Recommended (*.txt)"));
+            if (tempFile.isEmpty()) {
+                return;
+            }
+            openedFile = tempFile;
+        } else {
+            openedFile = this->defaultFile;
         }
-
-        openedFile = tempFile;
 
         QFile file(openedFile);
         QByteArray data;

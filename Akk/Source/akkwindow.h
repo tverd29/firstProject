@@ -50,6 +50,7 @@ class AkkWindow : public QMainWindow {
 
     QString curLang;
     QString openedFile;
+    QString defaultFile;
 
     LineEdit * searchLine = nullptr;
 
