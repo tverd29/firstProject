@@ -73,8 +73,11 @@ void SettingsDelegate::paint(QPainter * painter, const QStyleOptionViewItem & op
 
     switch (index.column()) {
         case SettingsColumns::Alias: {
+            auto rect = option.rect;
+            rect.setLeft(rect.left() + 5);
+
             QTextOption opt(Qt::AlignVCenter | Qt::AlignLeft);
-            painter->drawText(option.rect, index.data().toString(), opt);
+            painter->drawText(rect, index.data().toString(), opt);
             break;
         }
         case SettingsColumns::Values: {
