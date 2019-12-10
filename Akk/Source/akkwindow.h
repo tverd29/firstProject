@@ -57,6 +57,8 @@ class AkkWindow : public QMainWindow {
     QAction * editAction = nullptr;
     QAction * delAction  = nullptr;
 
+    bool isSaved = true;
+
   private:
     void initAccModel();
     void initConnections();
@@ -66,7 +68,6 @@ class AkkWindow : public QMainWindow {
     QWidget * getSpacerWidget();
     QWidget * getMarginWidget(const int margin = 8);
     void successSave(const QString & file);
-    bool isSaved = true;
     void Error(int x);
     void needToClose();
     void savingQuestion();

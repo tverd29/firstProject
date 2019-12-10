@@ -20,9 +20,11 @@ class Settings : public QObject {
     void setLanguage(const QString & language);
 
     const QString getDefaultFile();
+    const QString getDefaultFileAlias();
     void setDefaultFile(const QString & file);
 
     const QHash<QString, QString> getLanguages();
+    const QString getLanguageAlias();
 
   private:
     explicit Settings(QObject * parrent = nullptr);

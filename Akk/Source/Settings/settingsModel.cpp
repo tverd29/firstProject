@@ -7,23 +7,32 @@ SettingsModel::SettingsModel(QObject * parent) : QAbstractTableModel(parent) {
 }
 
 QVariant SettingsModel::data(const QModelIndex & index, int role) const {
-    if (index.isValid() && role == Qt::DisplayRole) {
+    if (index.isValid()) {
         auto row    = index.row();
         auto column = index.column();
 
-        if (column == SettingsColumns::Alias) {
-            switch (row) {
-                case SettingsRows::DefaultFile:
-                    return tr("Default file");
-                case SettingsRows::Language:
-                    return tr("Language");
+        if (role == Qt::DisplayRole) {
+            if (column == SettingsColumns::Alias) {
+                switch (row) {
+                    case SettingsRows::DefaultFile:
+                        return tr("Default file");
+                    case SettingsRows::Language:
+                        return tr("Language");
+                }
+            } else if (column == SettingsColumns::Values) {
+                switch (row) {
+                    case SettingsRows::DefaultFile:
+                        return Settings::Instance()->getDefaultFileAlias();
+                    case SettingsRows::Language:
+                        return Settings::Instance()->getLanguageAlias();
+                }
             }
-        } else if (column == SettingsColumns::Values) {
-            switch (row) {
-                case SettingsRows::DefaultFile:
-                    return Settings::Instance()->getDefaultFile();
-                case SettingsRows::Language:
-                    return Settings::Instance()->getLanguage();
+        } else if (role == Qt::UserRole) {
+            if (column == SettingsColumns::Values) {
+                switch (row) {
+                    case SettingsRows::Language:
+                        return Settings::Instance()->getLanguage();
+                }
             }
         }
     }

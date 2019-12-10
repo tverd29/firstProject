@@ -10,8 +10,8 @@ Settings * Settings::Instance() {
 }
 
 void Settings::initLanguages() {
-    this->languages.insert("en_US", "EN");
-    this->languages.insert("ru_RU", "RU");
+    this->languages.insert("en_US", "English");
+    this->languages.insert("ru_RU", "Русский");
 }
 
 const QString Settings::getLanguage() {
@@ -26,12 +26,24 @@ const QString Settings::getDefaultFile() {
     return settings->value("defaultFile", QVariant()).toString();
 }
 
+const QString Settings::getDefaultFileAlias() {
+    auto values = settings->value("defaultFile", QVariant()).toString().split('/');
+    if (values.count() > 0) {
+        return values.last();
+    }
+    return QString();
+}
+
 void Settings::setDefaultFile(const QString & file) {
     settings->setValue("defaultFile", file);
 }
 
 const QHash<QString, QString> Settings::getLanguages() {
     return this->languages;
+}
+
+const QString Settings::getLanguageAlias() {
+    return this->languages.value(this->getLanguage());
 }
 
 Settings::Settings(QObject * parent) : QObject(parent) {
