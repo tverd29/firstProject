@@ -15,8 +15,12 @@ QWidget * SettingsDelegate::createEditor(QWidget * parent, const QStyleOptionVie
     if (index.isValid() && index.column() == SettingsColumns::Values) {
         switch (index.row()) {
             case SettingsRows::DefaultFile: {
-                auto wgt = new QFileDialog(parent);
-                return wgt;
+                QString tempFile = QFileDialog::getOpenFileName(parent, tr("Load file"), "",
+                                                                tr("Recommended (*.txt)"));
+                if (!tempFile.isEmpty()) {
+                    Settings::Instance()->setDefaultFile(tempFile);
+                }
+                return nullptr;
             }
             case SettingsRows::Language: {
                 auto wgt   = new QComboBox(parent);
