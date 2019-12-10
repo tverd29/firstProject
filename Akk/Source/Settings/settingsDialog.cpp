@@ -32,7 +32,10 @@ SettingsDialog::SettingsDialog(QWidget * parrent) : QDialog(parrent) {
                                                                  QHeaderView::Stretch);
 
     this->acceptButton = new QPushButton(tr("accept"));
+    connect(this->acceptButton, &QPushButton::clicked, this, &SettingsDialog::accept);
+
     this->cancelButton = new QPushButton(tr("cancel"));
+    connect(this->cancelButton, &QPushButton::clicked, this, &SettingsDialog::reject);
 
     QHBoxLayout * bottomLayout = new QHBoxLayout();
     bottomLayout->setAlignment(Qt::AlignRight);

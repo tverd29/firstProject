@@ -11,10 +11,16 @@ class Settings : public QObject {
 
     static Settings * m_settings;
 
+    QString tempDefaultFile;
+    QString tempLanguage;
+
   public:
     static Settings * Instance();
 
     void initLanguages();
+
+    void save();
+    void restore();
 
     const QString getLanguage();
     void setLanguage(const QString & language);

@@ -380,7 +380,12 @@ void AkkWindow::saveAsClicked() {
 }
 
 void AkkWindow::settingsClicked() {
-    if (settingsDialog->exec()) {
+    Settings::Instance()->save();
+    if (!settingsDialog->exec()) {
+        Settings::Instance()->restore();
+    } else {
+        popUp->setPopupText(tr("Settings accepted"));
+        popUp->show();
     }
 }
 

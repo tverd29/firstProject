@@ -14,6 +14,16 @@ void Settings::initLanguages() {
     this->languages.insert("ru_RU", "Русский");
 }
 
+void Settings::save() {
+    this->tempDefaultFile = this->getDefaultFile();
+    this->tempLanguage    = this->getLanguage();
+}
+
+void Settings::restore() {
+    this->setDefaultFile(this->tempDefaultFile);
+    this->setLanguage(this->tempLanguage);
+}
+
 const QString Settings::getLanguage() {
     return settings->value("language", QVariant()).toString();
 }
