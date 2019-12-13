@@ -4,47 +4,47 @@ DialogAddEdit::DialogAddEdit(QWidget * p) : QDialog(p) {
     this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint |
                          Qt::MSWindowsFixedSizeDialogHint);
 
-    resourceLabel = new QLabel;
+    resourceLabel = new QLabel(this);
     resourceLabel->setText(tr("Resource:"));
-    loginLabel = new QLabel;
+    loginLabel = new QLabel(this);
     loginLabel->setText(tr("Account:"));
-    passwordLabel = new QLabel;
+    passwordLabel = new QLabel(this);
     passwordLabel->setText(tr("Password:"));
 
-    resourceLine = new QLineEdit;
+    resourceLine = new QLineEdit(this);
     connect(this->resourceLine, &QLineEdit::textChanged, this, &DialogAddEdit::resourceChanged);
 
-    loginLine = new QLineEdit;
+    loginLine = new QLineEdit(this);
     connect(this->loginLine, &QLineEdit::textChanged, this, &DialogAddEdit::loginChanged);
 
-    passwordLine = new QLineEdit;
+    passwordLine = new QLineEdit(this);
     connect(this->passwordLine, &QLineEdit::textChanged, this, &DialogAddEdit::passwordChanged);
-    ok = new QPushButton();
+    ok = new QPushButton(this);
     ok->setEnabled(false);
     connect(this->ok, &QPushButton::clicked, this, &DialogAddEdit::okClicked);
 
-    no = new QPushButton(tr("Cancel"));
+    no = new QPushButton(tr("Cancel"), this);
     connect(this->no, &QPushButton::clicked, this, &DialogAddEdit::noClicked);
 
-    QVBoxLayout * left = new QVBoxLayout;
+    QVBoxLayout * left = new QVBoxLayout();
     left->addWidget(resourceLabel);
     left->addWidget(loginLabel);
     left->addWidget(passwordLabel);
 
-    QVBoxLayout * right = new QVBoxLayout;
+    QVBoxLayout * right = new QVBoxLayout();
     right->addWidget(resourceLine);
     right->addWidget(loginLine);
     right->addWidget(passwordLine);
 
-    QHBoxLayout * top = new QHBoxLayout;
+    QHBoxLayout * top = new QHBoxLayout();
     top->addLayout(left);
     top->addLayout(right);
 
-    QHBoxLayout * bottom = new QHBoxLayout;
+    QHBoxLayout * bottom = new QHBoxLayout();
     bottom->addWidget(ok);
     bottom->addWidget(no);
 
-    QVBoxLayout * main = new QVBoxLayout;
+    QVBoxLayout * main = new QVBoxLayout();
     main->addLayout(top);
     main->addLayout(bottom);
 

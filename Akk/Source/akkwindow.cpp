@@ -102,7 +102,7 @@ void AkkWindow::initConnections() {
 }
 
 QLayout * AkkWindow::initMainLayout() {
-    searchLine = new LineEdit;
+    searchLine = new LineEdit(this);
     searchLine->setPlaceholderText(tr("Search..."));
 
     QVBoxLayout * main = new QVBoxLayout;
@@ -113,46 +113,46 @@ QLayout * AkkWindow::initMainLayout() {
 }
 
 QToolBar * AkkWindow::initTopToolbar() {
-    passwordLine = new LineEdit();
+    passwordLine = new LineEdit(this);
     passwordLine->setPlaceholderText(tr("Password..."));
     passwordLine->setEchoMode(QLineEdit::Password);
     passwordLine->setFixedWidth(200);
 
     if (this->defaultFile.isEmpty()) {
-        loadAction = new QAction(QIcon(QPixmap("icons/file_open.png")), tr("load"));
+        loadAction = new QAction(QIcon(QPixmap("icons/file_open.png")), tr("load"), this);
         loadAction->setEnabled(false);
     } else {
-        loadAction = new QAction(QIcon(QPixmap("icons/accept.png")), tr("load"));
+        loadAction = new QAction(QIcon(QPixmap("icons/accept.png")), tr("load"), this);
         loadAction->setEnabled(false);
     }
 
-    saveAction = new QAction(QIcon(QPixmap("icons/save.png")), tr("save"));
+    saveAction = new QAction(QIcon(QPixmap("icons/save.png")), tr("save"), this);
     saveAction->setEnabled(false);
 
-    saveAsAction = new QAction(QIcon(QPixmap("icons/save_as.png")), tr("save as..."));
+    saveAsAction = new QAction(QIcon(QPixmap("icons/save_as.png")), tr("save as..."), this);
     saveAsAction->setEnabled(false);
 
-    settingsAction = new QAction(QIcon(QPixmap("icons/settings.png")), tr("settings"));
+    settingsAction = new QAction(QIcon(QPixmap("icons/settings.png")), tr("settings"), this);
     settingsAction->setEnabled(true);
 
-    QLabel * warning = new QLabel(tr("need to restart app"));
+    QLabel * warning = new QLabel(tr("need to restart app"), this);
     warning->setVisible(false);
-    QLabel * warningIcon = new QLabel();
+    QLabel * warningIcon = new QLabel(this);
     warningIcon->setFixedHeight(25);
     warningIcon->setPixmap(QPixmap("icons/warning.png").scaled(25, 25));
     warningIcon->setVisible(false);
-    restartAction = new QAction(QIcon(QPixmap("icons/restart.png")), tr("restart"));
+    restartAction = new QAction(QIcon(QPixmap("icons/restart.png")), tr("restart"), this);
     restartAction->setVisible(false);
 
     auto language = Settings::Instance()->getLanguage();
     if (language.contains("ru")) {
         curLang        = "RU";
-        languageAction = new QAction(curLang);
+        languageAction = new QAction(curLang, this);
     } else if (language.contains("en")) {
         curLang        = "EN";
-        languageAction = new QAction(curLang);
+        languageAction = new QAction(curLang, this);
     } else {
-        languageAction = new QAction();
+        languageAction = new QAction(this);
     }
 
     QToolBar * toolbar = new QToolBar(this);
@@ -176,13 +176,13 @@ QToolBar * AkkWindow::initTopToolbar() {
 }
 
 QToolBar * AkkWindow::initBottomToolbar() {
-    addAction = new QAction(QIcon(QPixmap("icons/add.png")), tr("Add"));
+    addAction = new QAction(QIcon(QPixmap("icons/add.png")), tr("Add"), this);
     addAction->setEnabled(false);
 
-    editAction = new QAction(QIcon(QPixmap("icons/edit.png")), tr("Edit"));
+    editAction = new QAction(QIcon(QPixmap("icons/edit.png")), tr("Edit"), this);
     editAction->setEnabled(false);
 
-    delAction = new QAction(QIcon(QPixmap("icons/del_2.png")), tr("Delete"));
+    delAction = new QAction(QIcon(QPixmap("icons/del_2.png")), tr("Delete"), this);
     delAction->setEnabled(false);
 
     QToolBar * toolbar = new QToolBar(this);

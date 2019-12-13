@@ -31,10 +31,10 @@ SettingsDialog::SettingsDialog(QWidget * parrent) : QDialog(parrent) {
     this->settingsView->horizontalHeader()->setSectionResizeMode(SettingsColumns::Values,
                                                                  QHeaderView::Stretch);
 
-    this->acceptButton = new QPushButton(tr("accept"));
+    this->acceptButton = new QPushButton(tr("accept"), this);
     connect(this->acceptButton, &QPushButton::clicked, this, &SettingsDialog::accept);
 
-    this->cancelButton = new QPushButton(tr("cancel"));
+    this->cancelButton = new QPushButton(tr("cancel"), this);
     connect(this->cancelButton, &QPushButton::clicked, this, &SettingsDialog::reject);
 
     QHBoxLayout * bottomLayout = new QHBoxLayout();
