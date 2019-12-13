@@ -19,4 +19,7 @@ class SettingsDialog : public QDialog {
   public:
     SettingsDialog(QWidget * parrent = nullptr);
     ~SettingsDialog() = default;
+
+  private:
+    void initViewHeight();
 };

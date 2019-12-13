@@ -43,9 +43,19 @@ SettingsDialog::SettingsDialog(QWidget * parrent) : QDialog(parrent) {
     bottomLayout->addWidget(cancelButton);
     bottomLayout->setMargin(5);
 
+    this->initViewHeight();
+
     QVBoxLayout * main = new QVBoxLayout();
     main->setMargin(0);
     main->addWidget(this->settingsView);
     main->addLayout(bottomLayout);
     this->setLayout(main);
+}
+
+void SettingsDialog::initViewHeight() {
+    auto viewHeight = this->settingsView->horizontalHeader()->height();
+    for (int row = 0; row < SettingsRows::RowsCount; ++row) {
+        viewHeight += this->settingsView->rowHeight(row) + 1;
+    }
+    this->settingsView->setFixedHeight(viewHeight);
 }
