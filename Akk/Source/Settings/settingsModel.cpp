@@ -40,6 +40,22 @@ QVariant SettingsModel::data(const QModelIndex & index, int role) const {
 }
 
 bool SettingsModel::setData(const QModelIndex & index, const QVariant & value, int role) {
+    if (!index.isValid()) {
+        return false;
+    }
+
+    auto row    = index.row();
+    auto column = index.column();
+
+    if (column == SettingsColumns::Values) {
+        switch (row) {
+            case SettingsRows::Language:
+                Settings::Instance()->setLanguage(value.toString());
+                emit criticalSettingChanged();
+                break;
+        }
+    }
+
     return true;
 }
 

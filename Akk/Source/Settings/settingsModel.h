@@ -18,4 +18,7 @@ class SettingsModel : public QAbstractTableModel {
 
     int rowCount(const QModelIndex & parent = QModelIndex()) const override;
     int columnCount(const QModelIndex & parent = QModelIndex()) const override;
+
+  signals:
+    void criticalSettingChanged();
 };
