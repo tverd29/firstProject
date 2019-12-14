@@ -85,8 +85,8 @@ void AkkWindow::initConnections() {
     connect(this->passwordLine, &QLineEdit::textChanged, this, &AkkWindow::PassTextChanged);
     connect(this->passwordLine, &LineEdit::clicked, this, [&]() { this->passwordLine->clear(); });
     connect(this->loadAction, &QAction::triggered, this, &AkkWindow::LoadClicked);
-    connect(this->languageAction, &QAction::triggered, this, &AkkWindow::LanguageClicked);
-    connect(this->restartAction, &QAction::triggered, this, &AkkWindow::RestartClicked);
+
+    connect(this->settingsDialog, &SettingsDialog::restartApp, this, &AkkWindow::setNeedRestart);
 
     connect(this->searchLine, &QLineEdit::textChanged, this->proxy, &AccountProxy::setFilter);
     connect(this->searchLine, &LineEdit::clicked, this, [&]() { this->searchLine->clear(); });
@@ -135,26 +135,6 @@ QToolBar * AkkWindow::initTopToolbar() {
     settingsAction = new QAction(QIcon(QPixmap("icons/settings.png")), tr("settings"), this);
     settingsAction->setEnabled(true);
 
-    QLabel * warning = new QLabel(tr("need to restart app"), this);
-    warning->setVisible(false);
-    QLabel * warningIcon = new QLabel(this);
-    warningIcon->setFixedHeight(25);
-    warningIcon->setPixmap(QPixmap("icons/warning.png").scaled(25, 25));
-    warningIcon->setVisible(false);
-    restartAction = new QAction(QIcon(QPixmap("icons/restart.png")), tr("restart"), this);
-    restartAction->setVisible(false);
-
-    auto language = Settings::Instance()->getLanguage();
-    if (language.contains("ru")) {
-        curLang        = "RU";
-        languageAction = new QAction(curLang, this);
-    } else if (language.contains("en")) {
-        curLang        = "EN";
-        languageAction = new QAction(curLang, this);
-    } else {
-        languageAction = new QAction(this);
-    }
-
     QToolBar * toolbar = new QToolBar(this);
     toolbar->addWidget(getMarginWidget());
     toolbar->addWidget(passwordLine);
@@ -164,13 +144,7 @@ QToolBar * AkkWindow::initTopToolbar() {
     toolbar->addAction(saveAsAction);
     toolbar->addSeparator();
     toolbar->addAction(settingsAction);
-    toolbar->addSeparator();
-    restartWarningIcon = toolbar->addWidget(warningIcon);
-    restartWarning     = toolbar->addWidget(warning);
-    toolbar->addAction(restartAction);
     toolbar->addWidget(getSpacerWidget());
-    toolbar->addAction(languageAction);
-    toolbar->addWidget(getMarginWidget());
     toolbar->setMovable(false);
     return toolbar;
 }
@@ -291,33 +265,6 @@ void AkkWindow::LoadClicked() {
     }
 }
 
-void AkkWindow::LanguageClicked() {
-    if (languageAction->text() == "RU") {
-        languageAction->setText("EN");
-        Settings::Instance()->setLanguage("en_US");
-    } else if (languageAction->text() == "EN") {
-        languageAction->setText("RU");
-        Settings::Instance()->setLanguage("ru_RU");
-    }
-
-    if (curLang == languageAction->text()) {
-        restartWarning->setVisible(false);
-        restartWarningIcon->setVisible(false);
-        restartAction->setVisible(false);
-
-    } else {
-        restartWarning->setVisible(true);
-        restartWarningIcon->setVisible(true);
-        restartAction->setVisible(true);
-    }
-}
-
-void AkkWindow::RestartClicked() {
-    needToClose();
-    qApp->quit();
-    QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
-}
-
 void AkkWindow::addClicked() {
     accountDialog->setLines(tr("Add"), true);
     accountDialog->exec();
@@ -386,12 +333,19 @@ void AkkWindow::settingsClicked() {
     } else {
         popUp->setPopupText(tr("Settings accepted"));
         popUp->show();
+        if (this->needRestart) {
+            this->restartApp();
+        }
     }
 }
 
 void AkkWindow::clearSelection() {
     delAction->setEnabled(false);
     editAction->setEnabled(false);
+}
+
+void AkkWindow::setNeedRestart() {
+    this->needRestart = true;
 }
 
 void AkkWindow::successSave(const QString & f) {
@@ -500,6 +454,12 @@ void AkkWindow::updatePopupGeometry() {
     topLeft.setX(topLeft.x() + 300);
     topLeft.setY(topLeft.y() + 500);
     this->popUp->updateGeometry(topLeft);
+}
+
+void AkkWindow::restartApp() {
+    needToClose();
+    qApp->quit();
+    QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
 }
 
 const QString AkkWindow::getFileName() const {

@@ -38,15 +38,11 @@ class AkkWindow : public QMainWindow {
     DialogAddEdit * accountDialog   = nullptr;
     SettingsDialog * settingsDialog = nullptr;
 
-    LineEdit * passwordLine      = nullptr;
-    QAction * loadAction         = nullptr;
-    QAction * saveAction         = nullptr;
-    QAction * saveAsAction       = nullptr;
-    QAction * settingsAction     = nullptr;
-    QAction * languageAction     = nullptr;
-    QAction * restartAction      = nullptr;
-    QAction * restartWarning     = nullptr;
-    QAction * restartWarningIcon = nullptr;
+    LineEdit * passwordLine  = nullptr;
+    QAction * loadAction     = nullptr;
+    QAction * saveAction     = nullptr;
+    QAction * saveAsAction   = nullptr;
+    QAction * settingsAction = nullptr;
 
     QString curLang;
     QString openedFile;
@@ -58,7 +54,8 @@ class AkkWindow : public QMainWindow {
     QAction * editAction = nullptr;
     QAction * delAction  = nullptr;
 
-    bool isSaved = true;
+    bool isSaved     = true;
+    bool needRestart = false;
 
   private:
     void initAccModel();
@@ -75,6 +72,8 @@ class AkkWindow : public QMainWindow {
 
     void updatePopupGeometry();
 
+    void restartApp();
+
     const QString getFileName() const;
 
   protected:
@@ -86,8 +85,6 @@ class AkkWindow : public QMainWindow {
     void changeEDButEnabled(bool value);
     void PassTextChanged(const QString & str);
     void LoadClicked();
-    void LanguageClicked();
-    void RestartClicked();
     void addClicked();
     void addAccount(const QString & res, const QString & acc, const QString & pas);
     void editClicked();
@@ -97,4 +94,5 @@ class AkkWindow : public QMainWindow {
     void saveAsClicked();
     void settingsClicked();
     void clearSelection();
+    void setNeedRestart();
 };

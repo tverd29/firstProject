@@ -5,6 +5,7 @@
 
 class QTableView;
 class SettingsModel;
+class QHBoxLayout;
 
 class SettingsDialog : public QDialog {
     Q_OBJECT
@@ -13,8 +14,15 @@ class SettingsDialog : public QDialog {
     QTableView * settingsView     = nullptr;
     SettingsModel * settingsModel = nullptr;
 
+    QPushButton * restartButton  = nullptr;
+    QAction * restartAction      = nullptr;
+    QWidget * restartWarning     = nullptr;
+    QWidget * restartWarningIcon = nullptr;
+
     QPushButton * acceptButton = nullptr;
     QPushButton * cancelButton = nullptr;
+
+    QHBoxLayout * restartLayout = nullptr;
 
   public:
     SettingsDialog(QWidget * parrent = nullptr);
@@ -22,4 +30,8 @@ class SettingsDialog : public QDialog {
 
   private:
     void initViewHeight();
+    void setRestartLayoutVisibility(bool visibility = true);
+
+  signals:
+    void restartApp();
 };
