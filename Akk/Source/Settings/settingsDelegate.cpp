@@ -53,7 +53,7 @@ void SettingsDelegate::setModelData(QWidget * editor, QAbstractItemModel * model
         switch (index.row()) {
             case SettingsRows::Language:
                 auto wgt = dynamic_cast<QComboBox *>(editor);
-                Settings::Instance()->setLanguage(wgt->currentData().toString());
+                model->setData(index, wgt->currentData());
                 return;
         }
     }
@@ -62,18 +62,14 @@ void SettingsDelegate::setModelData(QWidget * editor, QAbstractItemModel * model
 
 void SettingsDelegate::paint(QPainter * painter, const QStyleOptionViewItem & option,
                              const QModelIndex & index) const {
-    if (index.row() == SettingsRows::DefaultFile) {
-        painter->save();
-
-        painter->setPen(QColor("lightgrey"));
-        painter->drawLine(option.rect.topLeft(), option.rect.topRight());
-
-        painter->restore();
+    if (!index.isValid()) {
+        return;
     }
+
+    auto rect = option.rect;
 
     switch (index.column()) {
         case SettingsColumns::Alias: {
-            auto rect = option.rect;
             rect.setLeft(rect.left() + 5);
 
             QTextOption opt(Qt::AlignVCenter | Qt::AlignLeft);
@@ -81,10 +77,27 @@ void SettingsDelegate::paint(QPainter * painter, const QStyleOptionViewItem & op
             break;
         }
         case SettingsColumns::Values: {
+            if (option.state & QStyle::State_MouseOver) {
+                painter->save();
+                painter->setBrush(QBrush(QColor(240, 248, 255)));
+                painter->setPen(QColor("white"));
+                painter->drawRect(rect);
+                painter->restore();
+            }
+
             QTextOption opt(Qt::AlignCenter);
-            painter->drawText(option.rect, index.data().toString(), opt);
+            painter->drawText(rect, index.data().toString(), opt);
             break;
         }
+    }
+
+    if (index.row() == SettingsRows::DefaultFile) {
+        painter->save();
+
+        painter->setPen(QColor("lightgrey"));
+        painter->drawLine(option.rect.topLeft(), option.rect.topRight());
+
+        painter->restore();
     }
 }
 
