@@ -20,7 +20,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-CONFIG += c++17
+CONFIG += c++11
 
 SOURCES += \
     Source/AkksModel/AccountItemDelegate.cpp \
@@ -60,6 +60,13 @@ HEADERS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+# if need to start app with admin root
+#win32
+#{
+#    CONFIG += embed_manifest_exe
+#    QMAKE_LFLAGS_WINDOWS += /MANIFESTUAC:"level='requireAdministrator'"
+#}
 
 DISTFILES += \
     myapp.rc \
