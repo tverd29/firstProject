@@ -22,6 +22,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 CONFIG += c++11
 
+DESTDIR = $$PWD/../build/
+
 SOURCES += \
     Source/AkksModel/AccountItemDelegate.cpp \
     Source/Popup/Popup.cpp \
@@ -60,6 +62,11 @@ HEADERS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+win32{
+    QMAKE_POST_LINK += $$[QT_INSTALL_BINS]\windeployqt.exe \
+        $${DESTDIR}$${TARGET}.exe
+}
 
 # if need to start app with admin root
 #win32
