@@ -14,8 +14,8 @@ class SettingsDialog : public QDialog {
     QTableView * settingsView     = nullptr;
     SettingsModel * settingsModel = nullptr;
 
-    QPushButton * restartButton  = nullptr;
-    QAction * restartAction      = nullptr;
+    QPushButton * restartButton = nullptr;
+    //    QAction * restartAction      = nullptr;
     QWidget * restartWarning     = nullptr;
     QWidget * restartWarningIcon = nullptr;
 

@@ -47,7 +47,8 @@ SettingsDialog::SettingsDialog(QWidget * parrent) : QDialog(parrent) {
     warningIcon->setFixedHeight(25);
     warningIcon->setPixmap(QPixmap("icons/warning.png").scaled(25, 25));
     this->restartWarningIcon = warningIcon;
-    restartAction          = new QAction(QIcon(QPixmap("icons/restart.png")), tr("restart"), this);
+    //    restartAction          = new QAction(QIcon(QPixmap("icons/restart.png")), tr("restart"),
+    //    this);
     QWidget * spacerWidget = new QWidget(this);
     spacerWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     this->restartButton = new QPushButton(tr("restart"), this);
@@ -105,6 +106,6 @@ void SettingsDialog::setRestartLayoutVisibility(bool visibility) {
 
     this->restartWarning->setVisible(visibility);
     this->restartWarningIcon->setVisible(visibility);
-    this->restartAction->setVisible(visibility);
+    //    this->restartAction->setVisible(visibility);
     this->restartButton->setVisible(visibility);
 }
