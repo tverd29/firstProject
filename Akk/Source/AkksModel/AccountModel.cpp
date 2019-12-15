@@ -167,6 +167,10 @@ int AccountModel::getRowCount() {
     return this->rootItem->childCount();
 }
 
+bool AccountModel::isResourceValid(const QString & res) {
+    return this->rootItem->isResourceValid(res);
+}
+
 void AccountModel::clearModel() {
     delete this->rootItem;
     rootItem = new AccountItem(AccountTypes::ROOT);

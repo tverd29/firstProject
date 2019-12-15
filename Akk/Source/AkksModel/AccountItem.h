@@ -33,4 +33,6 @@ class AccountItem {
 
     bool isSelected();
     void setSelected(bool value);
+
+    bool isResourceValid(const QString & res);
 };

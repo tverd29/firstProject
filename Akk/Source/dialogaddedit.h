@@ -14,6 +14,7 @@ class DialogAddEdit : public QDialog {
     void setLines(const QString & str = "button", bool isAdding = false,
                   const QString res = QString(), const QString & akk = QString(),
                   const QString & pas = QString());
+    void resourceValidAnswer(const QString & res, bool answer);
 
   private:
     QLabel * resourceLabel;
@@ -31,10 +32,12 @@ class DialogAddEdit : public QDialog {
     void resourceChanged(QString str);
     void loginChanged(QString str);
     void passwordChanged(QString str);
+
     void noClicked();
     void okClicked();
 
   signals:
     void addAccount(const QString & res, const QString & acc, const QString & pas);
     void editAccount(const QString & res, const QString & acc, const QString & pas);
+    void isResourceValid(const QString & res);
 };

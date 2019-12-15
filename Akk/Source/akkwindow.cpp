@@ -81,6 +81,8 @@ void AkkWindow::initAccModel() {
 void AkkWindow::initConnections() {
     connect(this->accountDialog, &DialogAddEdit::addAccount, this, &AkkWindow::addAccount);
     connect(this->accountDialog, &DialogAddEdit::editAccount, this, &AkkWindow::editAccount);
+    connect(this->accountDialog, &DialogAddEdit::isResourceValid, this,
+            &AkkWindow::isResourceValid);
 
     connect(this->passwordLine, &QLineEdit::textChanged, this, &AkkWindow::PassTextChanged);
     connect(this->passwordLine, &LineEdit::clicked, this, [&]() { this->passwordLine->clear(); });
@@ -263,6 +265,10 @@ void AkkWindow::LoadClicked() {
     } catch (AkkErrors x) {
         Error(x);
     }
+}
+
+void AkkWindow::isResourceValid(const QString & res) {
+    accountDialog->resourceValidAnswer(res, this->model->isResourceValid(res));
 }
 
 void AkkWindow::addClicked() {

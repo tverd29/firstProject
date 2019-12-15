@@ -117,3 +117,12 @@ bool AccountItem::isSelected() {
 void AccountItem::setSelected(bool value) {
     this->selected = value;
 }
+
+bool AccountItem::isResourceValid(const QString & res) {
+    for (auto & akk : m_childItems) {
+        if (akk->getAccount().resource.toLower() == res.toLower()) {
+            return false;
+        }
+    }
+    return true;
+}

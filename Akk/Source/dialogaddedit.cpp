@@ -1,5 +1,7 @@
 #include "dialogaddedit.h"
 
+#include "Popup/Popup.h"
+
 DialogAddEdit::DialogAddEdit(QWidget * p) : QDialog(p) {
     this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint |
                          Qt::MSWindowsFixedSizeDialogHint);
@@ -75,12 +77,13 @@ void DialogAddEdit::setLines(const QString & str, bool isAdding, const QString r
     resourceLine->setFocus();
 }
 
-void DialogAddEdit::noClicked() {
-    this->reject();
-}
-
-void DialogAddEdit::okClicked() {
-    QString res = resourceLine->text();
+void DialogAddEdit::resourceValidAnswer(const QString & res, bool answer) {
+    if (!answer) {
+        auto popUp = Popup::Instance();
+        popUp->setPopupText(tr("resource has already been created"));
+        popUp->show();
+        return;
+    }
     QString acc = loginLine->text();
     QString pas = passwordLine->text();
     if (!res.isEmpty() && !acc.isEmpty() && !pas.isEmpty()) {
@@ -92,4 +95,13 @@ void DialogAddEdit::okClicked() {
     }
     isAdding = false;
     this->accept();
+}
+
+void DialogAddEdit::noClicked() {
+    this->reject();
+}
+
+void DialogAddEdit::okClicked() {
+    QString res = resourceLine->text();
+    emit isResourceValid(res);
 }

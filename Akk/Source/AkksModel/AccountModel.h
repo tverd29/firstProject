@@ -39,6 +39,8 @@ class AccountModel : public QAbstractItemModel {
     QList<Account> getAllAkks();
     int getRowCount();
 
+    bool isResourceValid(const QString & res);
+
   private:
     void clearModel();
     void addItem(AccountItem * item);

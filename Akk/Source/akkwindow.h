@@ -85,14 +85,20 @@ class AkkWindow : public QMainWindow {
     void changeEDButEnabled(bool value);
     void PassTextChanged(const QString & str);
     void LoadClicked();
+
+    void isResourceValid(const QString & res);
+
     void addClicked();
     void addAccount(const QString & res, const QString & acc, const QString & pas);
     void editClicked();
     void editAccount(const QString & res, const QString & acc, const QString & pas);
     void delClicked();
+
     void saveClicked();
     void saveAsClicked();
+
     void settingsClicked();
+
     void clearSelection();
     void setNeedRestart();
 };
