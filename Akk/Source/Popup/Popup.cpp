@@ -26,9 +26,7 @@ Popup::Popup(QWidget * parent) : QWidget(parent) {
     animation.setTargetObject(this);  // Устанавливаем целевой объект анимации
     animation.setPropertyName("popupOpacity");  // Устанавливаем анимируемое свойство
     connect(&animation, &QAbstractAnimation::finished, this,
-            &Popup::hide); /* Подключаем сигнал окончания
-                            * анимации к слоты скрытия
-                            * */
+            &Popup::hide);  // Подключаем сигнал окончания анимации к слоты скрытия
 
     // Настройка текста уведомления
     label.setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);  // Устанавливаем по центру
@@ -52,9 +50,7 @@ Popup::Popup(QWidget * parent) : QWidget(parent) {
 void Popup::paintEvent(QPaintEvent * event) {
     Q_UNUSED(event)
 
-    /* А теперь настраиваем фон уведомления,
-     * который является прямоугольником с чёрным фоном
-     * */
+    // А теперь настраиваем фон уведомления,который является прямоугольником с чёрным фоном
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);  // Включаем сглаживание
 
@@ -66,11 +62,11 @@ void Popup::paintEvent(QPaintEvent * event) {
     roundedRect.setWidth(rect().width() - 10);
     roundedRect.setHeight(rect().height() - 10);
 
-    // Кисть настраиваем на чёрный цвет в режиме полупрозрачности 180 из 255
+    // Кисть настраиваем на чёрный цвет в режиме полупрозрачности
     painter.setBrush(QBrush(QColor(60, 60, 60, 200)));
     painter.setPen(Qt::NoPen);  // Край уведомления не будет выделен
 
-    // Отрисовываем фон с закруглением краёв в 10px
+    // Отрисовываем фон с закруглением краёв
     painter.drawRoundedRect(roundedRect, 15, 15);
 }
 
@@ -95,9 +91,8 @@ void Popup::show() {
 
     QWidget::show();  // Отображаем виджет, который полностью прозрачен
 
-    animation.start();  // И запускаем анимацию
-    timer->start(
-        1000);  // А также стартуем таймер, который запустит скрытие уведомления через 2 секунды
+    animation.start();   // И запускаем анимацию
+    timer->start(1000);  // А также стартуем таймер, который запустит скрытие уведомления
 }
 
 void Popup::updateGeometry(QPoint topLeft) {
