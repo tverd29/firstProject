@@ -38,6 +38,10 @@ SettingsDialog::SettingsDialog(QWidget * parrent) : QDialog(parrent) {
     this->settingsView->horizontalHeader()->setSectionResizeMode(SettingsColumns::Values,
                                                                  QHeaderView::Stretch);
 
+    this->settingsView->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum));
+    this->settingsView->resizeRowsToContents();
+    this->settingsView->resizeColumnsToContents();
+
     this->restartWarning = new QLabel(tr("need to restart app"), this);
     QLabel * warningIcon = new QLabel(this);
     warningIcon->setFixedHeight(25);
