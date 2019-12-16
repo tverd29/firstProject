@@ -70,7 +70,7 @@ class AkkWindow : public QMainWindow {
     void needToClose();
     void savingQuestion();
 
-    void updatePopupGeometry();
+    void updatePopupCenter();
 
     void restartApp();
 

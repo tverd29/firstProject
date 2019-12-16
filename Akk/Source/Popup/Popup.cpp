@@ -15,6 +15,22 @@ Popup * Popup::Instance() {
     return m_instance;
 }
 
+void Popup::updateGeometry() {
+    needCorrection = false;
+
+    QPoint topLeft;
+    topLeft.setX(this->center.x() - (width() / 2));
+    topLeft.setY(this->center.y());
+
+    QRect rect(topLeft, topLeft);
+    setGeometry(rect);
+}
+
+void Popup::updateCenter(const QPoint center) {
+    this->center = center;
+    this->updateGeometry();
+}
+
 Popup::Popup(QWidget * parent) : QWidget(parent) {
     setWindowFlags(Qt::FramelessWindowHint |  // Отключаем оформление окна
                    Qt::Tool |  // Отменяем показ в качестве отдельного окна
@@ -74,6 +90,7 @@ void Popup::setPopupText(const QString & text) {
     if (text != label.text()) {
         needCorrection = true;
     }
+
     label.setText(text);  // Устанавливаем текст в Label
     adjustSize();         // С пересчётом размеров уведомления
 }
@@ -86,20 +103,13 @@ void Popup::show() {
     animation.setEndValue(1.0);  // Конечное - полностью непрозрачный виджет
 
     if (needCorrection) {
-        this->updateGeometry(this->geometry().topLeft());
+        this->updateGeometry();
     }
 
     QWidget::show();  // Отображаем виджет, который полностью прозрачен
 
     animation.start();   // И запускаем анимацию
     timer->start(1000);  // А также стартуем таймер, который запустит скрытие уведомления
-}
-
-void Popup::updateGeometry(QPoint topLeft) {
-    needCorrection = false;
-    topLeft.setX(topLeft.x() - (width() / 2));
-    QRect rect(topLeft, topLeft);
-    setGeometry(rect);
 }
 
 void Popup::hideAnimation() {

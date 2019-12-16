@@ -408,12 +408,12 @@ void AkkWindow::keyPressEvent(QKeyEvent * ev) {
 
 void AkkWindow::paintEvent(QPaintEvent * ev) {
     QMainWindow::paintEvent(ev);
-    updatePopupGeometry();
+    updatePopupCenter();
 }
 
 void AkkWindow::moveEvent(QMoveEvent * ev) {
     QMainWindow::moveEvent(ev);
-    updatePopupGeometry();
+    updatePopupCenter();
 }
 
 void AkkWindow::Error(int x) {
@@ -455,11 +455,11 @@ void AkkWindow::changeEDButEnabled(bool value) {
     editAction->setEnabled(value);
 }
 
-void AkkWindow::updatePopupGeometry() {
-    auto topLeft = this->geometry().topLeft();
-    topLeft.setX(topLeft.x() + 300);
-    topLeft.setY(topLeft.y() + 500);
-    this->popUp->updateGeometry(topLeft);
+void AkkWindow::updatePopupCenter() {
+    QPoint popUpCenter;
+    popUpCenter.setX(this->geometry().center().x());
+    popUpCenter.setY(this->geometry().bottom() - 100);
+    this->popUp->updateCenter(popUpCenter);
 }
 
 void AkkWindow::restartApp() {
