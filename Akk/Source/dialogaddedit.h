@@ -14,7 +14,7 @@ class DialogAddEdit : public QDialog {
     void setLines(const QString & str = "button", bool isAdding = false,
                   const QString res = QString(), const QString & akk = QString(),
                   const QString & pas = QString());
-    void resourceValidAnswer(const QString & res, bool answer);
+    void resourceValidAnswer(const QString & res, bool isValidRes = true);
 
   private:
     QLabel * resourceLabel;
@@ -27,6 +27,7 @@ class DialogAddEdit : public QDialog {
     QPushButton * no;
     QPushButton * ok;
 
+    QString oldRes;
     bool isAdding = false;
   public slots:
     void resourceChanged(QString str);

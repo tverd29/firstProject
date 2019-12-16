@@ -67,7 +67,12 @@ void DialogAddEdit::passwordChanged(QString str) {
 }
 void DialogAddEdit::setLines(const QString & str, bool isAdding, const QString res,
                              const QString & akk, const QString & pas) {
+    this->oldRes   = QString();
     this->isAdding = isAdding;
+
+    if (!isAdding) {
+        this->oldRes = res;
+    }
 
     this->setWindowTitle(str);
     ok->setText(str);
@@ -77,8 +82,8 @@ void DialogAddEdit::setLines(const QString & str, bool isAdding, const QString r
     resourceLine->setFocus();
 }
 
-void DialogAddEdit::resourceValidAnswer(const QString & res, bool answer) {
-    if (!answer) {
+void DialogAddEdit::resourceValidAnswer(const QString & res, bool isValidRes) {
+    if (!isValidRes) {
         auto popUp = Popup::Instance();
         popUp->setPopupText(tr("resource has already been created"));
         popUp->show();
@@ -103,5 +108,9 @@ void DialogAddEdit::noClicked() {
 
 void DialogAddEdit::okClicked() {
     QString res = resourceLine->text();
-    emit isResourceValid(res);
+    if (res.toLower() == this->oldRes.toLower()) {
+        this->resourceValidAnswer(res);
+    } else {
+        emit isResourceValid(res);
+    }
 }
