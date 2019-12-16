@@ -25,13 +25,13 @@
 <context>
     <name>AkkWindow</name>
     <message>
-        <location filename="../Source/akkwindow.cpp" line="117"/>
+        <location filename="../Source/akkwindow.cpp" line="119"/>
         <source>Password...</source>
         <translation>Password...</translation>
     </message>
     <message>
-        <location filename="../Source/akkwindow.cpp" line="122"/>
-        <location filename="../Source/akkwindow.cpp" line="125"/>
+        <location filename="../Source/akkwindow.cpp" line="124"/>
+        <location filename="../Source/akkwindow.cpp" line="127"/>
         <source>load</source>
         <translation>Load</translation>
     </message>
@@ -48,34 +48,34 @@
         <translation type="vanished">Password:</translation>
     </message>
     <message>
-        <location filename="../Source/akkwindow.cpp" line="106"/>
+        <location filename="../Source/akkwindow.cpp" line="108"/>
         <source>Search...</source>
         <translation>Search...</translation>
     </message>
     <message>
-        <location filename="../Source/akkwindow.cpp" line="153"/>
-        <location filename="../Source/akkwindow.cpp" line="269"/>
+        <location filename="../Source/akkwindow.cpp" line="155"/>
+        <location filename="../Source/akkwindow.cpp" line="275"/>
         <source>Add</source>
         <translation>Add</translation>
     </message>
     <message>
-        <location filename="../Source/akkwindow.cpp" line="156"/>
-        <location filename="../Source/akkwindow.cpp" line="289"/>
+        <location filename="../Source/akkwindow.cpp" line="158"/>
+        <location filename="../Source/akkwindow.cpp" line="295"/>
         <source>Edit</source>
         <translation>Edit</translation>
     </message>
     <message>
-        <location filename="../Source/akkwindow.cpp" line="159"/>
+        <location filename="../Source/akkwindow.cpp" line="161"/>
         <source>Delete</source>
         <translation>Delete</translation>
     </message>
     <message>
-        <location filename="../Source/akkwindow.cpp" line="129"/>
+        <location filename="../Source/akkwindow.cpp" line="131"/>
         <source>save</source>
         <translation>Save</translation>
     </message>
     <message>
-        <location filename="../Source/akkwindow.cpp" line="132"/>
+        <location filename="../Source/akkwindow.cpp" line="134"/>
         <source>save as...</source>
         <translation>Save as...</translation>
     </message>
@@ -88,73 +88,73 @@
         <translation type="vanished">restart</translation>
     </message>
     <message>
-        <location filename="../Source/akkwindow.cpp" line="261"/>
+        <location filename="../Source/akkwindow.cpp" line="263"/>
         <source>Loading %1 complete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Source/akkwindow.cpp" line="281"/>
+        <location filename="../Source/akkwindow.cpp" line="287"/>
         <source>%1 added</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Source/akkwindow.cpp" line="298"/>
+        <location filename="../Source/akkwindow.cpp" line="304"/>
         <source>%1 edited</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Source/akkwindow.cpp" line="313"/>
+        <location filename="../Source/akkwindow.cpp" line="319"/>
         <source>%1 deleted</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Source/akkwindow.cpp" line="334"/>
+        <location filename="../Source/akkwindow.cpp" line="340"/>
         <source>Settings accepted</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Source/akkwindow.cpp" line="373"/>
+        <location filename="../Source/akkwindow.cpp" line="379"/>
         <source>Saving %1 complete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Source/akkwindow.cpp" line="439"/>
+        <location filename="../Source/akkwindow.cpp" line="445"/>
         <source>Saving</source>
         <translation>Saving</translation>
     </message>
     <message>
-        <location filename="../Source/akkwindow.cpp" line="439"/>
+        <location filename="../Source/akkwindow.cpp" line="445"/>
         <source>Do you want to save?</source>
         <translation>Do you want to save?</translation>
     </message>
     <message>
-        <location filename="../Source/akkwindow.cpp" line="203"/>
+        <location filename="../Source/akkwindow.cpp" line="205"/>
         <source>Load file</source>
         <translation>Load file</translation>
     </message>
     <message>
-        <location filename="../Source/akkwindow.cpp" line="135"/>
+        <location filename="../Source/akkwindow.cpp" line="137"/>
         <source>settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Source/akkwindow.cpp" line="203"/>
-        <location filename="../Source/akkwindow.cpp" line="323"/>
+        <location filename="../Source/akkwindow.cpp" line="205"/>
+        <location filename="../Source/akkwindow.cpp" line="329"/>
         <source>Recommended (*.txt)</source>
         <translation>Recommended (*.txt)</translation>
     </message>
     <message>
-        <location filename="../Source/akkwindow.cpp" line="304"/>
+        <location filename="../Source/akkwindow.cpp" line="310"/>
         <source>Deleting</source>
         <translation>Deleting</translation>
     </message>
     <message>
-        <location filename="../Source/akkwindow.cpp" line="304"/>
+        <location filename="../Source/akkwindow.cpp" line="310"/>
         <source>Are you sure?</source>
         <translation>Are you sure?</translation>
     </message>
     <message>
-        <location filename="../Source/akkwindow.cpp" line="323"/>
+        <location filename="../Source/akkwindow.cpp" line="329"/>
         <source>Save file</source>
         <translation>Save file</translation>
     </message>
@@ -163,22 +163,22 @@
         <translation type="vanished">Saving complete</translation>
     </message>
     <message>
-        <location filename="../Source/akkwindow.cpp" line="416"/>
+        <location filename="../Source/akkwindow.cpp" line="422"/>
         <source>Error openning file</source>
         <translation>Error openning file</translation>
     </message>
     <message>
-        <location filename="../Source/akkwindow.cpp" line="419"/>
+        <location filename="../Source/akkwindow.cpp" line="425"/>
         <source>Save Error</source>
         <translation>Save Error</translation>
     </message>
     <message>
-        <location filename="../Source/akkwindow.cpp" line="422"/>
+        <location filename="../Source/akkwindow.cpp" line="428"/>
         <source>Bad File</source>
         <translation>Bad File</translation>
     </message>
     <message>
-        <location filename="../Source/akkwindow.cpp" line="425"/>
+        <location filename="../Source/akkwindow.cpp" line="431"/>
         <source>Incorrect password</source>
         <translation>Incorrect password</translation>
     </message>
@@ -186,24 +186,29 @@
 <context>
     <name>DialogAddEdit</name>
     <message>
-        <location filename="../Source/dialogaddedit.cpp" line="8"/>
+        <location filename="../Source/dialogaddedit.cpp" line="10"/>
         <source>Resource:</source>
         <translation>Resource:</translation>
     </message>
     <message>
-        <location filename="../Source/dialogaddedit.cpp" line="10"/>
+        <location filename="../Source/dialogaddedit.cpp" line="12"/>
         <source>Account:</source>
         <translation>Account:</translation>
     </message>
     <message>
-        <location filename="../Source/dialogaddedit.cpp" line="12"/>
+        <location filename="../Source/dialogaddedit.cpp" line="14"/>
         <source>Password:</source>
         <translation>Password:</translation>
     </message>
     <message>
-        <location filename="../Source/dialogaddedit.cpp" line="26"/>
+        <location filename="../Source/dialogaddedit.cpp" line="28"/>
         <source>Cancel</source>
         <translation>Cancel</translation>
+    </message>
+    <message>
+        <location filename="../Source/dialogaddedit.cpp" line="88"/>
+        <source>resource has already been created</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -227,23 +232,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Source/Settings/settingsDialog.cpp" line="41"/>
+        <location filename="../Source/Settings/settingsDialog.cpp" line="45"/>
         <source>need to restart app</source>
         <translation type="unfinished">need to restart app</translation>
     </message>
     <message>
-        <location filename="../Source/Settings/settingsDialog.cpp" line="46"/>
-        <location filename="../Source/Settings/settingsDialog.cpp" line="49"/>
+        <location filename="../Source/Settings/settingsDialog.cpp" line="54"/>
         <source>restart</source>
         <translation type="unfinished">restart</translation>
     </message>
     <message>
-        <location filename="../Source/Settings/settingsDialog.cpp" line="62"/>
+        <location filename="../Source/Settings/settingsDialog.cpp" line="67"/>
         <source>accept</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Source/Settings/settingsDialog.cpp" line="64"/>
+        <location filename="../Source/Settings/settingsDialog.cpp" line="69"/>
         <source>cancel</source>
         <translation type="unfinished"></translation>
     </message>
