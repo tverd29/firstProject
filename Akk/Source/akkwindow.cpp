@@ -396,7 +396,7 @@ void AkkWindow::keyPressEvent(QKeyEvent * ev) {
         this->delClicked();
     } else if (ev->key() == Qt::Key_Insert && addAction->isEnabled()) {
         this->addClicked();
-    } else if (ev->key() == Qt::Key_Enter) {
+    } else if (ev->key() == Qt::Key_Enter || ev->key() == Qt::Key_Return) {
         if (passwordLine->hasFocus()) {
             this->LoadClicked();
         } else if (view->hasFocus()) {
